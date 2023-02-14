@@ -164,3 +164,29 @@
 2023-02-14T15:15:22.338606+0500 | INFO | Bot successfully started
 2023-02-14T15:15:24.641317+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
 2023-02-14T15:15:24.644319+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:50:32.494333+0500 | INFO | Bot successfully started
+2023-02-14T15:50:35.574972+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:50:50.495021+0500 | INFO | Bot successfully started
+2023-02-14T15:50:52.118355+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:50:57.094597+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:50:57.094597+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T16:05:10.199538+0500 | INFO | Bot successfully started
+2023-02-14T16:05:12.310630+0500 | ERROR | 'sqlite3.Cursor' object has no attribute 'fetch'
+2023-02-14T16:05:12.310630+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:05:37.483590+0500 | INFO | Bot successfully started
+2023-02-14T16:05:39.427595+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:06:16.826827+0500 | INFO | Bot successfully started
+2023-02-14T16:06:19.337870+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:06:44.315896+0500 | INFO | Bot successfully started
+2023-02-14T16:06:45.882961+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:07:00.624900+0500 | INFO | Bot successfully started
+2023-02-14T16:07:03.248697+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:08:15.461003+0500 | INFO | Bot successfully started
+2023-02-14T16:08:17.342405+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:08:56.177783+0500 | INFO | Bot successfully started
+2023-02-14T16:09:11.234454+0500 | INFO | Bot successfully started
+2023-02-14T16:09:14.112257+0500 | ERROR | list index out of range
+2023-02-14T16:09:14.112257+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:09:37.210760+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T16:09:37.210760+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T16:09:39.927820+0500 | INFO | User log in | 726420734, Ivan, wh1tly337

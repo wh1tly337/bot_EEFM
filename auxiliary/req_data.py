@@ -15,4 +15,5 @@ src_db = 'auxiliary/employee.db'
 temporary_password = '123'
 
 # ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
-boss = 'Шешенина Ивана Владимировича'
+director_name = 'Шешенина Ивана Владимировича'
+director_id = ''
