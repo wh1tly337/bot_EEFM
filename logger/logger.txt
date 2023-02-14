@@ -164,3 +164,22 @@
 2023-02-14T15:15:22.338606+0500 | INFO | Bot successfully started
 2023-02-14T15:15:24.641317+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
 2023-02-14T15:15:24.644319+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:30:10.978748+0500 | INFO | Bot successfully started
+2023-02-14T15:31:06.161074+0500 | INFO | New user start bot | 577906481, Александр Владимирович, AVCAMID
+2023-02-14T15:34:03.591061+0500 | INFO | Bot successfully started
+2023-02-14T15:34:06.199255+0500 | INFO | New user start bot 
+2023-02-14T15:34:29.091232+0500 | INFO | Bot successfully started
+2023-02-14T15:34:31.402527+0500 | INFO | ('New user start bot ', {577906481}, {'Александр Владимирович'}, {'AVCAMID'})
+2023-02-14T15:34:49.148881+0500 | INFO | Bot successfully started
+2023-02-14T15:34:51.708045+0500 | INFO | ('New user start bot ', 577906481, 'Александр Владимирович', 'AVCAMID')
+2023-02-14T15:35:13.801993+0500 | INFO | Bot successfully started
+2023-02-14T15:35:15.692152+0500 | INFO | ('New user start bot ', 577906481, 'Александр Владимирович', 'AVCAMID')
+2023-02-14T15:37:03.367572+0500 | INFO | Bot successfully started
+2023-02-14T15:37:06.703962+0500 | INFO | ('New user start bot |', 577906481, 'Александр Владимирович', 'AVCAMID')
+2023-02-14T15:45:09.907884+0500 | INFO | ('New user start bot |', 726420734, 'Ivan', 'wh1tly337')
+2023-02-14T15:45:19.137757+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T15:45:26.276373+0500 | INFO | New user log in and added to database | 577906481, Александр Владимирович, AVCAMID
+2023-02-14T15:46:27.571102+0500 | INFO | Bot successfully started
+2023-02-14T15:46:31.780297+0500 | INFO | ('New user start bot |', 577906481, 'Александр Владимирович', 'AVCAMID')
+2023-02-14T15:46:39.911247+0500 | INFO | New user log in and added to database | 577906481, Александр Владимирович, AVCAMID
+2023-02-14T15:50:48.505745+0500 | INFO | ('New user start bot |', 577906481, 'Александр Владимирович', 'AVCAMID')
