@@ -6,6 +6,7 @@ from datetime import datetime
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from workers import db_worker as dbw
+from .funcs import print_log_info
 
 
 # класс для регистрации состояния сообщений пользователя (можете сильно не вникать это просто необходимо для правильной работы,
@@ -13,6 +14,8 @@ from workers import db_worker as dbw
 class Response(StatesGroup):
     authorization_handler = State()  # нельзя менять название переменной, иначе ничего не работает
     authorization_password_handler = State()  # нельзя менять название переменной, иначе ничего не работает
+
+
 
 
 # функция для обработки сообщения после нажатия кнопки "Получить доступ",
@@ -79,12 +82,8 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 '-'
             )
-            logger.info(
-                f"New user log in and added to database | "
-                f"{message.from_user.id}, "
-                f"{message.from_user.full_name}, "
-                f"{message.from_user.username}"
-            )
+            msg_new_user = 'New user log in and added to database'
+            print_log_info(message, msg_new_user)
         else:
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
@@ -92,13 +91,8 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
                 parse_mode='Markdown',
                 reply_markup=markup_new_user
             )
-            logger.info(
-                f"User unsuccessfully tried to log in | "
-                f"{message.from_user.id}, "
-                f"{message.from_user.full_name}, "
-                f"{message.from_user.username}"
-            )
-
+            msg_new_user = 'User unsuccessfully tried to log in'
+            print_log_info(message, msg_new_user)
     await state.finish()
 
 

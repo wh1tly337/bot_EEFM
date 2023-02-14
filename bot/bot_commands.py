@@ -9,6 +9,8 @@ from bot import (
     admin_handler as adm
 )
 from workers import db_worker as dbw
+from .funcs import print_log_info
+
 
 
 # функция отвечающая за команду /start
@@ -16,12 +18,8 @@ from workers import db_worker as dbw
 async def start_message(message: types.Message):
     result = await dbw.get_data('id', message.chat.id)
     if message.from_user.id != result:
-        logger.info(
-            f"New user start bot | "
-            f"{message.from_user.id}, "
-            f"{message.from_user.full_name}, "
-            f"{message.from_user.username}"
-        )
+        msg_new_user_start = 'New user start bot'
+        print_log_info(message, msg_new_user_start)
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text=f"{message.from_user.full_name}, к сожалению у вас нет доступа к данному боту",
@@ -31,13 +29,8 @@ async def start_message(message: types.Message):
         # метод выше начинает считывание последующего сообщения пользователя для его авторизации
         # (нужен для работы функции authorization_handler в файле message_handler.py)
     else:
-        logger.info(
-            f"User log in | "
-            f"{message.from_user.id}, "
-            f"{message.from_user.full_name}, "
-            f"{message.from_user.username}"
-        )
-
+        msg_log_in = 'User log in'
+        print_log_info(message, msg_log_in)
         result = await dbw.get_data('post', message.chat.id)
         if result == 'doctor':
             markup = markup_doctor

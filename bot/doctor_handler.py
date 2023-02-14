@@ -6,7 +6,7 @@ from datetime import datetime
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from workers import db_worker as dbw
-
+from .funcs import print_log_info
 
 # класс для регистрации состояния сообщений пользователя (можете сильно не вникать это просто необходимо для правильной работы,
 # просто копируйте и меняйте названия переменных под свою задачу)
@@ -39,4 +39,7 @@ async def register_doctor_handler(message: types.Message, state: FSMContext):
 
 # регистратор передающий данные в main_bot.py
 def register_handlers_doctor(dp: Dispatcher):  # noqa
-    dp.register_message_handler(register_doctor_handler, state=Response.register_doctor_handler)
+    dp.register_message_handler(
+        register_doctor_handler,
+        state=Response.register_doctor_handler
+    )
