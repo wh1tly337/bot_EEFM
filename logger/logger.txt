@@ -190,3 +190,28 @@
 2023-02-14T16:09:37.210760+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
 2023-02-14T16:09:37.210760+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
 2023-02-14T16:09:39.927820+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:53:45.224819+0500 | INFO | Bot successfully started
+2023-02-14T16:53:49.171207+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:54:14.985968+0500 | INFO | Bot successfully started
+2023-02-14T16:54:16.396985+0500 | ERROR | list index out of range
+2023-02-14T16:54:16.397986+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:54:19.776732+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T16:54:19.776732+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T16:54:22.017646+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:55:12.707788+0500 | INFO | Bot successfully started
+2023-02-14T16:55:14.927031+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:55:27.008647+0500 | INFO | Bot successfully started
+2023-02-14T16:55:28.222853+0500 | ERROR | list index out of range
+2023-02-14T16:55:28.223854+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:55:31.339437+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T16:55:31.339437+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T16:55:33.485147+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:55:36.420652+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:59:23.865325+0500 | INFO | Bot successfully started
+2023-02-14T16:59:26.732634+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T16:59:39.437323+0500 | INFO | Bot successfully started
+2023-02-14T16:59:40.650237+0500 | ERROR | list index out of range
+2023-02-14T16:59:40.650237+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T16:59:43.533585+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T16:59:43.533585+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T16:59:46.677572+0500 | INFO | User log in | 726420734, Ivan, wh1tly337

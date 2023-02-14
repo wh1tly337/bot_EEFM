@@ -29,7 +29,8 @@ async def close_connection():
         logger.error(ex)
 
 
-# код для создания таблицы. Только нужно добавлять данные о документах в эту же бд, но можно в другую таблицу только с документами (связывать по primary key или id пользователя)
+# код для создания таблицы. Только нужно добавлять данные о документах в эту же бд,
+# но можно в другую таблицу только с документами (связывать по primary key или id пользователя)
 # async def make_table():
 #     await start_connection()
 #     cursor.execute(f"""CREATE TABLE users
@@ -46,7 +47,8 @@ async def close_connection():
 
 
 # функция для получения данных из бд
-# TODO В дальнейшем нужно добавить аргумент для вызова, от которого будет зависеть какая информация будет возвращаться
+# TODO В дальнейшем нужно добавить аргумент для вызова,
+#  от которого будет зависеть какая информация будет возвращаться
 async def get_data(what_need, value):
     try:
         await start_connection()
@@ -68,7 +70,8 @@ async def add_new_user(id_tg, first_name, username, post, date_added, date_remov
     try:
         await start_connection()
         cursor.execute(
-            'INSERT INTO users (id, first_name, username, post, date_added, date_removed) VALUES (?,?,?,?,?,?);',
+            'INSERT INTO users (id, first_name, username, post, date_added, date_removed) '
+            'VALUES (?,?,?,?,?,?);',
             (id_tg, first_name, username, post, date_added, date_removed)
         )
         connection.commit()
