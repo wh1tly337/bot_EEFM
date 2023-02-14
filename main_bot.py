@@ -2,8 +2,10 @@ from aiogram import executor
 from loguru import logger
 
 from auxiliary.req_data import *
-import bot_commands as bc
-import message_handler as mh
+from bot import (
+    bot_commands as bc,
+    message_handler as mh
+)
 
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(f"{src_logger}logger.txt", format='{time} | {level} | {message}', rotation='00:00', compression='zip')

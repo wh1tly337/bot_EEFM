@@ -21,3 +21,146 @@
 2023-02-14T11:43:44.078824+0500 | INFO | Bot successfully started
 2023-02-14T11:43:47.492463+0500 | INFO | New user | 726420734, Ivan, wh1tly337
 2023-02-14T11:43:51.736170+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
+2023-02-14T13:48:42.087217+0500 | INFO | Bot successfully started
+2023-02-14T13:57:04.840074+0500 | INFO | Bot successfully started
+2023-02-14T13:57:11.398112+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T13:57:14.812830+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T14:00:33.470234+0500 | INFO | Bot successfully started
+2023-02-14T14:00:36.562266+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:02:32.706417+0500 | INFO | Bot successfully started
+2023-02-14T14:02:34.472193+0500 | ERROR | name 'connection' is not defined
+2023-02-14T14:02:34.472193+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:03:19.364758+0500 | INFO | Bot successfully started
+2023-02-14T14:03:20.976517+0500 | INFO | SQL connection started
+2023-02-14T14:03:20.976517+0500 | ERROR | 'sqlite3.Cursor' object does not support the context manager protocol
+2023-02-14T14:03:20.976517+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:03:52.067275+0500 | INFO | Bot successfully started
+2023-02-14T14:03:53.554038+0500 | INFO | SQL connection started
+2023-02-14T14:04:53.586225+0500 | INFO | Bot successfully started
+2023-02-14T14:04:55.905292+0500 | INFO | SQL connection started
+2023-02-14T14:07:00.850452+0500 | INFO | Bot successfully started
+2023-02-14T14:07:03.046798+0500 | INFO | SQL connection started
+2023-02-14T14:07:03.051804+0500 | INFO | SQL connection closed
+2023-02-14T14:07:03.055808+0500 | INFO | SQL connection started
+2023-02-14T14:07:03.055808+0500 | INFO | SQL connection closed
+2023-02-14T14:07:03.055808+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:08:18.465822+0500 | INFO | Bot successfully started
+2023-02-14T14:08:21.093013+0500 | INFO | SQL connection started
+2023-02-14T14:08:21.094014+0500 | INFO | SQL connection closed
+2023-02-14T14:08:21.094014+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:32:33.442997+0500 | INFO | Bot successfully started
+2023-02-14T14:32:36.195019+0500 | INFO | SQL connection started
+2023-02-14T14:32:36.197021+0500 | INFO | SQL connection closed
+2023-02-14T14:32:36.197021+0500 | INFO | SQL connection started
+2023-02-14T14:32:36.197021+0500 | INFO | SQL connection closed
+2023-02-14T14:32:36.197021+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:33:57.786399+0500 | INFO | Bot successfully started
+2023-02-14T14:33:59.676022+0500 | INFO | SQL connection started
+2023-02-14T14:33:59.676957+0500 | INFO | Added new user to table users
+2023-02-14T14:33:59.676957+0500 | INFO | SQL connection closed
+2023-02-14T14:33:59.676957+0500 | INFO | SQL connection started
+2023-02-14T14:33:59.676957+0500 | INFO | SQL connection closed
+2023-02-14T14:33:59.677969+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:35:52.641968+0500 | INFO | Bot successfully started
+2023-02-14T14:35:54.958657+0500 | INFO | SQL connection started
+2023-02-14T14:35:54.959658+0500 | INFO | Added new user to table users
+2023-02-14T14:35:54.960659+0500 | INFO | SQL connection closed
+2023-02-14T14:35:54.960659+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:36:26.440358+0500 | INFO | Bot successfully started
+2023-02-14T14:36:28.931885+0500 | INFO | SQL connection started
+2023-02-14T14:36:28.932886+0500 | INFO | Added new user to table users
+2023-02-14T14:36:28.933886+0500 | INFO | SQL connection closed
+2023-02-14T14:36:28.933886+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:36:45.320887+0500 | INFO | Bot successfully started
+2023-02-14T14:36:46.648833+0500 | INFO | SQL connection started
+2023-02-14T14:36:46.648833+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:36:46.647822, -
+2023-02-14T14:36:46.649834+0500 | INFO | SQL connection closed
+2023-02-14T14:36:46.649834+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:37:30.242989+0500 | INFO | Bot successfully started
+2023-02-14T14:37:32.707957+0500 | INFO | SQL connection started
+2023-02-14T14:37:32.708959+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:37:32.707957, -
+2023-02-14T14:37:32.708959+0500 | INFO | SQL connection closed
+2023-02-14T14:37:32.708959+0500 | INFO | SQL connection started
+2023-02-14T14:37:32.709960+0500 | INFO | SQL connection closed
+2023-02-14T14:37:32.709960+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:38:51.581318+0500 | INFO | Bot successfully started
+2023-02-14T14:38:53.446530+0500 | INFO | SQL connection started
+2023-02-14T14:39:27.644035+0500 | INFO | Bot successfully started
+2023-02-14T14:39:29.376093+0500 | INFO | SQL connection started
+2023-02-14T14:39:29.377733+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:39:29.376093, -
+2023-02-14T14:39:29.377733+0500 | INFO | SQL connection closed
+2023-02-14T14:39:29.377733+0500 | INFO | SQL connection started
+2023-02-14T14:39:29.378736+0500 | INFO | SQL connection closed
+2023-02-14T14:39:29.378736+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:39:34.667496+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
+2023-02-14T14:40:55.243842+0500 | INFO | Bot successfully started
+2023-02-14T14:43:07.027524+0500 | INFO | Bot successfully started
+2023-02-14T14:43:09.555730+0500 | INFO | SQL connection started
+2023-02-14T14:43:09.555730+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:43:09.551728, -
+2023-02-14T14:43:09.556732+0500 | INFO | SQL connection closed
+2023-02-14T14:43:09.556732+0500 | INFO | SQL connection started
+2023-02-14T14:43:09.556732+0500 | INFO | SQL connection closed
+2023-02-14T14:43:09.557734+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:45:19.583634+0500 | INFO | Bot successfully started
+2023-02-14T14:45:21.393841+0500 | INFO | SQL connection started
+2023-02-14T14:45:21.394841+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:45:21.390838, -
+2023-02-14T14:45:21.394841+0500 | INFO | SQL connection closed
+2023-02-14T14:45:21.394841+0500 | INFO | SQL connection started
+2023-02-14T14:45:21.395842+0500 | INFO | SQL connection closed
+2023-02-14T14:45:21.395842+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:48:55.750766+0500 | INFO | Bot successfully started
+2023-02-14T14:48:56.947185+0500 | INFO | SQL connection started
+2023-02-14T14:49:14.876815+0500 | INFO | Bot successfully started
+2023-02-14T14:49:16.061421+0500 | INFO | SQL connection started
+2023-02-14T14:49:16.062422+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:49:16.061421, -
+2023-02-14T14:49:16.063423+0500 | INFO | SQL connection closed
+2023-02-14T14:49:16.063423+0500 | INFO | SQL connection started
+2023-02-14T14:49:16.063423+0500 | INFO | SQL connection closed
+2023-02-14T14:49:16.063423+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:52:26.427477+0500 | INFO | Bot successfully started
+2023-02-14T14:52:29.710053+0500 | ERROR | unable to open database file
+2023-02-14T14:52:55.809202+0500 | INFO | Bot successfully started
+2023-02-14T14:52:57.052581+0500 | INFO | SQL connection started
+2023-02-14T14:52:57.052581+0500 | INFO | Added new user to table users | <built-in function id>, Ivan, wh1tly337, doctor, 2023-02-14 14:52:57.048577, -
+2023-02-14T14:52:57.053582+0500 | INFO | SQL connection closed
+2023-02-14T14:52:57.053582+0500 | INFO | SQL connection started
+2023-02-14T14:52:57.053582+0500 | INFO | SQL connection closed
+2023-02-14T14:52:57.053582+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T14:54:07.980201+0500 | INFO | Bot successfully started
+2023-02-14T14:54:11.725246+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T14:54:11.725246+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:00:12.795647+0500 | INFO | Bot successfully started
+2023-02-14T15:00:15.673216+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:01:43.797420+0500 | INFO | Bot successfully started
+2023-02-14T15:01:50.801683+0500 | INFO | Bot successfully started
+2023-02-14T15:01:52.213870+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:01:52.213870+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:05:00.615657+0500 | INFO | Bot successfully started
+2023-02-14T15:05:03.642648+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:05:03.643648+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:05:31.359293+0500 | INFO | Bot successfully started
+2023-02-14T15:05:33.964619+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:05:33.964619+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:06:52.723836+0500 | INFO | Bot successfully started
+2023-02-14T15:06:54.436307+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:06:54.437307+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:07:32.501180+0500 | INFO | Bot successfully started
+2023-02-14T15:07:34.519430+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:07:34.519430+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:08:19.291661+0500 | INFO | Bot successfully started
+2023-02-14T15:08:20.218531+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:08:20.219532+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:10:37.208767+0500 | INFO | Bot successfully started
+2023-02-14T15:11:06.514211+0500 | INFO | Bot successfully started
+2023-02-14T15:11:24.145988+0500 | INFO | Bot successfully started
+2023-02-14T15:12:11.244047+0500 | INFO | Bot successfully started
+2023-02-14T15:12:31.021374+0500 | INFO | Bot successfully started
+2023-02-14T15:13:07.774785+0500 | INFO | Bot successfully started
+2023-02-14T15:13:08.996544+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:13:08.996544+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:13:40.810034+0500 | INFO | Bot successfully started
+2023-02-14T15:13:42.314392+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:13:42.315394+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
+2023-02-14T15:15:22.338606+0500 | INFO | Bot successfully started
+2023-02-14T15:15:24.641317+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-14T15:15:24.644319+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337

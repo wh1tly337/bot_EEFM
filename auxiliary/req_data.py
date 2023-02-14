@@ -7,8 +7,9 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 bot_aiogram = Bot(token='5951899941:AAFS1oW1HLkIxR8AQP8i9sSGNEQ0YRtGh50')
 dp = Dispatcher(bot_aiogram, storage=MemoryStorage())
 
-# путь логгера
+# пути до файлов
 src_logger = 'logger/'
+src_db = 'auxiliary/employee.db'
 
 # временный пароль создаваемый директором
 temporary_password = '123'
