@@ -12,7 +12,7 @@ pip install -r requirements.txt
 ``` 
 - В папке с файлом manage.py выполните команду:
 ```
-python3 main_bot.py
+python main_bot.py
 ```
 ### Авторы
 Алескандр Шешенин, Иван Ивановичев, Трофим Крутой)
