@@ -1,0 +1,23 @@
+2023-02-14T11:25:19.409487+0500 | INFO | Bot successfully started
+2023-02-14T11:25:23.895051+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:29:58.681629+0500 | INFO | Bot successfully started
+2023-02-14T11:30:01.554790+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:31:01.120300+0500 | INFO | Bot successfully started
+2023-02-14T11:31:03.928647+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:34:28.654287+0500 | INFO | Bot successfully started
+2023-02-14T11:34:35.267969+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:39:51.432935+0500 | INFO | Bot successfully started
+2023-02-14T11:39:54.262807+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:40:03.507774+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
+2023-02-14T11:40:13.895082+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:40:42.694236+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:40:50.187413+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:40:52.862497+0500 | INFO | User | 726420734, Ivan, wh1tly337| unsuccessfully tried to log in
+2023-02-14T11:41:49.837360+0500 | INFO | Bot successfully started
+2023-02-14T11:41:55.916233+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:42:08.621211+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
+2023-02-14T11:42:29.813079+0500 | INFO | Bot successfully started
+2023-02-14T11:42:34.095605+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:43:44.078824+0500 | INFO | Bot successfully started
+2023-02-14T11:43:47.492463+0500 | INFO | New user | 726420734, Ivan, wh1tly337
+2023-02-14T11:43:51.736170+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
