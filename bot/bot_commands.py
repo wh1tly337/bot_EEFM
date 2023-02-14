@@ -2,7 +2,12 @@ from loguru import logger
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
-from bot import message_handler as mh
+from bot import (
+    message_handler as mh,
+    doctor_handler as doch,
+    director_handler as dirh,
+    admin_handler as adm
+)
 from workers import db_worker as dbw
 
 
@@ -32,10 +37,20 @@ async def start_message(message: types.Message):
             f"{message.from_user.full_name}, "
             f"{message.from_user.username}"
         )
+
+        result = await dbw.get_data('post', message.chat.id)
+        if result == 'doctor':
+            markup = markup_doctor
+            await doch.Response.register_doctor_handler.set()
+        elif result == 'admin':
+            markup = markup_admin
+        else:
+            markup = markup_director
+
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text=f"{message.from_user.full_name}, добро пожаловать в бот клиники ИТА!",
-            reply_markup=markup_test
+            reply_markup=markup
         )
 
 

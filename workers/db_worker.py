@@ -53,9 +53,11 @@ async def get_data(what_need, value):
     try:
         await start_connection()
         # cursor.execute(f"""SELECT * FROM users""")
+        cursor.execute(f"""SELECT * FROM users WHERE id = '{value}'""")
         if what_need == 'id':
-            cursor.execute(f"""SELECT * FROM users WHERE id = '{value}'""")
             result = cursor.fetchall()[0][0]
+        elif what_need == 'post':
+            result = cursor.fetchall()[0][3]
         else:
             result = None
         await close_connection()

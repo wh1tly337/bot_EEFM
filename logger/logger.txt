@@ -215,3 +215,11 @@
 2023-02-14T16:59:43.533585+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
 2023-02-14T16:59:43.533585+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
 2023-02-14T16:59:46.677572+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T17:23:02.350103+0500 | INFO | Bot successfully started
+2023-02-14T17:23:12.361456+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T17:32:42.242562+0500 | INFO | Bot successfully started
+2023-02-14T17:32:47.564267+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T17:44:36.399436+0500 | INFO | Bot successfully started
+2023-02-14T17:44:38.282506+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
+2023-02-14T17:46:17.234021+0500 | INFO | Bot successfully started
+2023-02-14T17:46:21.452143+0500 | INFO | User log in | 726420734, Ivan, wh1tly337

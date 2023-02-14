@@ -11,8 +11,8 @@ from workers import db_worker as dbw
 # класс для регистрации состояния сообщений пользователя (можете сильно не вникать это просто необходимо для правильной работы,
 # просто копируйте и меняйте названия переменных под свою задачу)
 class Response(StatesGroup):
-    authorization_handler = State()
-    authorization_password_handler = State()
+    authorization_handler = State()  # нельзя менять название переменной, иначе ничего не работает
+    authorization_password_handler = State()  # нельзя менять название переменной, иначе ничего не работает
 
 
 # функция для обработки сообщения после нажатия кнопки "Получить доступ",
@@ -56,11 +56,20 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
         await state.finish()
     else:
         if authorization_password_response == temporary_password:
+
+            result = await dbw.get_data('post', message.chat.id)
+            if result == 'doctor':
+                markup = markup_doctor
+            elif result == 'admin':
+                markup = markup_admin
+            else:
+                markup = markup_director
+
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
                 text=f"{message.from_user.full_name}, добро пожаловать в бот клиники ИТА!",
                 parse_mode='Markdown',
-                reply_markup=markup_test
+                reply_markup=markup
             )
             await dbw.add_new_user(
                 message.from_user.id,
