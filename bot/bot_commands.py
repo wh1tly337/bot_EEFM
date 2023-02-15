@@ -6,7 +6,7 @@ from bot import (
     message_handler as mh,
     doctor_handler as doch
 )
-from funcs import print_log_info
+from bot.funcs import print_log_info
 from workers import db_worker as dbw
 
 

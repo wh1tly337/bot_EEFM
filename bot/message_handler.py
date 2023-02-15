@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from auxiliary.req_data import director_name
-from funcs import print_log_info
+from bot.funcs import print_log_info
 from workers import db_worker as dbw
 
 
@@ -57,7 +57,6 @@ async def authorization_password_handler(message: types.Message,
             parse_mode='Markdown',
             reply_markup=markup_new_user
         )
-        print('back to auth handler')
         await Response.authorization_handler.set()
     else:
         if authorization_password_response == temporary_password:

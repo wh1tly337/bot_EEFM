@@ -278,3 +278,12 @@
 2023-02-15T13:25:36.032223+0500 | INFO | Bot successfully started
 2023-02-15T13:25:37.748666+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
 2023-02-15T13:25:37.750663+0500 | INFO | Logged user post |
+2023-02-15T15:42:01.498733+0500 | INFO | Bot successfully started
+2023-02-15T15:42:07.482449+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T15:42:07.483450+0500 | INFO | Logged user post |
+2023-02-15T15:44:30.889363+0500 | INFO | Bot successfully started
+2023-02-15T15:44:34.953614+0500 | ERROR | list index out of range
+2023-02-15T15:44:34.954606+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T15:45:31.062669+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T15:45:31.238999+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T15:46:26.500764+0500 | INFO | Bot successfully started
