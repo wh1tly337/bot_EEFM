@@ -4,6 +4,7 @@ from loguru import logger
 
 from auxiliary.req_data import *
 
+
 global connection, cursor
 
 
@@ -101,5 +102,7 @@ async def remove_user(id_tg):
 
 # TODO реализовать функцию перевода из Excel файла в sql таблицу (schedule созданную отдельно, один раз)
 #  при помощи обновления таблицы созданную только для расписания (связать с таблицей users при помощи primary key или id пользователя)
-
 # TODO реализовать функцию чтобы директор вручную мог добавлять врачей
+
+async def add_user_manual():
+    ...

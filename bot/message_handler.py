@@ -7,7 +7,7 @@ from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from workers import db_worker as dbw
 from .funcs import print_log_info
-
+from auxiliary.req_data import director_name
 
 # класс для регистрации состояния сообщений пользователя (можете сильно не вникать это просто необходимо для правильной работы,
 # просто копируйте и меняйте названия переменных под свою задачу)
@@ -34,7 +34,7 @@ async def authorization_handler(message: types.Message, state: FSMContext):
             reply_markup=markup_cancel
         )
         await Response.authorization_password_handler.set()
-    else:
+    elif authorization_response == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text='Хорошо',
@@ -56,10 +56,18 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
             parse_mode='Markdown',
             reply_markup=markup_new_user
         )
-        await state.finish()
+        print('back to auth handler')
+        await Response.authorization_handler.set()
     else:
         if authorization_password_response == temporary_password:
-
+            await dbw.add_new_user(
+                message.from_user.id,
+                message.from_user.full_name,
+                message.from_user.username,
+                'doctor',
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                '-'
+            )
             result = await dbw.get_data('post', message.chat.id)
             if result == 'doctor':
                 markup = markup_doctor
@@ -74,14 +82,6 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
                 parse_mode='Markdown',
                 reply_markup=markup
             )
-            await dbw.add_new_user(
-                message.from_user.id,
-                message.from_user.full_name,
-                message.from_user.username,
-                'doctor',
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                '-'
-            )
             msg_new_user = 'New user log in and added to database'
             print_log_info(message, msg_new_user)
         else:
@@ -93,7 +93,7 @@ async def authorization_password_handler(message: types.Message, state: FSMConte
             )
             msg_new_user = 'User unsuccessfully tried to log in'
             print_log_info(message, msg_new_user)
-    await state.finish()
+        await state.finish()
 
 
 # регистратор передающий данные в main_bot.py

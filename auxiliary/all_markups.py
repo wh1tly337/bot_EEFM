@@ -9,7 +9,7 @@ markup_cancel.add(btn_cancel)
 ''' Кнопки для нового пользователя '''
 markup_new_user = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_new_user = types.KeyboardButton('Получить доступ')
-markup_new_user.add(btn1_new_user, btn_cancel)
+markup_new_user.add(btn1_new_user)
 
 ''' Кнопки 1-го уровня для доктора '''
 markup_doctor = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -42,14 +42,14 @@ btn1_director = types.KeyboardButton('Управление персоналом'
 btn2_director = types.KeyboardButton('Получить расписание')
 markup_director.add(btn1_director, btn2_director)
 
-''' Кнопки 2-го уровня для директора '''
-markup_director = types.ReplyKeyboardMarkup(resize_keyboard=True)
-btn1_director = types.KeyboardButton('Найти сотрудника')
-btn2_director = types.KeyboardButton('Добавить сотрудника с тг')
-btn3_director = types.KeyboardButton('Добавить сотрудника без тг')
-btn4_director = types.KeyboardButton('Удалить сотрудника')
-btn5_director = types.KeyboardButton('Передать права директора')
-markup_director.add(btn1_director)
-markup_director.add(btn2_director, btn3_director)
-markup_director.add(btn4_director)
-markup_director.add(btn5_director)
+# ''' Кнопки 2-го уровня для директора '''
+# markup_director_emp = types.ReplyKeyboardMarkup(resize_keyboard=True)
+# btn1_director_emp = types.KeyboardButton('Найти сотрудника')
+# btn2_director_emp = types.KeyboardButton('Добавить сотрудника с тг')
+# btn3_director_emp = types.KeyboardButton('Добавить сотрудника без тг')
+# btn4_director_emp = types.KeyboardButton('Удалить сотрудника')
+# btn5_director_emp = types.KeyboardButton('Передать права директора')
+# markup_director.add(btn1_director_emp)
+# markup_director.add(btn2_director_emp, btn3_director_emp)
+# markup_director.add(btn4_director_emp)
+# markup_director.add(btn5_director_emp)

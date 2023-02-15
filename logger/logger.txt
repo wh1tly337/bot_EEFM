@@ -1,310 +1,280 @@
-2023-02-14T11:25:19.409487+0500 | INFO | Bot successfully started
-2023-02-14T11:25:23.895051+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:29:58.681629+0500 | INFO | Bot successfully started
-2023-02-14T11:30:01.554790+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:31:01.120300+0500 | INFO | Bot successfully started
-2023-02-14T11:31:03.928647+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:34:28.654287+0500 | INFO | Bot successfully started
-2023-02-14T11:34:35.267969+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:39:51.432935+0500 | INFO | Bot successfully started
-2023-02-14T11:39:54.262807+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:40:03.507774+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
-2023-02-14T11:40:13.895082+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:40:42.694236+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:40:50.187413+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:40:52.862497+0500 | INFO | User | 726420734, Ivan, wh1tly337| unsuccessfully tried to log in
-2023-02-14T11:41:49.837360+0500 | INFO | Bot successfully started
-2023-02-14T11:41:55.916233+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:42:08.621211+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
-2023-02-14T11:42:29.813079+0500 | INFO | Bot successfully started
-2023-02-14T11:42:34.095605+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:43:44.078824+0500 | INFO | Bot successfully started
-2023-02-14T11:43:47.492463+0500 | INFO | New user | 726420734, Ivan, wh1tly337
-2023-02-14T11:43:51.736170+0500 | INFO | New user | 726420734, Ivan, wh1tly337| log in and added to database
-2023-02-14T13:48:42.087217+0500 | INFO | Bot successfully started
-2023-02-14T13:57:04.840074+0500 | INFO | Bot successfully started
-2023-02-14T13:57:11.398112+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T13:57:14.812830+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T14:00:33.470234+0500 | INFO | Bot successfully started
-2023-02-14T14:00:36.562266+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:02:32.706417+0500 | INFO | Bot successfully started
-2023-02-14T14:02:34.472193+0500 | ERROR | name 'connection' is not defined
-2023-02-14T14:02:34.472193+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:03:19.364758+0500 | INFO | Bot successfully started
-2023-02-14T14:03:20.976517+0500 | INFO | SQL connection started
-2023-02-14T14:03:20.976517+0500 | ERROR | 'sqlite3.Cursor' object does not support the context manager protocol
-2023-02-14T14:03:20.976517+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:03:52.067275+0500 | INFO | Bot successfully started
-2023-02-14T14:03:53.554038+0500 | INFO | SQL connection started
-2023-02-14T14:04:53.586225+0500 | INFO | Bot successfully started
-2023-02-14T14:04:55.905292+0500 | INFO | SQL connection started
-2023-02-14T14:07:00.850452+0500 | INFO | Bot successfully started
-2023-02-14T14:07:03.046798+0500 | INFO | SQL connection started
-2023-02-14T14:07:03.051804+0500 | INFO | SQL connection closed
-2023-02-14T14:07:03.055808+0500 | INFO | SQL connection started
-2023-02-14T14:07:03.055808+0500 | INFO | SQL connection closed
-2023-02-14T14:07:03.055808+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:08:18.465822+0500 | INFO | Bot successfully started
-2023-02-14T14:08:21.093013+0500 | INFO | SQL connection started
-2023-02-14T14:08:21.094014+0500 | INFO | SQL connection closed
-2023-02-14T14:08:21.094014+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:32:33.442997+0500 | INFO | Bot successfully started
-2023-02-14T14:32:36.195019+0500 | INFO | SQL connection started
-2023-02-14T14:32:36.197021+0500 | INFO | SQL connection closed
-2023-02-14T14:32:36.197021+0500 | INFO | SQL connection started
-2023-02-14T14:32:36.197021+0500 | INFO | SQL connection closed
-2023-02-14T14:32:36.197021+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:33:57.786399+0500 | INFO | Bot successfully started
-2023-02-14T14:33:59.676022+0500 | INFO | SQL connection started
-2023-02-14T14:33:59.676957+0500 | INFO | Added new user to table users
-2023-02-14T14:33:59.676957+0500 | INFO | SQL connection closed
-2023-02-14T14:33:59.676957+0500 | INFO | SQL connection started
-2023-02-14T14:33:59.676957+0500 | INFO | SQL connection closed
-2023-02-14T14:33:59.677969+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:35:52.641968+0500 | INFO | Bot successfully started
-2023-02-14T14:35:54.958657+0500 | INFO | SQL connection started
-2023-02-14T14:35:54.959658+0500 | INFO | Added new user to table users
-2023-02-14T14:35:54.960659+0500 | INFO | SQL connection closed
-2023-02-14T14:35:54.960659+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:36:26.440358+0500 | INFO | Bot successfully started
-2023-02-14T14:36:28.931885+0500 | INFO | SQL connection started
-2023-02-14T14:36:28.932886+0500 | INFO | Added new user to table users
-2023-02-14T14:36:28.933886+0500 | INFO | SQL connection closed
-2023-02-14T14:36:28.933886+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:36:45.320887+0500 | INFO | Bot successfully started
-2023-02-14T14:36:46.648833+0500 | INFO | SQL connection started
-2023-02-14T14:36:46.648833+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:36:46.647822, -
-2023-02-14T14:36:46.649834+0500 | INFO | SQL connection closed
-2023-02-14T14:36:46.649834+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:37:30.242989+0500 | INFO | Bot successfully started
-2023-02-14T14:37:32.707957+0500 | INFO | SQL connection started
-2023-02-14T14:37:32.708959+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:37:32.707957, -
-2023-02-14T14:37:32.708959+0500 | INFO | SQL connection closed
-2023-02-14T14:37:32.708959+0500 | INFO | SQL connection started
-2023-02-14T14:37:32.709960+0500 | INFO | SQL connection closed
-2023-02-14T14:37:32.709960+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:38:51.581318+0500 | INFO | Bot successfully started
-2023-02-14T14:38:53.446530+0500 | INFO | SQL connection started
-2023-02-14T14:39:27.644035+0500 | INFO | Bot successfully started
-2023-02-14T14:39:29.376093+0500 | INFO | SQL connection started
-2023-02-14T14:39:29.377733+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:39:29.376093, -
-2023-02-14T14:39:29.377733+0500 | INFO | SQL connection closed
-2023-02-14T14:39:29.377733+0500 | INFO | SQL connection started
-2023-02-14T14:39:29.378736+0500 | INFO | SQL connection closed
-2023-02-14T14:39:29.378736+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:39:34.667496+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T14:40:55.243842+0500 | INFO | Bot successfully started
-2023-02-14T14:43:07.027524+0500 | INFO | Bot successfully started
-2023-02-14T14:43:09.555730+0500 | INFO | SQL connection started
-2023-02-14T14:43:09.555730+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:43:09.551728, -
-2023-02-14T14:43:09.556732+0500 | INFO | SQL connection closed
-2023-02-14T14:43:09.556732+0500 | INFO | SQL connection started
-2023-02-14T14:43:09.556732+0500 | INFO | SQL connection closed
-2023-02-14T14:43:09.557734+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:45:19.583634+0500 | INFO | Bot successfully started
-2023-02-14T14:45:21.393841+0500 | INFO | SQL connection started
-2023-02-14T14:45:21.394841+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:45:21.390838, -
-2023-02-14T14:45:21.394841+0500 | INFO | SQL connection closed
-2023-02-14T14:45:21.394841+0500 | INFO | SQL connection started
-2023-02-14T14:45:21.395842+0500 | INFO | SQL connection closed
-2023-02-14T14:45:21.395842+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:48:55.750766+0500 | INFO | Bot successfully started
-2023-02-14T14:48:56.947185+0500 | INFO | SQL connection started
-2023-02-14T14:49:14.876815+0500 | INFO | Bot successfully started
-2023-02-14T14:49:16.061421+0500 | INFO | SQL connection started
-2023-02-14T14:49:16.062422+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor, 2023-02-14 14:49:16.061421, -
-2023-02-14T14:49:16.063423+0500 | INFO | SQL connection closed
-2023-02-14T14:49:16.063423+0500 | INFO | SQL connection started
-2023-02-14T14:49:16.063423+0500 | INFO | SQL connection closed
-2023-02-14T14:49:16.063423+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:52:26.427477+0500 | INFO | Bot successfully started
-2023-02-14T14:52:29.710053+0500 | ERROR | unable to open database file
-2023-02-14T14:52:55.809202+0500 | INFO | Bot successfully started
-2023-02-14T14:52:57.052581+0500 | INFO | SQL connection started
-2023-02-14T14:52:57.052581+0500 | INFO | Added new user to table users | <built-in function id>, Ivan, wh1tly337, doctor, 2023-02-14 14:52:57.048577, -
-2023-02-14T14:52:57.053582+0500 | INFO | SQL connection closed
-2023-02-14T14:52:57.053582+0500 | INFO | SQL connection started
-2023-02-14T14:52:57.053582+0500 | INFO | SQL connection closed
-2023-02-14T14:52:57.053582+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T14:54:07.980201+0500 | INFO | Bot successfully started
-2023-02-14T14:54:11.725246+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T14:54:11.725246+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:00:12.795647+0500 | INFO | Bot successfully started
-2023-02-14T15:00:15.673216+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:01:43.797420+0500 | INFO | Bot successfully started
-2023-02-14T15:01:50.801683+0500 | INFO | Bot successfully started
-2023-02-14T15:01:52.213870+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:01:52.213870+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:05:00.615657+0500 | INFO | Bot successfully started
-2023-02-14T15:05:03.642648+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:05:03.643648+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:05:31.359293+0500 | INFO | Bot successfully started
-2023-02-14T15:05:33.964619+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:05:33.964619+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:06:52.723836+0500 | INFO | Bot successfully started
-2023-02-14T15:06:54.436307+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:06:54.437307+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:07:32.501180+0500 | INFO | Bot successfully started
-2023-02-14T15:07:34.519430+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:07:34.519430+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:08:19.291661+0500 | INFO | Bot successfully started
-2023-02-14T15:08:20.218531+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:08:20.219532+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:10:37.208767+0500 | INFO | Bot successfully started
-2023-02-14T15:11:06.514211+0500 | INFO | Bot successfully started
-2023-02-14T15:11:24.145988+0500 | INFO | Bot successfully started
-2023-02-14T15:12:11.244047+0500 | INFO | Bot successfully started
-2023-02-14T15:12:31.021374+0500 | INFO | Bot successfully started
-2023-02-14T15:13:07.774785+0500 | INFO | Bot successfully started
-2023-02-14T15:13:08.996544+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:13:08.996544+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:13:40.810034+0500 | INFO | Bot successfully started
-2023-02-14T15:13:42.314392+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:13:42.315394+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:15:22.338606+0500 | INFO | Bot successfully started
-2023-02-14T15:15:24.641317+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:15:24.644319+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:50:32.494333+0500 | INFO | Bot successfully started
-2023-02-14T15:50:35.574972+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:50:50.495021+0500 | INFO | Bot successfully started
-2023-02-14T15:50:52.118355+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T15:50:57.094597+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T15:50:57.094597+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T16:05:10.199538+0500 | INFO | Bot successfully started
-2023-02-14T16:05:12.310630+0500 | ERROR | 'sqlite3.Cursor' object has no attribute 'fetch'
-2023-02-14T16:05:12.310630+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:05:37.483590+0500 | INFO | Bot successfully started
-2023-02-14T16:05:39.427595+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:06:16.826827+0500 | INFO | Bot successfully started
-2023-02-14T16:06:19.337870+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:06:44.315896+0500 | INFO | Bot successfully started
-2023-02-14T16:06:45.882961+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:07:00.624900+0500 | INFO | Bot successfully started
-2023-02-14T16:07:03.248697+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:08:15.461003+0500 | INFO | Bot successfully started
-2023-02-14T16:08:17.342405+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:08:56.177783+0500 | INFO | Bot successfully started
-2023-02-14T16:09:11.234454+0500 | INFO | Bot successfully started
-2023-02-14T16:09:14.112257+0500 | ERROR | list index out of range
-2023-02-14T16:09:14.112257+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:09:37.210760+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T16:09:37.210760+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T16:09:39.927820+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:53:45.224819+0500 | INFO | Bot successfully started
-2023-02-14T16:53:49.171207+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:54:14.985968+0500 | INFO | Bot successfully started
-2023-02-14T16:54:16.396985+0500 | ERROR | list index out of range
-2023-02-14T16:54:16.397986+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:54:19.776732+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T16:54:19.776732+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T16:54:22.017646+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:55:12.707788+0500 | INFO | Bot successfully started
-2023-02-14T16:55:14.927031+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:55:27.008647+0500 | INFO | Bot successfully started
-2023-02-14T16:55:28.222853+0500 | ERROR | list index out of range
-2023-02-14T16:55:28.223854+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:55:31.339437+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T16:55:31.339437+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T16:55:33.485147+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:55:36.420652+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:59:23.865325+0500 | INFO | Bot successfully started
-2023-02-14T16:59:26.732634+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T16:59:39.437323+0500 | INFO | Bot successfully started
-2023-02-14T16:59:40.650237+0500 | ERROR | list index out of range
-2023-02-14T16:59:40.650237+0500 | INFO | New user start bot | 726420734, Ivan, wh1tly337
-2023-02-14T16:59:43.533585+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
-2023-02-14T16:59:43.533585+0500 | INFO | New user log in and added to database | 726420734, Ivan, wh1tly337
-2023-02-14T16:59:46.677572+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T17:23:02.350103+0500 | INFO | Bot successfully started
-2023-02-14T17:23:12.361456+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T17:32:42.242562+0500 | INFO | Bot successfully started
-2023-02-14T17:32:47.564267+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T17:44:36.399436+0500 | INFO | Bot successfully started
-2023-02-14T17:44:38.282506+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T17:46:17.234021+0500 | INFO | Bot successfully started
-2023-02-14T17:46:21.452143+0500 | INFO | User log in | 726420734, Ivan, wh1tly337
-2023-02-14T21:25:02.732640+0500 | INFO | Bot successfully started
-2023-02-14T21:25:03.172541+0500 | ERROR | list index out of range
-2023-02-14T21:25:03.173546+0500 | INFO | New user start bot | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:30:18.598124+0500 | INFO | Bot successfully started
-2023-02-14T21:30:22.273815+0500 | ERROR | list index out of range
-2023-02-14T21:30:22.275810+0500 | INFO | New user start bot | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:30:24.868752+0500 | ERROR | list index out of range
-2023-02-14T21:30:25.071747+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
-2023-02-14T21:30:25.072748+0500 | INFO | New user log in and added to database | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:31:00.224893+0500 | INFO | Bot successfully started
-2023-02-14T21:31:02.925040+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:31:33.822475+0500 | INFO | Bot successfully started
-2023-02-14T21:31:37.650825+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:37:07.384487+0500 | INFO | Bot successfully started
-2023-02-14T21:37:32.698882+0500 | INFO | Bot successfully started
-2023-02-14T21:37:34.214822+0500 | INFO | (577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:37:34.215335+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:38:05.850170+0500 | INFO | Bot successfully started
-2023-02-14T21:38:09.615794+0500 | INFO | ('User log in', ' | ', 577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:38:09.616794+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:38:26.004798+0500 | INFO | Bot successfully started
-2023-02-14T21:38:28.157776+0500 | INFO | User log in
-2023-02-14T21:38:28.159775+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:39:20.597347+0500 | INFO | Bot successfully started
-2023-02-14T21:39:22.313317+0500 | INFO | ('User log in', ' | ', 577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:39:22.314315+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:39:38.397815+0500 | INFO | Bot successfully started
-2023-02-14T21:39:40.166761+0500 | INFO | ('User log in', ' | ', 577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:39:40.168757+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:39:53.161866+0500 | INFO | Bot successfully started
-2023-02-14T21:40:13.109556+0500 | INFO | Bot successfully started
-2023-02-14T21:40:31.015864+0500 | INFO | Bot successfully started
-2023-02-14T21:42:12.177851+0500 | INFO | Bot successfully started
-2023-02-14T21:42:27.420716+0500 | INFO | Bot successfully started
-2023-02-14T21:52:43.218044+0500 | INFO | Bot successfully started
-2023-02-14T21:53:04.129674+0500 | INFO | Bot successfully started
-2023-02-14T21:53:30.075173+0500 | INFO | Bot successfully started
-2023-02-14T21:54:00.747245+0500 | INFO | Bot successfully started
-2023-02-14T21:54:21.002997+0500 | INFO | Bot successfully started
-2023-02-14T21:54:55.421336+0500 | INFO | Bot successfully started
-2023-02-14T21:55:43.932768+0500 | INFO | Bot successfully started
-2023-02-14T21:57:06.860674+0500 | INFO | Bot successfully started
-2023-02-14T21:57:07.752756+0500 | INFO | User log in577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:57:07.754751+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:57:21.425713+0500 | INFO | Bot successfully started
-2023-02-14T21:57:22.205800+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:57:22.206828+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:57:53.960036+0500 | INFO | Bot successfully started
-2023-02-14T21:57:54.775804+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:57:54.777807+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:58:23.720397+0500 | INFO | Bot successfully started
-2023-02-14T21:58:47.909263+0500 | INFO | Bot successfully started
-2023-02-14T21:58:48.755301+0500 | INFO | User log in | 
-2023-02-14T21:58:48.756301+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:59:02.048882+0500 | INFO | Bot successfully started
-2023-02-14T21:59:21.626137+0500 | INFO | Bot successfully started
-2023-02-14T21:59:23.072792+0500 | INFO | ('User log in | ', 577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:59:23.073789+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T21:59:39.707859+0500 | INFO | Bot successfully started
-2023-02-14T21:59:40.516671+0500 | INFO | ('User log in | ', 577906481, 'Александр Владимирович', 'AVCAMID')
-2023-02-14T21:59:40.517666+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T22:01:38.148393+0500 | INFO | Bot successfully started
-2023-02-14T22:01:40.207783+0500 | INFO | ['User log in | ', 577906481, 'Александр Владимирович', 'AVCAMID']
-2023-02-14T22:01:40.209778+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T22:02:25.156489+0500 | INFO | Bot successfully started
-2023-02-14T22:04:03.298125+0500 | INFO | Bot successfully started
-2023-02-14T22:04:04.409387+0500 | INFO | User log in | 577906481Александр ВладимировичAVCAMID
-2023-02-14T22:04:04.410386+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T22:04:19.499786+0500 | INFO | Bot successfully started
-2023-02-14T22:04:20.288217+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:04:20.291213+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T22:04:41.403833+0500 | INFO | Bot successfully started
-2023-02-14T22:04:42.068939+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:04:42.069939+0500 | INFO | User log in | 577906481, Александр Владимирович, AVCAMID
-2023-02-14T22:17:54.313873+0500 | INFO | Bot successfully started
-2023-02-14T22:18:00.974501+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:18:34.739253+0500 | INFO | Bot successfully started
-2023-02-14T22:19:49.551783+0500 | INFO | Bot successfully started
-2023-02-14T22:19:54.236505+0500 | INFO | Bot successfully started
-2023-02-14T22:19:55.788392+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:23:28.186427+0500 | INFO | Bot successfully started
-2023-02-14T22:23:29.925364+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:31:45.005471+0500 | INFO | Bot successfully started
-2023-02-14T22:32:00.333018+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-14T22:46:29.335527+0500 | INFO | Bot successfully started
+2023-02-15T09:58:48.272531+0500 | INFO | Bot successfully started
+2023-02-15T09:59:01.283793+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:14:37.435457+0500 | INFO | Bot successfully started
+2023-02-15T10:14:43.597512+0500 | ERROR | list index out of range
+2023-02-15T10:14:43.598512+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:14:48.579074+0500 | ERROR | list index out of range
+2023-02-15T10:14:48.774117+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T10:14:48.776118+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:16:37.379357+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:16:53.534831+0500 | INFO | Bot successfully started
+2023-02-15T10:16:54.446098+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:17:11.894628+0500 | INFO | Bot successfully started
+2023-02-15T10:17:13.404683+0500 | ERROR | list index out of range
+2023-02-15T10:17:13.405683+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:17:16.431094+0500 | ERROR | list index out of range
+2023-02-15T10:17:16.559046+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T10:17:16.561046+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:17:21.756114+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:18:33.395069+0500 | INFO | Bot successfully started
+2023-02-15T10:18:35.686995+0500 | ERROR | list index out of range
+2023-02-15T10:18:35.688998+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:18:37.602661+0500 | ERROR | list index out of range
+2023-02-15T10:18:37.718683+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T10:18:37.720684+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:18:46.507965+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:19:22.529378+0500 | INFO | Bot successfully started
+2023-02-15T10:19:24.156172+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:19:48.426503+0500 | INFO | Bot successfully started
+2023-02-15T10:19:48.839318+0500 | ERROR | list index out of range
+2023-02-15T10:19:48.840314+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:19:53.743009+0500 | INFO | Bot successfully started
+2023-02-15T10:19:58.615929+0500 | ERROR | list index out of range
+2023-02-15T10:19:58.616925+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:21:17.369772+0500 | ERROR | list index out of range
+2023-02-15T10:21:17.371773+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:21:24.935949+0500 | ERROR | list index out of range
+2023-02-15T10:21:24.936945+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:21:29.513890+0500 | ERROR | list index out of range
+2023-02-15T10:21:29.514885+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:21:47.911645+0500 | ERROR | list index out of range
+2023-02-15T10:21:47.912641+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:21:52.868748+0500 | ERROR | list index out of range
+2023-02-15T10:21:53.054816+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T10:21:53.055817+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:22:00.577627+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:22:25.457607+0500 | INFO | Bot successfully started
+2023-02-15T10:22:26.695609+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:23:23.168230+0500 | INFO | Bot successfully started
+2023-02-15T10:23:25.486614+0500 | ERROR | list index out of range
+2023-02-15T10:23:25.488608+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:23:27.932960+0500 | ERROR | list index out of range
+2023-02-15T10:23:27.934955+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:23:29.854005+0500 | ERROR | list index out of range
+2023-02-15T10:23:29.856001+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:02.511768+0500 | INFO | Bot successfully started
+2023-02-15T10:24:03.482899+0500 | ERROR | list index out of range
+2023-02-15T10:24:03.483896+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:41.556127+0500 | ERROR | list index out of range
+2023-02-15T10:24:41.557127+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:48.288490+0500 | ERROR | list index out of range
+2023-02-15T10:24:48.289485+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:50.491338+0500 | ERROR | list index out of range
+2023-02-15T10:24:53.674525+0500 | INFO | User unsuccessfully tried to log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:57.908338+0500 | ERROR | list index out of range
+2023-02-15T10:24:57.910334+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:24:59.837358+0500 | ERROR | list index out of range
+2023-02-15T10:25:01.826233+0500 | INFO | User unsuccessfully tried to log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:25:41.613301+0500 | INFO | Bot successfully started
+2023-02-15T10:25:47.911355+0500 | ERROR | list index out of range
+2023-02-15T10:25:47.912350+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:25:50.950825+0500 | ERROR | list index out of range
+2023-02-15T10:25:50.951819+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:25:54.319343+0500 | ERROR | list index out of range
+2023-02-15T10:25:54.321340+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:25:56.712940+0500 | ERROR | list index out of range
+2023-02-15T10:25:56.714937+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:26:08.843374+0500 | ERROR | list index out of range
+2023-02-15T10:26:08.844374+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:26:17.368924+0500 | ERROR | list index out of range
+2023-02-15T10:26:17.369969+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:29:26.351172+0500 | INFO | Bot successfully started
+2023-02-15T10:29:29.492905+0500 | ERROR | list index out of range
+2023-02-15T10:29:29.494960+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:31:30.723171+0500 | INFO | Bot successfully started
+2023-02-15T10:32:25.197360+0500 | INFO | Bot successfully started
+2023-02-15T10:33:09.792301+0500 | INFO | Bot successfully started
+2023-02-15T10:33:52.993685+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T10:59:01.504192+0500 | ERROR | list index out of range
+2023-02-15T10:59:01.505187+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:59:02.193468+0500 | ERROR | list index out of range
+2023-02-15T10:59:02.194458+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:59:02.543402+0500 | ERROR | list index out of range
+2023-02-15T10:59:02.543402+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T10:59:56.236756+0500 | ERROR | list index out of range
+2023-02-15T10:59:56.238756+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:00:46.120498+0500 | INFO | Bot successfully started
+2023-02-15T11:00:47.729208+0500 | ERROR | list index out of range
+2023-02-15T11:00:47.730209+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:01:08.127246+0500 | ERROR | list index out of range
+2023-02-15T11:01:08.128242+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:01:21.265412+0500 | ERROR | list index out of range
+2023-02-15T11:01:21.266412+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:01:48.519163+0500 | ERROR | list index out of range
+2023-02-15T11:01:48.520160+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:01:52.541243+0500 | ERROR | list index out of range
+2023-02-15T11:01:52.680883+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T11:01:52.681882+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:04:24.712790+0500 | INFO | Bot successfully started
+2023-02-15T11:04:27.165710+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:04:27.167705+0500 | INFO | Logged user post |
+2023-02-15T11:04:49.319838+0500 | INFO | Bot successfully started
+2023-02-15T11:04:50.358249+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:04:50.360245+0500 | INFO | Logged user post |
+2023-02-15T11:05:05.229047+0500 | INFO | Bot successfully started
+2023-02-15T11:05:14.283935+0500 | ERROR | list index out of range
+2023-02-15T11:05:14.285932+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:05:23.456223+0500 | ERROR | list index out of range
+2023-02-15T11:05:23.457219+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:05:26.022543+0500 | ERROR | list index out of range
+2023-02-15T11:05:26.142570+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T11:05:26.143570+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:07:14.047853+0500 | INFO | Bot successfully started
+2023-02-15T11:07:22.755262+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:07:22.757261+0500 | INFO | Logged user post |
+2023-02-15T11:07:27.845982+0500 | INFO | Bot successfully started
+2023-02-15T11:07:33.924638+0500 | ERROR | list index out of range
+2023-02-15T11:07:33.925639+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:07:37.424219+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T11:07:37.535250+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:08:28.384164+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:08:28.386170+0500 | INFO | Logged user post |
+2023-02-15T11:08:34.364335+0500 | INFO | Bot successfully started
+2023-02-15T11:08:54.055155+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:08:54.057154+0500 | INFO | Logged user post |
+2023-02-15T11:09:48.349775+0500 | INFO | Bot successfully started
+2023-02-15T11:09:49.003220+0500 | ERROR | list index out of range
+2023-02-15T11:09:49.005219+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:09:53.560175+0500 | ERROR | list index out of range
+2023-02-15T11:09:53.561172+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:12:51.035748+0500 | INFO | Bot successfully started
+2023-02-15T11:12:54.754573+0500 | ERROR | list index out of range
+2023-02-15T11:12:54.756572+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:13:04.596280+0500 | ERROR | list index out of range
+2023-02-15T11:13:04.597279+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:15:36.177657+0500 | ERROR | list index out of range
+2023-02-15T11:15:36.178652+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:16:46.488228+0500 | INFO | Bot successfully started
+2023-02-15T11:17:38.212961+0500 | INFO | Bot successfully started
+2023-02-15T11:17:40.576319+0500 | ERROR | list index out of range
+2023-02-15T11:17:40.577313+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:21:03.286155+0500 | INFO | Bot successfully started
+2023-02-15T11:21:09.209431+0500 | ERROR | list index out of range
+2023-02-15T11:21:09.210961+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:22:58.729195+0500 | INFO | Bot successfully started
+2023-02-15T11:23:01.735991+0500 | ERROR | list index out of range
+2023-02-15T11:23:01.736989+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:23:09.513351+0500 | ERROR | list index out of range
+2023-02-15T11:23:09.515351+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T11:24:10.577284+0500 | INFO | Bot successfully started
+2023-02-15T11:24:13.488058+0500 | ERROR | list index out of range
+2023-02-15T11:24:13.490054+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:00:03.688809+0500 | INFO | Bot successfully started
+2023-02-15T12:00:11.742815+0500 | ERROR | list index out of range
+2023-02-15T12:00:11.743815+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:01:16.727905+0500 | INFO | Bot successfully started
+2023-02-15T12:01:19.599854+0500 | ERROR | list index out of range
+2023-02-15T12:01:19.600849+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:01:49.018226+0500 | INFO | Bot successfully started
+2023-02-15T12:01:51.885882+0500 | ERROR | list index out of range
+2023-02-15T12:01:51.886879+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:02:07.490874+0500 | ERROR | list index out of range
+2023-02-15T12:02:07.491870+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:02:32.388148+0500 | ERROR | list index out of range
+2023-02-15T12:02:32.389149+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:02:37.791565+0500 | ERROR | list index out of range
+2023-02-15T12:02:37.792560+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:03:12.624232+0500 | INFO | Bot successfully started
+2023-02-15T12:03:15.138140+0500 | ERROR | list index out of range
+2023-02-15T12:03:15.139143+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:04:15.318561+0500 | INFO | Bot successfully started
+2023-02-15T12:04:22.007044+0500 | ERROR | list index out of range
+2023-02-15T12:04:22.009047+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:04:24.307815+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T12:04:24.427380+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:04:27.678454+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:04:27.679455+0500 | INFO | Logged user post |
+2023-02-15T12:04:51.227636+0500 | INFO | Bot successfully started
+2023-02-15T12:04:52.261960+0500 | ERROR | list index out of range
+2023-02-15T12:04:52.262954+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:05:53.285775+0500 | INFO | Bot successfully started
+2023-02-15T12:05:57.724633+0500 | ERROR | list index out of range
+2023-02-15T12:05:57.726630+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:07:24.571760+0500 | ERROR | list index out of range
+2023-02-15T12:07:24.573760+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:08:18.109743+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T12:08:18.111480+0500 | INFO | Logged user post |
+2023-02-15T12:21:09.709378+0500 | INFO | Bot successfully started
+2023-02-15T12:21:11.077910+0500 | ERROR | list index out of range
+2023-02-15T12:21:11.078910+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:21:28.619870+0500 | INFO | Bot successfully started
+2023-02-15T12:21:31.181889+0500 | ERROR | list index out of range
+2023-02-15T12:21:31.182884+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:21:43.887205+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T12:21:43.999343+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:22:10.725568+0500 | INFO | Bot successfully started
+2023-02-15T12:22:13.223999+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:22:13.225994+0500 | INFO | Logged user post |
+2023-02-15T12:22:59.528058+0500 | INFO | Bot successfully started
+2023-02-15T12:23:01.607960+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:23:01.609960+0500 | INFO | Logged user post |
+2023-02-15T12:57:46.194120+0500 | INFO | Bot successfully started
+2023-02-15T12:57:52.516401+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T12:57:52.517402+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T12:57:52.518401+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:58:45.163586+0500 | INFO | Bot successfully started
+2023-02-15T12:58:47.502235+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T12:58:47.503237+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T12:58:47.504239+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:59:13.942750+0500 | INFO | Bot successfully started
+2023-02-15T12:59:15.783746+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T12:59:15.785747+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T12:59:15.785747+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T12:59:44.552578+0500 | INFO | Bot successfully started
+2023-02-15T12:59:45.931724+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T12:59:45.933109+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T12:59:45.934101+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:00:06.323210+0500 | INFO | Bot successfully started
+2023-02-15T13:00:07.908667+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:00:07.910661+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:00:07.911661+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:00:44.118129+0500 | INFO | Bot successfully started
+2023-02-15T13:00:47.672858+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:00:47.673858+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:00:47.674868+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:01:12.574662+0500 | INFO | Bot successfully started
+2023-02-15T13:01:13.297139+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:01:13.299166+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:01:13.300165+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:02:10.471845+0500 | INFO | Bot successfully started
+2023-02-15T13:02:12.261532+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:02:12.263044+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:02:12.264042+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:02:36.152403+0500 | INFO | Bot successfully started
+2023-02-15T13:02:36.975879+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:02:36.976868+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:02:36.977868+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:03:02.034426+0500 | INFO | Bot successfully started
+2023-02-15T13:03:03.129568+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:03:03.131516+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:03:03.132516+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:03:19.586445+0500 | INFO | Bot successfully started
+2023-02-15T13:03:20.501178+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:03:20.502725+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:03:20.504236+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:04:33.691770+0500 | INFO | Bot successfully started
+2023-02-15T13:04:35.998515+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:04:35.999506+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:04:36.000507+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:04:58.433035+0500 | INFO | Bot successfully started
+2023-02-15T13:04:59.359483+0500 | ERROR | name 'src_db' is not defined
+2023-02-15T13:04:59.361474+0500 | ERROR | name 'cursor' is not defined
+2023-02-15T13:04:59.362478+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:07:16.036904+0500 | INFO | Bot successfully started
+2023-02-15T13:07:16.445985+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:07:16.447498+0500 | INFO | Logged user post |
+2023-02-15T13:23:30.414758+0500 | INFO | Bot successfully started
+2023-02-15T13:23:33.693896+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:23:33.695890+0500 | INFO | Logged user post |
+2023-02-15T13:23:43.639600+0500 | ERROR | list index out of range
+2023-02-15T13:23:43.642601+0500 | INFO | New user start bot | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:23:48.859909+0500 | INFO | Added new user to table users | 577906481, Александр Владимирович, AVCAMID, doctor
+2023-02-15T13:23:48.971937+0500 | INFO | New user log in and added to database | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:24:36.563465+0500 | INFO | Bot successfully started
+2023-02-15T13:24:50.880636+0500 | INFO | Bot successfully started
+2023-02-15T13:24:54.555736+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:24:54.557736+0500 | INFO | Logged user post |
+2023-02-15T13:25:04.054160+0500 | INFO | Bot successfully started
+2023-02-15T13:25:36.032223+0500 | INFO | Bot successfully started
+2023-02-15T13:25:37.748666+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T13:25:37.750663+0500 | INFO | Logged user post |

@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from auxiliary.all_markups import *
 
 # файл для хранения каких-либо данных
 
@@ -17,3 +18,4 @@ temporary_password = '123'
 # ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
 director_name = 'Шешенина Ивана Владимировича'
 director_id = ''
+
