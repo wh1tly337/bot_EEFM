@@ -22,7 +22,6 @@ class Response(StatesGroup):
 async def register_admin_handler(message: types.Message, state: FSMContext):
     admin_response = message.text
     await state.update_data(user_response=admin_response)
-
     if admin_response == 'Расписание':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,

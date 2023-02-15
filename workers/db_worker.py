@@ -62,15 +62,20 @@ async def get_data(what_need, value):
         else:
             result = None
         await close_connection()
-
         return result
     except Exception as ex:
         logger.error(ex)
 
 
 # функция для добавления нового пользователя в бд
-async def add_new_user(id_tg, first_name, username, post, date_added,
-                       date_removed):
+async def add_new_user(
+    id_tg,
+    first_name,
+    username,
+    post,
+    date_added=None,
+    date_removed=None
+):
     try:
         await start_connection()
         cursor.execute(
@@ -91,6 +96,14 @@ async def add_new_user(id_tg, first_name, username, post, date_added,
 
 
 # TODO async def update_user():
+async def update_user(field, current, needed):
+    try:
+        await start_connection()
+        cursor.execute(f"""UPDATE users SET {field} = {needed} WHERE {field} = {current}""")
+        connection.commit()
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
 
 
 # функция для удаления пользователя из бд

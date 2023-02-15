@@ -12,7 +12,7 @@ class Response(StatesGroup):
 async def register_doctor_handler(message: types.Message, state: FSMContext):
     doctor_response = message.text
     await state.update_data(user_response=doctor_response)
-
+    print('enter doctor start')
     if doctor_response == 'Получить расписание':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,

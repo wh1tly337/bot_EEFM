@@ -8,7 +8,8 @@ from bot import (
     bot_commands as bc,
     message_handler as mh,
     doctor_handler as doch,
-    admin_handler as ah
+    admin_handler as ah,
+    director_handler as dirh
 )
 
 # создание/открытие и запись данных в логгер при запуске бота
@@ -24,6 +25,7 @@ bc.register_handlers_default_commands(dp)
 mh.register_handlers_authorization(dp)
 doch.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
+dirh.register_handlers_director(dp)
 
 
 if __name__ == '__main__':

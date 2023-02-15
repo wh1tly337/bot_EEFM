@@ -12,7 +12,7 @@ src_logger = 'logger/'
 src_db = 'auxiliary/employee.db'
 
 # временный пароль создаваемый директором
-temporary_password = '123'
+# temporary_password = '123'
 
 # ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
 director_name = 'Шешенина Ивана Владимировича'

@@ -53,7 +53,10 @@ async def authorization_password_handler(message: types.Message,
                                          state: FSMContext):
     authorization_password_response = message.text
     await state.update_data(user_response=authorization_password_response)
-
+    try:
+        authorization_password_response = int(authorization_password_response)
+    except:
+        ...
     if authorization_password_response == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -63,15 +66,9 @@ async def authorization_password_handler(message: types.Message,
         )
         await Response.authorization_handler.set()
     else:
+        temporary_password = await dbw.get_data('id', authorization_password_response)
         if authorization_password_response == temporary_password:
-            await dbw.add_new_user(
-                message.from_user.id,
-                message.from_user.full_name,
-                message.from_user.username,
-                'admin',
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                '-'
-            )
+            await dbw.update_user('id', temporary_password, message.chat.id)
             result = await dbw.get_data('post', message.chat.id)
             if result == 'doctor':
                 markup = markup_doctor
@@ -84,6 +81,7 @@ async def authorization_password_handler(message: types.Message,
 
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
+                # TODO поменять вывод на вывод фио из бд
                 text=f"{message.from_user.full_name}"
                      f", добро пожаловать в бот клиники ИТА!",
                 parse_mode='Markdown',

@@ -5,7 +5,8 @@ from auxiliary.req_data import *
 from bot import (
     message_handler as mh,
     doctor_handler as doch,
-    admin_handler as ah
+    admin_handler as ah,
+    director_handler as dirh,
 )
 from bot.funcs import print_log_info
 from workers import db_worker as dbw
@@ -38,15 +39,19 @@ async def start_message(message: types.Message):
 
         # TODO неправильно работает определение admin в логгере
         result = await dbw.get_data('post', message.chat.id)
-        logger.info('Logged user post |', result)
+        logger.info(f'Logged user post | {result}')
+        
         if result == 'doctor':
             markup = markup_doctor
             await doch.Response.register_doctor_handler.set()
         elif result == 'admin':
             markup = markup_admin
+            print(' post = admin')
             await ah.Response.register_admin_handler.set()
-        else:
+        elif result == 'director':
             markup = markup_director
+            print('post = director')
+            await dirh.Response.register_director_handler.set()
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
