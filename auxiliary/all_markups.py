@@ -24,11 +24,14 @@ btn2_admin = types.KeyboardButton('Отправить сообщение')
 markup_admin.add(btn1_admin, btn2_admin)
 
 ''' Кнопки 2-го уровня (расписания) для админа '''
-markup_admin_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
-btn1_admin_schedule = types.KeyboardButton('Получить шаблон')
-btn2_admin_schedule = types.KeyboardButton('Загрузить расписание')
-markup_admin_schedule.add(btn1_admin_schedule, btn2_admin_schedule)
-markup_admin_schedule.add(btn_cancel)
+markup_admin_make_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn1_admin_make_schedule = types.KeyboardButton('Получить шаблон')
+btn2_admin_make_schedule = types.KeyboardButton('Загрузить расписание')
+btn3_admin_make_schedule = types.KeyboardButton('Посмотреть расписание')
+markup_admin_make_schedule.add(btn1_admin_make_schedule,
+                               btn2_admin_make_schedule)
+markup_admin_make_schedule.add(btn3_admin_make_schedule)
+markup_admin_make_schedule.add(btn_cancel)
 
 ''' Кнопки 2-го уровня (сообщения) для админа '''
 markup_admin_message = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -36,6 +39,14 @@ btn1_admin_message = types.KeyboardButton('Рассылка')
 btn2_admin_message = types.KeyboardButton('Директору')
 markup_admin_message.add(btn1_admin_message, btn2_admin_message)
 markup_admin_message.add(btn_cancel)
+
+''' Кнопки 3-го уровня (расписания) для админа '''
+markup_admin_watch_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn1_admin_watch_schedule = types.KeyboardButton('На сегодня')
+btn2_admin_watch_schedule = types.KeyboardButton('На неделю')
+markup_admin_watch_schedule.add(btn1_admin_watch_schedule,
+                                btn2_admin_watch_schedule)
+markup_admin_watch_schedule.add(btn_cancel)
 
 ''' Кнопки 1-го уровня для директора '''
 markup_director = types.ReplyKeyboardMarkup(resize_keyboard=True)

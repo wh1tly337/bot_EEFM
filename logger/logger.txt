@@ -369,3 +369,135 @@
 2023-02-15T16:46:45.896781+0500 | INFO | After bot reboot all users need to write /start
 2023-02-15T16:46:59.347412+0500 | INFO | User log in | 726420734 Ivan wh1tly337
 2023-02-15T16:46:59.348407+0500 | INFO | Logged user post |
+2023-02-15T17:01:13.946218+0500 | INFO | Bot successfully started
+2023-02-15T17:01:13.947218+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:01:21.356687+0500 | INFO | Bot successfully started
+2023-02-15T17:01:21.357688+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:01:23.927913+0500 | ERROR | list index out of range
+2023-02-15T17:01:23.927913+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T17:01:33.277591+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, admin
+2023-02-15T17:02:08.663020+0500 | INFO | Bot successfully started
+2023-02-15T17:02:08.664021+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:02:10.886446+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:02:10.886446+0500 | INFO | Logged user post |
+2023-02-15T17:02:31.326247+0500 | INFO | Bot successfully started
+2023-02-15T17:02:31.326247+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:02:32.897206+0500 | ERROR | list index out of range
+2023-02-15T17:02:32.897206+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T17:02:36.184631+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, admin
+2023-02-15T17:02:36.315290+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T17:04:09.022921+0500 | INFO | Bot successfully started
+2023-02-15T17:04:09.022921+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:04:16.272673+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:04:16.273673+0500 | INFO | Logged user post |
+2023-02-15T17:05:32.885782+0500 | INFO | Bot successfully started
+2023-02-15T17:05:32.885782+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:05:38.895113+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:05:38.895113+0500 | INFO | Logged user post |
+2023-02-15T17:06:18.152066+0500 | INFO | Bot successfully started
+2023-02-15T17:06:18.153067+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:06:19.815120+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:06:19.815120+0500 | INFO | Logged user post |
+2023-02-15T17:07:33.266491+0500 | INFO | Bot successfully started
+2023-02-15T17:07:33.266491+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:07:36.226040+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:07:36.226040+0500 | INFO | Logged user post |
+2023-02-15T17:08:07.796721+0500 | INFO | Bot successfully started
+2023-02-15T17:08:07.796721+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:08:12.207916+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:08:12.207916+0500 | INFO | Logged user post |
+2023-02-15T17:45:05.407685+0500 | INFO | Bot successfully started
+2023-02-15T17:45:05.407685+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:45:09.678328+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:45:09.679328+0500 | INFO | Logged user post |
+2023-02-15T17:46:44.344586+0500 | INFO | Bot successfully started
+2023-02-15T17:46:44.345587+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:46:47.297784+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:46:47.297784+0500 | INFO | Logged user post |
+2023-02-15T17:48:03.472000+0500 | INFO | Bot successfully started
+2023-02-15T17:48:03.473001+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:48:06.749319+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:48:06.749319+0500 | INFO | Logged user post |
+2023-02-15T17:48:37.238340+0500 | INFO | Bot successfully started
+2023-02-15T17:48:37.238340+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:48:40.559273+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:48:40.560275+0500 | INFO | Logged user post |
+2023-02-15T17:49:23.669957+0500 | INFO | Bot successfully started
+2023-02-15T17:49:23.670958+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:49:27.444429+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:49:27.444429+0500 | INFO | Logged user post |
+2023-02-15T17:51:16.323067+0500 | INFO | Bot successfully started
+2023-02-15T17:51:16.324068+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:51:21.856061+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:51:21.856061+0500 | INFO | Logged user post |
+2023-02-15T17:52:21.957313+0500 | INFO | Bot successfully started
+2023-02-15T17:52:21.958314+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:52:26.847008+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T17:52:26.847008+0500 | INFO | Logged user post |
+2023-02-15T17:53:48.939876+0500 | INFO | Bot successfully started
+2023-02-15T17:53:48.939876+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:55:29.005977+0500 | INFO | Bot successfully started
+2023-02-15T17:55:29.005977+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T17:57:29.036964+0500 | INFO | Bot successfully started
+2023-02-15T17:58:58.060753+0500 | INFO | Bot successfully started
+2023-02-15T17:59:21.107830+0500 | INFO | Bot successfully started
+2023-02-15T18:01:14.041266+0500 | INFO | Bot successfully started
+2023-02-15T18:01:14.407610+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:01:14.407610+0500 | INFO | Logged user post |
+2023-02-15T18:01:34.566130+0500 | INFO | Bot successfully started
+2023-02-15T18:01:36.981053+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:01:36.981053+0500 | INFO | Logged user post |
+2023-02-15T18:02:51.535093+0500 | INFO | Bot successfully started
+2023-02-15T18:03:09.395524+0500 | INFO | Bot successfully started
+2023-02-15T18:03:19.806560+0500 | INFO | Bot successfully started
+2023-02-15T18:03:32.106525+0500 | INFO | Bot successfully started
+2023-02-15T18:03:37.743669+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:03:37.744670+0500 | INFO | Logged user post |
+2023-02-15T18:04:11.217989+0500 | INFO | Bot successfully started
+2023-02-15T18:04:52.400889+0500 | INFO | Bot successfully started
+2023-02-15T18:04:52.775005+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:04:52.775005+0500 | INFO | Logged user post |
+2023-02-15T18:07:43.935236+0500 | INFO | Bot successfully started
+2023-02-15T18:07:46.101055+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:07:46.101055+0500 | INFO | Logged user post |
+2023-02-15T18:08:17.848961+0500 | INFO | Bot successfully started
+2023-02-15T18:08:22.012442+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:08:22.012442+0500 | INFO | Logged user post |
+2023-02-15T18:08:38.006056+0500 | INFO | Bot successfully started
+2023-02-15T18:08:41.428222+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:08:41.428222+0500 | INFO | Logged user post |
+2023-02-15T18:09:25.331633+0500 | INFO | Bot successfully started
+2023-02-15T18:09:28.066725+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:09:28.066725+0500 | INFO | Logged user post |
+2023-02-15T18:09:54.290608+0500 | INFO | Bot successfully started
+2023-02-15T18:09:59.910031+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:09:59.910031+0500 | INFO | Logged user post |
+2023-02-15T18:11:07.697330+0500 | INFO | Bot successfully started
+2023-02-15T18:11:10.924916+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:11:10.924916+0500 | INFO | Logged user post |
+2023-02-15T18:12:06.730188+0500 | INFO | Bot successfully started
+2023-02-15T18:12:09.091696+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:12:09.091696+0500 | INFO | Logged user post |
+2023-02-15T18:12:32.654470+0500 | INFO | Bot successfully started
+2023-02-15T18:12:34.791209+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:12:34.791209+0500 | INFO | Logged user post |
+2023-02-15T18:13:16.697806+0500 | INFO | Bot successfully started
+2023-02-15T18:13:19.776203+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:13:19.776203+0500 | INFO | Logged user post |
+2023-02-15T18:13:59.891172+0500 | INFO | Bot successfully started
+2023-02-15T18:14:04.159223+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:14:04.160224+0500 | INFO | Logged user post |
+2023-02-15T18:14:39.359875+0500 | INFO | Bot successfully started
+2023-02-15T18:14:41.263169+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:14:41.264169+0500 | INFO | Logged user post |
+2023-02-15T18:16:46.448781+0500 | INFO | Bot successfully started
+2023-02-15T18:16:51.589702+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:16:51.590704+0500 | INFO | Logged user post |
+2023-02-15T18:19:34.821860+0500 | INFO | Bot successfully started
+2023-02-15T18:19:35.854281+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T18:19:35.854281+0500 | INFO | Logged user post |
+2023-02-15T18:21:16.875087+0500 | INFO | Bot successfully started
+2023-02-15T18:21:17.231050+0500 | ERROR | list index out of range
+2023-02-15T18:21:17.231050+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T18:21:22.646755+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, admin
+2023-02-15T18:21:22.781253+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337

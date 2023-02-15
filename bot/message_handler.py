@@ -7,7 +7,8 @@ from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from auxiliary.req_data import director_name
 from bot import (
-    doctor_handler as doch
+    doctor_handler as doch,
+    admin_handler as ah
 )
 from bot.funcs import print_log_info
 from workers import db_worker as dbw
@@ -47,7 +48,7 @@ async def authorization_handler(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-# функция для обработки временного пароля, вызывается в 26 строке этого файла
+# функция для обработки временного пароля, вызывается в 40 строке этого файла
 async def authorization_password_handler(message: types.Message,
                                          state: FSMContext):
     authorization_password_response = message.text
@@ -67,7 +68,7 @@ async def authorization_password_handler(message: types.Message,
                 message.from_user.id,
                 message.from_user.full_name,
                 message.from_user.username,
-                'doctor',
+                'admin',
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 '-'
             )
@@ -77,6 +78,7 @@ async def authorization_password_handler(message: types.Message,
                 await doch.Response.register_doctor_handler.set()
             elif result == 'admin':
                 markup = markup_admin
+                await ah.Response.register_admin_handler.set()
             else:
                 markup = markup_director
 

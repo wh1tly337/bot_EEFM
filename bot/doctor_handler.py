@@ -5,14 +5,10 @@ from auxiliary.all_markups import *
 from auxiliary.req_data import *
 
 
-# класс для регистрации состояния сообщений пользователя
-# (можете сильно не вникать это просто необходимо для правильной работы,
-# просто копируйте и меняйте названия переменных под свою задачу)
 class Response(StatesGroup):
     register_doctor_handler = State()
 
 
-# функция для обработки временного пароля, вызывается в 26 строке этого файла
 async def register_doctor_handler(message: types.Message, state: FSMContext):
     doctor_response = message.text
     await state.update_data(user_response=doctor_response)

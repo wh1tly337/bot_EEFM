@@ -4,7 +4,8 @@ from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from bot import (
     message_handler as mh,
-    doctor_handler as doch
+    doctor_handler as doch,
+    admin_handler as ah
 )
 from bot.funcs import print_log_info
 from workers import db_worker as dbw
@@ -35,6 +36,7 @@ async def start_message(message: types.Message):
         msg_log_in = 'User log in'
         print_log_info(message, msg_log_in)
 
+        # TODO неправильно работает определение admin в логгере
         result = await dbw.get_data('post', message.chat.id)
         logger.info('Logged user post |', result)
         if result == 'doctor':
@@ -42,6 +44,7 @@ async def start_message(message: types.Message):
             await doch.Response.register_doctor_handler.set()
         elif result == 'admin':
             markup = markup_admin
+            await ah.Response.register_admin_handler.set()
         else:
             markup = markup_director
 
