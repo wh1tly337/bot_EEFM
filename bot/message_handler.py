@@ -6,6 +6,9 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from auxiliary.req_data import director_name
+from bot import (
+    doctor_handler as doch
+)
 from bot.funcs import print_log_info
 from workers import db_worker as dbw
 
@@ -71,6 +74,7 @@ async def authorization_password_handler(message: types.Message,
             result = await dbw.get_data('post', message.chat.id)
             if result == 'doctor':
                 markup = markup_doctor
+                await doch.Response.register_doctor_handler.set()
             elif result == 'admin':
                 markup = markup_admin
             else:
@@ -94,7 +98,7 @@ async def authorization_password_handler(message: types.Message,
             )
             msg_new_user = 'User unsuccessfully tried to log in'
             print_log_info(message, msg_new_user)
-        await state.finish()
+            await Response.authorization_handler.set()
 
 
 # регистратор передающий данные в main_bot.py

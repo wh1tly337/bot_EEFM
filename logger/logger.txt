@@ -287,3 +287,85 @@
 2023-02-15T15:45:31.062669+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
 2023-02-15T15:45:31.238999+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
 2023-02-15T15:46:26.500764+0500 | INFO | Bot successfully started
+2023-02-15T16:14:40.979672+0500 | INFO | Bot successfully started
+2023-02-15T16:14:54.345798+0500 | ERROR | list index out of range
+2023-02-15T16:14:54.346799+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:15:42.749099+0500 | INFO | Bot successfully started
+2023-02-15T16:15:46.479323+0500 | ERROR | list index out of range
+2023-02-15T16:15:46.480324+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:15:51.832730+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:15:51.976770+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:17:38.749715+0500 | INFO | Bot successfully started
+2023-02-15T16:17:45.633424+0500 | INFO | Bot successfully started
+2023-02-15T16:17:47.651752+0500 | ERROR | list index out of range
+2023-02-15T16:17:47.651752+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:17:54.116343+0500 | INFO | Bot successfully started
+2023-02-15T16:17:55.937544+0500 | ERROR | list index out of range
+2023-02-15T16:17:55.937544+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:18:01.737261+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:18:01.848907+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:19:15.779682+0500 | INFO | Bot successfully started
+2023-02-15T16:19:18.164162+0500 | ERROR | list index out of range
+2023-02-15T16:19:18.164162+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:19:21.467145+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:19:21.588191+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:19:39.916033+0500 | INFO | Bot successfully started
+2023-02-15T16:25:33.809175+0500 | INFO | Bot successfully started
+2023-02-15T16:25:52.252441+0500 | INFO | Bot successfully started
+2023-02-15T16:26:05.624601+0500 | INFO | Bot successfully started
+2023-02-15T16:26:08.608656+0500 | ERROR | list index out of range
+2023-02-15T16:26:08.608656+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:26:23.780703+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:26:23.918749+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:28:08.731938+0500 | INFO | Bot successfully started
+2023-02-15T16:28:10.414886+0500 | ERROR | list index out of range
+2023-02-15T16:28:10.491924+0500 | ERROR | Message text is empty
+2023-02-15T16:28:12.730638+0500 | ERROR | list index out of range
+2023-02-15T16:28:12.809669+0500 | ERROR | Message text is empty
+2023-02-15T16:28:25.426421+0500 | INFO | Bot successfully started
+2023-02-15T16:28:27.464484+0500 | ERROR | list index out of range
+2023-02-15T16:28:32.850762+0500 | ERROR | list index out of range
+2023-02-15T16:28:35.308223+0500 | ERROR | list index out of range
+2023-02-15T16:28:36.597592+0500 | ERROR | list index out of range
+2023-02-15T16:28:53.348396+0500 | ERROR | list index out of range
+2023-02-15T16:28:53.349397+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:29:06.087159+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:29:07.648171+0500 | ERROR | list index out of range
+2023-02-15T16:29:09.904689+0500 | ERROR | list index out of range
+2023-02-15T16:29:25.083364+0500 | INFO | Bot successfully started
+2023-02-15T16:29:27.303540+0500 | ERROR | list index out of range
+2023-02-15T16:29:27.303540+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:29:37.408666+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:30:49.205988+0500 | INFO | Bot successfully started
+2023-02-15T16:30:52.849796+0500 | ERROR | list index out of range
+2023-02-15T16:30:52.850797+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:31:01.495128+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:31:03.340526+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:31:10.332578+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:31:18.382721+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:32:19.292466+0500 | INFO | Bot successfully started
+2023-02-15T16:32:23.562356+0500 | ERROR | list index out of range
+2023-02-15T16:32:23.562356+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:32:32.446678+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:32:39.497576+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:32:43.586299+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:32:43.821389+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:34:16.922654+0500 | INFO | Bot successfully started
+2023-02-15T16:37:26.468226+0500 | INFO | Bot successfully started
+2023-02-15T16:37:38.970065+0500 | INFO | Bot successfully started
+2023-02-15T16:37:42.697321+0500 | ERROR | list index out of range
+2023-02-15T16:37:42.698323+0500 | INFO | New user start bot | 726420734 Ivan wh1tly337
+2023-02-15T16:37:51.462679+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
+2023-02-15T16:37:58.055015+0500 | INFO | Added new user to table users | 726420734, Ivan, wh1tly337, doctor
+2023-02-15T16:37:58.167862+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T16:38:15.488722+0500 | INFO | Bot successfully started
+2023-02-15T16:38:29.510001+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T16:38:29.511002+0500 | INFO | Logged user post |
+2023-02-15T16:40:08.920321+0500 | INFO | Bot successfully started
+2023-02-15T16:40:08.921321+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T16:40:10.880168+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T16:40:10.880168+0500 | INFO | Logged user post |
+2023-02-15T16:46:45.896781+0500 | INFO | Bot successfully started
+2023-02-15T16:46:45.896781+0500 | INFO | After bot reboot all users need to write /start
+2023-02-15T16:46:59.347412+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-15T16:46:59.348407+0500 | INFO | Logged user post |

@@ -32,8 +32,6 @@ async def register_doctor_handler(message: types.Message, state: FSMContext):
             reply_markup=markup_doctor
         )
 
-    await state.finish()
-
 
 # регистратор передающий данные в main_bot.py
 def register_handlers_doctor(dp: Dispatcher):  # noqa

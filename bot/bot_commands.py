@@ -26,13 +26,15 @@ async def start_message(message: types.Message):
             reply_markup=markup_new_user
         )
 
-        await mh.Response.authorization_handler.set()
-        # метод выше начинает считывание последующего сообщения пользователя
+        # метод начинает считывание последующего сообщения пользователя
         # для его авторизации (нужен для работы функции authorization_handler
         # в файле message_handler.py)
+        await mh.Response.authorization_handler.set()
     else:
+
         msg_log_in = 'User log in'
         print_log_info(message, msg_log_in)
+
         result = await dbw.get_data('post', message.chat.id)
         logger.info('Logged user post |', result)
         if result == 'doctor':
