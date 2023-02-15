@@ -4,13 +4,10 @@ from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from bot import (
     message_handler as mh,
-    doctor_handler as doch,
-    director_handler as dirh,
-    admin_handler as adm
+    doctor_handler as doch
 )
+from funcs import print_log_info
 from workers import db_worker as dbw
-from .funcs import print_log_info
-
 
 
 # функция отвечающая за команду /start
@@ -24,13 +21,15 @@ async def start_message(message: types.Message):
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text=f"{message.from_user.full_name}, к сожалению у вас нет доступа к данному боту",
+            text=f"{message.from_user.full_name}"
+                 f", к сожалению у вас нет доступа к данному боту",
             reply_markup=markup_new_user
         )
 
         await mh.Response.authorization_handler.set()
-        # метод выше начинает считывание последующего сообщения пользователя для его авторизации
-        # (нужен для работы функции authorization_handler в файле message_handler.py)
+        # метод выше начинает считывание последующего сообщения пользователя
+        # для его авторизации (нужен для работы функции authorization_handler
+        # в файле message_handler.py)
     else:
         msg_log_in = 'User log in'
         print_log_info(message, msg_log_in)
@@ -46,7 +45,8 @@ async def start_message(message: types.Message):
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text=f"{message.from_user.full_name}, добро пожаловать в бот клиники ИТА!",
+            text=f"{message.from_user.full_name}"
+                 f", добро пожаловать в бот клиники ИТА!",
             reply_markup=markup
         )
 

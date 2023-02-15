@@ -1,6 +1,7 @@
 from aiogram import types
 
-# файл отвечающий за регистрацию/создание кнопок под клавиатурой (вызываются и добавляются в тг из других мест)
+# файл отвечающий за регистрацию/создание кнопок под клавиатурой
+# (вызываются и добавляются в тг из других мест)
 ''' Кнопка отмены для всех пользователей '''
 markup_cancel = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn_cancel = types.KeyboardButton('Отмена')
@@ -36,7 +37,7 @@ btn2_admin_message = types.KeyboardButton('Директору')
 markup_admin_message.add(btn1_admin_message, btn2_admin_message)
 markup_admin_message.add(btn_cancel)
 
-''' Кнопики 1-го уровня для директора '''
+''' Кнопки 1-го уровня для директора '''
 markup_director = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_director = types.KeyboardButton('Управление персоналом')
 btn2_director = types.KeyboardButton('Получить расписание')

@@ -4,7 +4,6 @@ from loguru import logger
 
 from auxiliary.req_data import *
 
-
 global connection, cursor
 
 
@@ -30,8 +29,9 @@ async def close_connection():
         logger.error(ex)
 
 
-# код для создания таблицы. Только нужно добавлять данные о документах в эту же бд,
-# но можно в другую таблицу только с документами (связывать по primary key или id пользователя)
+# код для создания таблицы. Только нужно добавлять данные о документах
+# в эту же бд, но можно в другую таблицу только с документами
+# (связывать по primary key или id пользователя)
 # async def make_table():
 #     await start_connection()
 #     cursor.execute(f"""CREATE TABLE users
@@ -69,16 +69,22 @@ async def get_data(what_need, value):
 
 
 # функция для добавления нового пользователя в бд
-async def add_new_user(id_tg, first_name, username, post, date_added, date_removed):
+async def add_new_user(id_tg, first_name, username, post, date_added,
+                       date_removed):
     try:
         await start_connection()
         cursor.execute(
-            'INSERT INTO users (id, first_name, username, post, date_added, date_removed) '
+            'INSERT INTO users '
+            '(id, first_name, username, post, date_added, date_removed) '
             'VALUES (?,?,?,?,?,?);',
             (id_tg, first_name, username, post, date_added, date_removed)
         )
         connection.commit()
-        logger.info(f'Added new user to table users | {id_tg}, {first_name}, {username}, {post}')
+        logger.info(f'Added new user to table users | '
+                    f'{id_tg}, '
+                    f'{first_name}, '
+                    f'{username}, '
+                    f'{post}')
         await close_connection()
     except Exception as ex:
         logger.error(ex)
@@ -100,8 +106,12 @@ async def remove_user(id_tg):
     except Exception as ex:
         logger.error(ex)
 
-# TODO реализовать функцию перевода из Excel файла в sql таблицу (schedule созданную отдельно, один раз)
-#  при помощи обновления таблицы созданную только для расписания (связать с таблицей users при помощи primary key или id пользователя)
+
+# TODO реализовать функцию перевода из Excel файла в sql таблицу
+#  (schedule созданную отдельно, один раз) при помощи обновления таблицы
+#  созданную только для расписания (связать с таблицей users при помощи primary
+#  key или id пользователя)
+
 # TODO реализовать функцию чтобы директор вручную мог добавлять врачей
 
 async def add_user_manual():

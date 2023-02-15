@@ -1,6 +1,5 @@
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from auxiliary.all_markups import *
 
 # файл для хранения каких-либо данных
 

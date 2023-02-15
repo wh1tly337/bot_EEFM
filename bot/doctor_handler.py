@@ -1,14 +1,12 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
-from loguru import logger
-from datetime import datetime
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
-from workers import db_worker as dbw
-from .funcs import print_log_info
 
-# класс для регистрации состояния сообщений пользователя (можете сильно не вникать это просто необходимо для правильной работы,
+
+# класс для регистрации состояния сообщений пользователя
+# (можете сильно не вникать это просто необходимо для правильной работы,
 # просто копируйте и меняйте названия переменных под свою задачу)
 class Response(StatesGroup):
     register_doctor_handler = State()
