@@ -18,6 +18,7 @@ class Response(StatesGroup):
     register_admin_watch_schedule_handler = State()
 
 
+# функция-обработчик сообщений стартовой страницы админа
 async def register_admin_handler(message: types.Message, state: FSMContext):
     admin_response = message.text
     await state.update_data(user_response=admin_response)
@@ -47,6 +48,7 @@ async def register_admin_handler(message: types.Message, state: FSMContext):
         )
 
 
+# функция-обработчик сообщений второй страницы расписания для админа
 async def register_admin_schedule_handler(message: types.Message,
                                           state: FSMContext):
     admin_schedule_response = message.text
@@ -93,6 +95,7 @@ async def register_admin_schedule_handler(message: types.Message,
         )
 
 
+# функция-обработчик сообщений второй страницы рассылки для админа
 async def register_admin_mailing_handler(message: types.Message,
                                          state: FSMContext):
     admin_mailing_response = message.text
@@ -132,6 +135,7 @@ async def register_admin_mailing_handler(message: types.Message,
         )
 
 
+# функция-обработчик сообщений от админа для перенаправления получателю
 async def register_admin_sending_handler(message: types.Message,
                                          state: FSMContext):
     admin_sending_response = message.text
@@ -156,6 +160,7 @@ async def register_admin_sending_handler(message: types.Message,
         await Response.register_admin_handler.set()
 
 
+# функция-обработчик файла расписания от админа
 async def register_admin_file_handler(message: types.Message,
                                       state: FSMContext):
     admin_file_response = message.text
@@ -171,6 +176,7 @@ async def register_admin_file_handler(message: types.Message,
     await Response.register_admin_handler.set()
 
 
+# функция-обработчик сообщений третьей страницы расписания для админа
 async def register_admin_watch_schedule_handler(message: types.Message,
                                                 state: FSMContext):
     admin_watch_schedule_response = message.text
