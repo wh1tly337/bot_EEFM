@@ -99,7 +99,8 @@ async def add_new_user(
 async def update_user(field, current, needed):
     try:
         await start_connection()
-        cursor.execute(f"""UPDATE users SET {field} = {needed} WHERE {field} = {current}""")
+        cursor.execute(f"""UPDATE users SET {field} = {needed} 
+        WHERE {field} = {current}""")
         connection.commit()
         await close_connection()
     except Exception as ex:

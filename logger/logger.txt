@@ -816,3 +816,10 @@
 2023-02-15T22:54:04.168264+0500 | ERROR | list index out of range
 2023-02-15T22:54:04.379063+0500 | INFO | User unsuccessfully tried to log in | 726420734 Ivan wh1tly337
 2023-02-15T22:54:08.464131+0500 | INFO | New user log in and added to database | 726420734 Ivan wh1tly337
+2023-02-15T22:59:01.205206+0500 | INFO | Bot successfully started
+2023-02-15T22:59:04.056923+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-15T22:59:04.056923+0500 | INFO | Logged user post | director
+2023-02-15T22:59:29.560737+0500 | INFO | Added new user to table users | 886637, Шлепа, попа, ьуь
+2023-02-15T23:00:24.474255+0500 | ERROR | list index out of range
+2023-02-15T23:00:24.474255+0500 | INFO | New user start bot | 404180771 Marina Fox Epic_Fox
+2023-02-15T23:00:38.350217+0500 | INFO | New user log in and added to database | 404180771 Marina Fox Epic_Fox

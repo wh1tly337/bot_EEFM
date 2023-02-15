@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
@@ -66,7 +64,8 @@ async def authorization_password_handler(message: types.Message,
         )
         await Response.authorization_handler.set()
     else:
-        temporary_password = await dbw.get_data('id', authorization_password_response)
+        temporary_password = await dbw.get_data('id',
+                                                authorization_password_response)
         if authorization_password_response == temporary_password:
             await dbw.update_user('id', temporary_password, message.chat.id)
             result = await dbw.get_data('post', message.chat.id)
