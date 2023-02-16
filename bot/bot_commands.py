@@ -15,7 +15,11 @@ from workers import db_worker as dbw
 # функция отвечающая за команду /start
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
-    result = await dbw.get_data('id', message.chat.id)
+    result = await dbw.get_data(
+        field='id',
+        what_need='id',
+        value=message.chat.id
+    )
     if message.from_user.id != result:
 
         msg_new_user_start = 'New user start bot'
@@ -38,7 +42,10 @@ async def start_message(message: types.Message):
         print_log_info(message, msg_log_in)
 
         # TODO неправильно работает определение admin в логгере
-        result = await dbw.get_data('post', message.chat.id)
+        result = await dbw.get_data(
+            field='id',
+            what_need='post',
+            value=message.chat.id)
         logger.info(f'Logged user post | {result}')
         
         if result == 'doctor':

@@ -7,8 +7,8 @@ from auxiliary.req_data import *
 global connection, cursor
 
 
-# создание соединения с бд
 async def start_connection():
+    ''' Создание соединения с бд '''
     global connection, cursor
 
     try:
@@ -18,8 +18,8 @@ async def start_connection():
         logger.error(ex)
 
 
-# удаление соединения с бд
 async def close_connection():
+    ''' Удаление соединения с бд '''
     global connection
 
     try:
@@ -47,27 +47,28 @@ async def close_connection():
 #     await close_connection()
 
 
-# функция для получения данных из бд
-# TODO В дальнейшем нужно добавить аргумент для вызова,
-#  от которого будет зависеть какая информация будет возвращаться
-async def get_data(what_need, value):
+async def get_data(field, value, what_need='all'):
+    ''' Функиця поиска данных '''
+    # field - столбец в бд, по которому поиск
+    # what_need - если что-то конкретное надо вывести (необязательный)
+    # value - то, чему равне столбец в бд
     try:
         await start_connection()
         # cursor.execute(f"""SELECT * FROM users""")
-        cursor.execute(f"""SELECT * FROM users WHERE id = '{value}'""")
+        cursor.execute(f"""SELECT * FROM users WHERE {field} = '{value}'""")
         if what_need == 'id':
             result = cursor.fetchall()[0][0]
         elif what_need == 'post':
             result = cursor.fetchall()[0][3]
         else:
-            result = None
+            result = cursor.fetchall()[0]
         await close_connection()
+        print(result)
         return result
     except Exception as ex:
         logger.error(ex)
 
 
-# функция для добавления нового пользователя в бд
 async def add_new_user(
     id_tg,
     first_name,
@@ -76,6 +77,7 @@ async def add_new_user(
     date_added=None,
     date_removed=None
 ):
+    ''' Функция добавления нового пользователя '''
     try:
         await start_connection()
         cursor.execute(
@@ -107,8 +109,8 @@ async def update_user(field, current, needed):
         logger.error(ex)
 
 
-# функция для удаления пользователя из бд
 async def remove_user(id_tg):
+    ''' Функиция удаления пользователя из бд'''
     try:
         await start_connection()
         cursor.execute(

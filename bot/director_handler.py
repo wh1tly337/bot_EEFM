@@ -13,11 +13,11 @@ class Response(StatesGroup):
     register_director_handler = State()
     register_director_emp_manage = State()
     register_director_create_handler = State()
+    register_director_find_handler = State()
 
 
-# Обработка стартовой страницы директора
 async def register_director_handler(message: types.Message, state: FSMContext):
-    print('enter director start ')
+    ''' Handler для стартовой страницы администратора '''
     director_response = message.text
     await state.update_data(user_response=director_response)
     if director_response == 'Управление персоналом':
@@ -38,9 +38,9 @@ async def register_director_handler(message: types.Message, state: FSMContext):
         await Response.register_director_handler.set()
 
 
-# Обработка Управление персоналом
 async def register_director_emp_manage(message: types.Message,
                                        state: FSMContext):
+    ''' Handler для страницы управления сотрудников администратора '''
     director_response = message.text
     await state.update_data(user_response=director_response)
 
@@ -57,10 +57,11 @@ async def register_director_emp_manage(message: types.Message,
     elif director_response == 'Найти сотрудника':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Нашел!',
+            text='Введите фамилию сотрудника. :)',
             parse_mode='Markdown',
             reply_markup=markup_director_emp
         )
+        await Response.register_director_find_handler.set()
     elif director_response == 'Удалить сотрудника':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -86,12 +87,38 @@ async def register_director_emp_manage(message: types.Message,
 
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
+    ''' Handler для страницы добавления сотрудников администратора '''
     director_response = message.text
     # Добавит строчку ниже во время рефакторинга, если не работает, то из-за нее
     await state.update_data(user_response=director_response)
-    print(director_response)
     emp_data = director_response.split()
-    print(emp_data)
+    if len(emp_data) != 4:
+        await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=f'Данные введены неверное, попробуйте ещё раз',
+        parse_mode='Markdown',
+        reply_markup=markup_director_emp
+        )
+        await Response.register_director_create_handler.set()
+        return
+
+    surname = emp_data[0]
+    name = emp_data[1]
+    patronymic = emp_data[2]
+    post = emp_data[3]
+    posts = ['director', 'admin', 'doctor']
+    if post not in posts:
+        await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=f'Такой должности нет!',
+        parse_mode='Markdown',
+        reply_markup=markup_director_emp
+        )
+        await Response.register_director_create_handler.set()
+        return
+    if post == 'director':
+        # TODO реализовать метод передачи директора
+        ...
     temporary_password = random.randint(100000, 1000000)
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -102,14 +129,45 @@ async def register_director_create_handler(message: types.Message,
     # TODO Исправить БД, изменить поля, добавить Отчество.
     await dbw.add_new_user(
         id_tg=temporary_password,
-        first_name=emp_data[0],
-        username=emp_data[1],
-        post=emp_data[3],
+        first_name=name,
+        username=surname,
+        post=post,
     )
 
+async def register_director_find_handler(message: types.Message,
+                                           state: FSMContext):
+    ''' Handler для страницы поиска сотрудников администратора '''
+    username = message.text
+    await state.update_data(user_response=username)
+    emp_data = await dbw.get_data(
+        field='username',
+        what_need='all',
+        value=username
+    )
+    if emp_data:
+        name = emp_data[2]
+        surname = emp_data[1]
+        post = emp_data[3]
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=f'''Сотрудник найден, его данные.
+            Имя: {name}
+            Фамилия: {surname}
+            Должность: {post}''',
+            parse_mode='Markdown',
+            reply_markup=markup_director_emp
+        )
+    else:
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=f'Сотрудник не найден!',
+            parse_mode='Markdown',
+            reply_markup=markup_director_emp
+        )
 
-# регистратор передающий данные в main_bot.py
+
 def register_handlers_director(dp: Dispatcher):  # noqa
+    ''' Регистратор handler'ов передает данные в main_bot.py'''
     dp.register_message_handler(
         register_director_handler,
         state=Response.register_director_handler
@@ -121,4 +179,8 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         register_director_create_handler,
         state=Response.register_director_create_handler
+    )
+    dp.register_message_handler(
+        register_director_find_handler,
+        state=Response.register_director_find_handler
     )
