@@ -62,7 +62,10 @@ async def register_admin_schedule_handler(message: types.Message,
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
-        # TODO отправить шаблон расписания
+        await bot_aiogram.send_document(
+            chat_id=message.chat.id,
+            document=open(f"{src_schedule_template}", 'rb')
+        )
     elif admin_schedule_response == 'Загрузить расписание':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -154,7 +157,7 @@ async def register_admin_sending_handler(message: types.Message,
         all_ids = await dbw.get_all_ids()
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Сообщение всем отправлено!',
+            text='Рассылка произведена успешно!',
             parse_mode='Markdown',
             reply_markup=markup_admin
         )

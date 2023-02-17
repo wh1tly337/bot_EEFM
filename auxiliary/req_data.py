@@ -10,6 +10,8 @@ dp = Dispatcher(bot_aiogram, storage=MemoryStorage())
 # пути до файлов
 src_logger = 'logger/'
 src_db = 'auxiliary/employee.db'
+src_schedule_template = 'auxiliary/schedule_template.xlsx'
+src_files = 'workers/'
 
 # ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
 director_name = 'Шешенина Ивана Владимировича'
