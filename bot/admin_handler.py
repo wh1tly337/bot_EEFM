@@ -6,9 +6,8 @@ from auxiliary.req_data import *
 from workers import db_worker as dbw
 
 
-# TODO поменять имена переменных в этом файле на нормальные
-
-# TODO поменять if/else на списки
+# TODO match/case работают медленнее чем if/else,
+#  так что нужно поменять на что-то другое
 
 class Response(StatesGroup):
     admin_message_handler = State()
