@@ -51,7 +51,7 @@ async def get_data(field, value, what_need='all'):
     ''' Функиця поиска данных '''
     # field - столбец в бд, по которому поиск
     # what_need - если что-то конкретное надо вывести (необязательный)
-    # value - то, чему равне столбец в бд
+    # value - то, чему равен столбец в бд
     try:
         await start_connection()
         # cursor.execute(f"""SELECT * FROM users""")

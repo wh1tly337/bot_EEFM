@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
+from workers import db_worker as dbw
 
 
 # TODO поменять имена переменных в этом файле на нормальные
@@ -16,6 +17,7 @@ class Response(StatesGroup):
     register_admin_sending_handler = State()
     register_admin_file_handler = State()
     register_admin_watch_schedule_handler = State()
+    register_admin_director_sending_handler = State()
 
 
 # функция-обработчик сообщений стартовой страницы админа
@@ -116,7 +118,7 @@ async def register_admin_mailing_handler(message: types.Message,
             parse_mode='Markdown',
             reply_markup=markup_cancel
         )
-        await Response.register_admin_sending_handler.set()
+        await Response.register_admin_director_sending_handler.set()
     elif admin_mailing_response == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -139,7 +141,7 @@ async def register_admin_sending_handler(message: types.Message,
                                          state: FSMContext):
     admin_sending_response = message.text
     await state.update_data(user_response=admin_sending_response)
-    # TODO функция по отправки сообщения директору или всему персоналу
+    # TODO функция по отправки сообщения всему персоналу
 
     if admin_sending_response == 'Отмена':
         await bot_aiogram.send_message(
@@ -152,7 +154,39 @@ async def register_admin_sending_handler(message: types.Message,
     else:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Сообщение отправлено!',
+            text='Сообщение всем отправлено!',
+            parse_mode='Markdown',
+            reply_markup=markup_admin
+        )
+        await Response.register_admin_handler.set()
+
+
+# функция-обработчик сообщений от админа для перенаправления получателю
+async def register_admin_director_sending_handler(message: types.Message,
+                                                  state: FSMContext):
+    admin_director_sending_response = message.text
+    await state.update_data(user_response=admin_director_sending_response)
+
+    if admin_director_sending_response == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Хорошо',
+            parse_mode='Markdown',
+            reply_markup=markup_admin_message
+        )
+        await Response.register_admin_mailing_handler.set()
+    else:
+        director_id = await dbw.get_data('post', 'director', 'id')
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Сообщение отправлено директору!',
+            parse_mode='Markdown',
+            reply_markup=markup_admin
+        )
+        await bot_aiogram.send_message(
+            chat_id=director_id,
+            text='Сообщение от администратора:\n' +
+                 admin_director_sending_response,
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
@@ -241,4 +275,8 @@ def register_handlers_admin(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         register_admin_watch_schedule_handler,
         state=Response.register_admin_watch_schedule_handler
+    )
+    dp.register_message_handler(
+        register_admin_director_sending_handler,
+        state=Response.register_admin_director_sending_handler
     )

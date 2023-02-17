@@ -13,5 +13,3 @@ src_db = 'auxiliary/employee.db'
 
 # ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
 director_name = 'Шешенина Ивана Владимировича'
-director_id = ''
-
