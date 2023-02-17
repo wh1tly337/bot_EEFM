@@ -141,7 +141,6 @@ async def register_admin_sending_handler(message: types.Message,
                                          state: FSMContext):
     admin_sending_response = message.text
     await state.update_data(user_response=admin_sending_response)
-    # TODO функция по отправки сообщения всему персоналу
 
     if admin_sending_response == 'Отмена':
         await bot_aiogram.send_message(
@@ -152,12 +151,21 @@ async def register_admin_sending_handler(message: types.Message,
         )
         await Response.register_admin_mailing_handler.set()
     else:
+        all_ids = await dbw.get_all_ids()
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text='Сообщение всем отправлено!',
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
+        for i in range(len(all_ids)):
+            await bot_aiogram.send_message(
+                chat_id=all_ids[i],
+                text='Рассылка от администратора:\n' +
+                     admin_sending_response,
+                parse_mode='Markdown',
+                reply_markup=markup_admin
+            )
         await Response.register_admin_handler.set()
 
 

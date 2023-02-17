@@ -13,3 +13,70 @@
 2023-02-17T17:12:27.065108+0500 | INFO | Bot successfully started
 2023-02-17T17:12:31.683870+0500 | INFO | User log in | 726420734 Ivan wh1tly337
 2023-02-17T17:12:31.683870+0500 | INFO | Logged user post | admin
+2023-02-17T17:17:49.544093+0500 | INFO | Bot successfully started
+2023-02-17T17:17:51.894832+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:17:51.894832+0500 | INFO | Logged user post | admin
+2023-02-17T17:17:56.012686+0500 | ERROR | list index out of range
+2023-02-17T17:20:20.460984+0500 | INFO | Bot successfully started
+2023-02-17T17:20:23.450872+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:20:23.450872+0500 | INFO | Logged user post | admin
+2023-02-17T17:20:36.189692+0500 | INFO | Bot successfully started
+2023-02-17T17:20:37.893080+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:20:37.893080+0500 | INFO | Logged user post | admin
+2023-02-17T17:22:05.124196+0500 | INFO | Bot successfully started
+2023-02-17T17:22:08.230836+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:22:08.230836+0500 | INFO | Logged user post | admin
+2023-02-17T17:22:22.072350+0500 | INFO | Bot successfully started
+2023-02-17T17:22:25.278499+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:22:25.279500+0500 | INFO | Logged user post | admin
+2023-02-17T17:23:11.782944+0500 | INFO | Bot successfully started
+2023-02-17T17:23:13.856409+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:23:13.857410+0500 | INFO | Logged user post | admin
+2023-02-17T17:24:16.828296+0500 | INFO | Bot successfully started
+2023-02-17T17:24:18.427835+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:24:18.427835+0500 | INFO | Logged user post | admin
+2023-02-17T17:25:36.799343+0500 | INFO | Bot successfully started
+2023-02-17T17:25:40.277656+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:25:40.277656+0500 | INFO | Logged user post | admin
+2023-02-17T17:25:56.973917+0500 | INFO | Bot successfully started
+2023-02-17T17:25:58.580815+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:25:58.580815+0500 | INFO | Logged user post | admin
+2023-02-17T17:26:01.113574+0500 | ERROR | list indices must be integers or slices, not tuple
+2023-02-17T17:26:20.761951+0500 | INFO | Bot successfully started
+2023-02-17T17:26:22.527828+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:26:22.527828+0500 | INFO | Logged user post | admin
+2023-02-17T17:26:25.012460+0500 | ERROR | list indices must be integers or slices, not tuple
+2023-02-17T17:26:46.290790+0500 | INFO | Bot successfully started
+2023-02-17T17:26:47.385311+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:26:47.385311+0500 | INFO | Logged user post | admin
+2023-02-17T17:26:49.940254+0500 | ERROR | tuple indices must be integers or slices, not tuple
+2023-02-17T17:26:58.421708+0500 | INFO | Bot successfully started
+2023-02-17T17:26:59.517964+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:26:59.517964+0500 | INFO | Logged user post | admin
+2023-02-17T17:27:25.079757+0500 | INFO | Bot successfully started
+2023-02-17T17:27:26.608927+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:27:26.609927+0500 | INFO | Logged user post | admin
+2023-02-17T17:27:56.266464+0500 | INFO | Bot successfully started
+2023-02-17T17:27:58.995241+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:27:58.995241+0500 | INFO | Logged user post | admin
+2023-02-17T17:28:28.291708+0500 | INFO | Bot successfully started
+2023-02-17T17:28:29.859265+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:28:29.859265+0500 | INFO | Logged user post | admin
+2023-02-17T17:31:01.635817+0500 | INFO | Bot successfully started
+2023-02-17T17:31:03.081700+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:31:03.082700+0500 | INFO | Logged user post | admin
+2023-02-17T17:31:27.034038+0500 | INFO | Bot successfully started
+2023-02-17T17:31:29.115408+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:31:29.115408+0500 | INFO | Logged user post | admin
+2023-02-17T17:31:43.509699+0500 | INFO | Bot successfully started
+2023-02-17T17:31:44.775250+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:31:44.776251+0500 | INFO | Logged user post | admin
+2023-02-17T17:32:04.760483+0500 | INFO | Bot successfully started
+2023-02-17T17:32:05.959033+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:32:05.960034+0500 | INFO | Logged user post | admin
+2023-02-17T17:32:56.987609+0500 | INFO | Bot successfully started
+2023-02-17T17:33:02.444451+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:33:02.444451+0500 | INFO | Logged user post | admin
+2023-02-17T17:33:36.303537+0500 | INFO | Bot successfully started
+2023-02-17T17:33:49.338257+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-17T17:33:49.338257+0500 | INFO | Logged user post | admin

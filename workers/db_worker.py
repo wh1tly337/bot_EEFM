@@ -46,6 +46,22 @@ async def close_connection():
 #  );""")
 #     await close_connection()
 
+async def get_all_ids():
+    try:
+        await start_connection()
+        # cursor.execute(f"""SELECT * FROM users""")
+        cursor.execute(f"""SELECT id FROM users""")
+        taken = cursor.fetchall()
+        result = []
+        for i in range(len(taken)):
+            result.append(*taken[i])
+        print(result)
+        await close_connection()
+        return result
+
+    except Exception as ex:
+        logger.error(ex)
+
 
 async def get_data(field, value, what_need='all'):
     ''' Функиця поиска данных '''
@@ -70,12 +86,12 @@ async def get_data(field, value, what_need='all'):
 
 
 async def add_new_user(
-    id_tg,
-    first_name,
-    username,
-    post,
-    date_added=None,
-    date_removed=None
+        id_tg,
+        first_name,
+        username,
+        post,
+        date_added=None,
+        date_removed=None
 ):
     ''' Функция добавления нового пользователя '''
     try:
