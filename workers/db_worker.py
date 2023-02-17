@@ -8,7 +8,7 @@ global connection, cursor
 
 
 async def start_connection():
-    ''' Создание соединения с бд '''
+    """ Создание соединения с бд """
     global connection, cursor
 
     try:
@@ -19,7 +19,7 @@ async def start_connection():
 
 
 async def close_connection():
-    ''' Удаление соединения с бд '''
+    """ Удаление соединения с бд """
     global connection
 
     try:
@@ -64,7 +64,7 @@ async def get_all_ids():
 
 
 async def get_data(field, value, what_need='all'):
-    ''' Функиця поиска данных '''
+    """ Функиця поиска данных """
     # field - столбец в бд, по которому поиск
     # what_need - если что-то конкретное надо вывести (необязательный)
     # value - то, чему равен столбец в бд
@@ -93,7 +93,7 @@ async def add_new_user(
         date_added=None,
         date_removed=None
 ):
-    ''' Функция добавления нового пользователя '''
+    """ Функция добавления нового пользователя """
     try:
         await start_connection()
         cursor.execute(
@@ -126,7 +126,7 @@ async def update_user(field, current, needed):
 
 
 async def remove_user(id_tg):
-    ''' Функиция удаления пользователя из бд'''
+    """ Функиция удаления пользователя из бд"""
     try:
         await start_connection()
         cursor.execute(

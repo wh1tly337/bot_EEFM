@@ -2,6 +2,11 @@ from aiogram import types
 
 # файл отвечающий за регистрацию/создание кнопок под клавиатурой
 # (вызываются и добавляются в тг из других мест)
+''' Кнопка старта для бота (не обязательная) '''
+markup_start = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn_start = types.KeyboardButton('/start')
+markup_start.add(btn_start)
+
 ''' Кнопка отмены для всех пользователей '''
 markup_cancel = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn_cancel = types.KeyboardButton('Отмена')

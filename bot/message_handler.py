@@ -80,7 +80,7 @@ async def authorization_password_handler(message: types.Message,
                 await doch.Response.register_doctor_handler.set()
             elif result == 'admin':
                 markup = markup_admin
-                await ah.Response.register_admin_handler.set()
+                await ah.Response.admin_message_handler.set()
             else:
                 markup = markup_director
 
