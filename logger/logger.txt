@@ -140,3 +140,29 @@
 2023-02-17T19:09:21.170170+0500 | INFO | Bot successfully started
 2023-02-17T19:09:23.579253+0500 | INFO | User log in | 726420734 Ivan wh1tly337
 2023-02-17T19:09:23.579253+0500 | INFO | Logged user post | admin
+2023-02-19T19:23:27.419560+0500 | INFO | Bot successfully started
+2023-02-19T19:23:39.439920+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:23:39.442912+0500 | INFO | Logged user post | director
+2023-02-19T19:45:31.878765+0500 | INFO | Bot successfully started
+2023-02-19T19:45:41.320640+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:45:41.321641+0500 | INFO | Logged user post | director
+2023-02-19T19:46:21.103617+0500 | INFO | Bot successfully started
+2023-02-19T19:46:25.269098+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:46:25.270098+0500 | INFO | Logged user post | admin
+2023-02-19T19:47:28.191186+0500 | INFO | Bot successfully started
+2023-02-19T19:47:32.668926+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:47:32.669926+0500 | INFO | Logged user post | admin
+2023-02-19T19:48:15.444621+0500 | INFO | Bot successfully started
+2023-02-19T19:48:27.825094+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:48:27.827095+0500 | INFO | Logged user post | admin
+2023-02-19T19:48:30.913632+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:48:30.914632+0500 | INFO | Logged user post | admin
+2023-02-19T19:49:10.189678+0500 | INFO | Bot successfully started
+2023-02-19T19:49:14.208449+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:49:14.209449+0500 | INFO | Logged user post | admin
+2023-02-19T19:49:57.731070+0500 | INFO | Bot successfully started
+2023-02-19T19:50:00.508174+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:50:00.510175+0500 | INFO | Logged user post | admin
+2023-02-19T19:52:31.925036+0500 | INFO | Bot successfully started
+2023-02-19T19:52:35.282718+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
+2023-02-19T19:52:35.283719+0500 | INFO | Logged user post | admin

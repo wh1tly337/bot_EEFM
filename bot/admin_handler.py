@@ -23,31 +23,33 @@ class Response(StatesGroup):
 async def admin_message_handler(message: types.Message, state: FSMContext):
     admin_response = message.text
     await state.update_data(user_response=admin_response)
-
-    match admin_response:
-        case 'Расписание':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Что вы хотите сделать с расписанием?',
-                parse_mode='Markdown',
-                reply_markup=markup_admin_make_schedule
-            )
-            await Response.admin_schedule_handler.set()
-        case 'Отправить сообщение':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Кому вы хотите отправить сообщение?',
-                parse_mode='Markdown',
-                reply_markup=markup_admin_message
-            )
-            await Response.admin_send_messages_handler.set()
-        case _:
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Нет такой команды, воспользуйтесь кнопками ниже',
-                parse_mode='Markdown',
-                reply_markup=markup_admin
-            )
+    admin_start_handlers = {
+        'Расписание': {
+            'markup': markup_admin_make_schedule,
+            'response': Response.admin_schedule_handler.set(),
+            'message': 'Что вы хотите сделать с раписанием',
+        },
+        'Отправить сообщение': {
+            'markup': markup_admin_message,
+            'response': Response.admin_send_messages_handler.set(),
+            'message': 'Кому вы хотите отправить сообщение?',
+        },
+        None: {
+            'markup': markup_admin,
+            'response': Response.admin_message_handler.set(),
+            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
+        }
+    }
+    command_dict = admin_start_handlers.get(admin_response)
+    if not command_dict:
+        command_dict = admin_start_handlers[None]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup')
+    )
+    await command_dict.get('response')
 
 
 # функция-обработчик сообщений второй страницы расписания для админа
@@ -55,7 +57,6 @@ async def admin_schedule_handler(message: types.Message,
                                  state: FSMContext):
     admin_schedule_response = message.text
     await state.update_data(user_response=admin_schedule_response)
-
     match admin_schedule_response:
         case 'Получить шаблон':
             await bot_aiogram.send_message(

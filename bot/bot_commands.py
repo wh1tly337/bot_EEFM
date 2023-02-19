@@ -45,23 +45,32 @@ async def start_message(message: types.Message):
         result = await dbw.get_data(
             field='id',
             what_need='post',
-            value=message.chat.id)
+            value=message.chat.id
+        )
         logger.info(f'Logged user post | {result}')
-
-        match result:
-            case 'doctor':
-                markup = markup_doctor
-                await doch.Response.register_doctor_handler.set()
-            case 'admin':
-                markup = markup_admin
-                print('post = admin')
-                await ah.Response.admin_message_handler.set()
-            case 'director':
-                markup = markup_director
-                print('post = director')
-                await dirh.Response.register_director_handler.set()
-            case _:
-                markup = markup_start
+        markup_to_handlers = {
+            'doctor': [markup_doctor, doch.Response.register_doctor_handler.set()],
+            'admin': [markup_admin, ah.Response.admin_message_handler.set()],
+            'director': [markup_director, dirh.Response.register_director_handler.set()],
+        }
+        markup = markup_to_handlers[result][0]
+        response = markup_to_handlers[result][1]
+        print(response)
+        await response
+        # match result:
+        #     case 'doctor':
+        #         markup = markup_doctor
+        #         await doch.Response.register_doctor_handler.set()
+        #     case 'admin':
+        #         markup = markup_admin
+        #         print('post = admin')
+        #         await ah.Response.admin_message_handler.set()
+        #     case 'director':
+        #         markup = markup_director
+        #         print('post = director')
+        #         await dirh.Response.register_director_handler.set()
+        #     case _:
+        #         markup = markup_start
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
