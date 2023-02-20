@@ -20,6 +20,7 @@ class Response(StatesGroup):
 async def admin_message_handler(message: types.Message, state: FSMContext):
     admin_response = message.text
     await state.update_data(user_response=admin_response)
+
     admin_handlers = {
         'Расписание': {
             'markup': markup_admin_make_schedule,
@@ -66,7 +67,7 @@ async def admin_schedule_handler(message: types.Message,
             ),
         },
         'Загрузить расписание': {
-            'markup': markup_admin,
+            'markup': markup_cancel,
             'response': Response.admin_file_handler.set(),
             'message': 'Отправьте мне Excel файл с расписанием',
             'func': None,
@@ -115,13 +116,22 @@ async def admin_file_handler(message: types.Message, state: FSMContext):
     await state.update_data(user_response=admin_file_response)
     # TODO функция обработке присылаемого файла расписания и загрузка его в бд
 
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text='Расписание получено!',
-        parse_mode='Markdown',
-        reply_markup=markup_admin
-    )
-    await Response.admin_message_handler.set()
+    if admin_file_response == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Хорошо',
+            parse_mode='Markdown',
+            reply_markup=markup_admin_make_schedule
+        )
+        await Response.admin_schedule_handler.set()
+    else:
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Расписание получено!',
+            parse_mode='Markdown',
+            reply_markup=markup_admin
+        )
+        await Response.admin_message_handler.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа
@@ -201,8 +211,8 @@ async def admin_send_messages_handler(message: types.Message,
             'message': 'Хорошо',
         },
         None: {
-            'markup': markup_admin_watch_schedule,
-            'response': Response.admin_watch_schedule_handler.set(),
+            'markup': markup_admin_message,
+            'response': Response.admin_send_messages_handler.set(),
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }

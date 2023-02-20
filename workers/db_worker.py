@@ -7,6 +7,9 @@ from auxiliary.req_data import *
 global connection, cursor
 
 
+# TODO обновить таблицу в бд на рабочий вариант с ФИО и тд
+
+
 async def start_connection():
     """ Создание соединения с бд """
     global connection, cursor
