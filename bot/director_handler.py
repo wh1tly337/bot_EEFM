@@ -4,7 +4,11 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-from auxiliary.all_markups import markup_director, markup_director_emp
+from auxiliary.all_markups import (
+    markup_director,
+    markup_director_emp,
+    markup_cancel
+)
 from auxiliary.req_data import *
 from workers import db_worker as dbw
 
@@ -19,23 +23,28 @@ class Response(StatesGroup):
 async def register_director_handler(message: types.Message, state: FSMContext):
     """ Handler для стартовой страницы администратора """
     director_response = message.text
-    await state.update_data(user_response=director_response)
-    if director_response == 'Управление персоналом':
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Доступные команды',
-            parse_mode='Markdown',
-            reply_markup=markup_director_emp
-        )
-        await Response.register_director_emp_manage.set()
-    else:
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Такой команды нет',
-            parse_mode='Markdown',
-            reply_markup=markup_director
-        )
-        await Response.register_director_handler.set()
+    director_start_handlers = {
+        'Управление персоналом': {
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage.set(),
+            'message': 'Доступные команды',
+        },
+        None: {
+            'markup': markup_director,
+            'response': Response.register_director_handler.set(),
+            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
+        }
+    }
+    command_dict = director_start_handlers.get(director_response)
+    if not command_dict:
+        command_dict = director_start_handlers[None]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup')
+    )
+    await command_dict.get('response')
 
 
 async def register_director_emp_manage(message: types.Message,
@@ -44,53 +53,67 @@ async def register_director_emp_manage(message: types.Message,
     director_response = message.text
     await state.update_data(user_response=director_response)
 
-    match director_response:
-        case 'Добавить сотрудника':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Введите ФИО и должность в формате:'
-                     ' Фамилия Имя Отчество должность',
-                parse_mode='Markdown',
-                reply_markup=markup_director_emp
-            )
-            await Response.register_director_create_handler.set()
-        case 'Найти сотрудника':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Введите фамилию сотрудника. :)',
-                parse_mode='Markdown',
-                reply_markup=markup_director_emp
-            )
-            await Response.register_director_find_handler.set()
-        case 'Удалить сотрудника':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Удалил!',
-                parse_mode='Markdown',
-                reply_markup=markup_director_emp
-            )
-        case 'Передать права директора':
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Теперь ты никто!',
-                parse_mode='Markdown',
-                reply_markup=markup_director_emp
-            )
-        case _:
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Такой команды нет',
-                parse_mode='Markdown',
-                reply_markup=markup_director_emp
-            )
+    director_emp_handlers = {
+        'Добавить сотрудника': {
+            'markup': markup_cancel,
+            'response': Response.register_director_create_handler.set(),
+            'message': 'Введите ФИО и должность в формате:'
+                        'Фамилия Имя Отчество должность',
+        },
+        'Найти сотрудника': {
+            'markup': markup_cancel,
+            'response': Response.register_director_find_handler.set(),
+            'message': 'Введите фамилию сотрудника. :)',
+        },
+        'Удалить сотрудника': {
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage.set(),
+            'message': 'Введите фамилию сотрудника. :)',
+        },
+        'Передать права директора': {
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage.set(),
+            'message': 'Теперь ты никто!',
+        },
+        'Отмена': {
+            'markup': markup_director,
+            'response': Response.register_director_handler.set(),
+            'message': 'Выберите команду',
+        },
+        None: {
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage.set(),
+            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
+        }
+    }
+
+    command_dict = director_emp_handlers.get(director_response)
+    if not command_dict:
+        command_dict = director_emp_handlers[None]
+
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup')
+    )
+    await command_dict.get('response')
 
 
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
     """ Handler для страницы добавления сотрудников администратора """
     director_response = message.text
-    # Добавит строчку ниже во время рефакторинга, если не работает, то из-за нее
     await state.update_data(user_response=director_response)
+    if director_response == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Выберите фукнцию',
+            parse_mode='Markdown',
+            reply_markup=markup_director_emp
+        )
+        await Response.register_director_emp_manage.set()
+        return
     emp_data = director_response.split()
     if len(emp_data) != 4:
         await bot_aiogram.send_message(
@@ -106,7 +129,15 @@ async def register_director_create_handler(message: types.Message,
     name = emp_data[1]
     patronymic = emp_data[2]
     post = emp_data[3]
-    posts = ['director', 'admin', 'doctor']
+    posts = {
+        'doctor': ['doctror', 'доктор', 'док'],
+        'director': ['director', 'директор'],
+        'admin': ['admin', 'админ', 'администратор']
+    }
+    for key, names in posts.items():
+        if post in names:
+            post = key
+            break
     if post not in posts:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -133,6 +164,8 @@ async def register_director_create_handler(message: types.Message,
         username=surname,
         post=post,
     )
+    await Response.register_director_emp_manage.set()
+    return
 
 
 async def register_director_find_handler(message: types.Message,
@@ -140,31 +173,42 @@ async def register_director_find_handler(message: types.Message,
     """ Handler для страницы поиска сотрудников администратора """
     username = message.text
     await state.update_data(user_response=username)
+    if username == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Выберите фукнцию',
+            parse_mode='Markdown',
+            reply_markup=markup_director_emp
+        )
+        await Response.register_director_emp_manage.set()
+        return
     emp_data = await dbw.get_data(
         field='username',
         what_need='all',
         value=username
     )
-    if emp_data:
-        name = emp_data[2]
-        surname = emp_data[1]
-        post = emp_data[3]
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=f"""Сотрудник найден, его данные.
-            Имя: {name}
-            Фамилия: {surname}
-            Должность: {post}""",
-            parse_mode='Markdown',
-            reply_markup=markup_director_emp
-        )
-    else:
+    if not emp_data:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text=f'Сотрудник не найден!',
             parse_mode='Markdown',
-            reply_markup=markup_director_emp
+            reply_markup=markup_cancel
         )
+        await Response.register_director_emp_manage.set()
+        return
+    name = emp_data[2]
+    surname = emp_data[1]
+    post = emp_data[3]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=f'''Сотрудник найден, его данные.
+        Имя: {name}
+        Фамилия: {surname}
+        Должность: {post}''',
+        parse_mode='Markdown',
+        reply_markup=markup_director_emp
+    )
+    await Response.register_director_emp_manage.set()
 
 
 def register_handlers_director(dp: Dispatcher):  # noqa
