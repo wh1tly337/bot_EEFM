@@ -41,7 +41,6 @@ async def start_message(message: types.Message):
         msg_log_in = 'User log in'
         print_log_info(message, msg_log_in)
 
-        # TODO неправильно работает определение admin в логгере
         result = await dbw.get_data(
             field='id',
             what_need='post',
@@ -49,10 +48,20 @@ async def start_message(message: types.Message):
         )
         logger.info(f'Logged user post | {result}')
         markup_to_handlers = {
-            'doctor': [markup_doctor, doch.Response.register_doctor_handler.set()],
-            'admin': [markup_admin, ah.Response.admin_message_handler.set()],
-            'director': [markup_director, dirh.Response.register_director_handler.set()],
+            'doctor': [
+                markup_doctor,
+                doch.Response.register_doctor_handler.set()
+            ],
+            'admin': [
+                markup_admin,
+                ah.Response.admin_message_handler.set()
+            ],
+            'director': [
+                markup_director,
+                dirh.Response.register_director_handler.set()
+            ],
         }
+        # TODO убрать закомментированный код и узнать все ли тут норм работает
         markup = markup_to_handlers[result][0]
         response = markup_to_handlers[result][1]
         print(response)

@@ -53,8 +53,8 @@ async def authorization_password_handler(message: types.Message,
     await state.update_data(user_response=authorization_password_response)
     try:
         authorization_password_response = int(authorization_password_response)
-    except:
-        ...
+    except Exception:
+        pass
     if authorization_password_response == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,

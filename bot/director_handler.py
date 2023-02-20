@@ -23,6 +23,12 @@ class Response(StatesGroup):
 async def register_director_handler(message: types.Message, state: FSMContext):
     """ Handler для стартовой страницы администратора """
     director_response = message.text
+
+    # TODO узнать у Саши куда делась строчка ниже
+    # await state.update_data(user_response=director_response)
+
+    # TODO узнать у Саши мб переменные ниже сделать одинаковыми,
+    #  они все равно каждый раз переопределяются
     director_start_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
@@ -35,7 +41,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
-    command_dict = director_start_handlers.get(director_response)
+    command_dict = director_start_handlers.get(director_response)  # noqa
     if not command_dict:
         command_dict = director_start_handlers[None]
     await bot_aiogram.send_message(
@@ -58,7 +64,7 @@ async def register_director_emp_manage(message: types.Message,
             'markup': markup_cancel,
             'response': Response.register_director_create_handler.set(),
             'message': 'Введите ФИО и должность в формате:'
-                        'Фамилия Имя Отчество должность',
+                       'Фамилия Имя Отчество должность',
         },
         'Найти сотрудника': {
             'markup': markup_cancel,
@@ -87,7 +93,7 @@ async def register_director_emp_manage(message: types.Message,
         }
     }
 
-    command_dict = director_emp_handlers.get(director_response)
+    command_dict = director_emp_handlers.get(director_response)  # noqa
     if not command_dict:
         command_dict = director_emp_handlers[None]
 
@@ -108,7 +114,7 @@ async def register_director_create_handler(message: types.Message,
     if director_response == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Выберите фукнцию',
+            text='Выберите функцию',
             parse_mode='Markdown',
             reply_markup=markup_director_emp
         )
@@ -127,10 +133,10 @@ async def register_director_create_handler(message: types.Message,
 
     surname = emp_data[0]
     name = emp_data[1]
-    patronymic = emp_data[2]
+    patronymic = emp_data[2]  # TODO не забыть внести эту переменную в бд
     post = emp_data[3]
     posts = {
-        'doctor': ['doctror', 'доктор', 'док'],
+        'doctor': ['doctor', 'доктор', 'док'],
         'director': ['director', 'директор'],
         'admin': ['admin', 'админ', 'администратор']
     }
@@ -176,7 +182,7 @@ async def register_director_find_handler(message: types.Message,
     if username == 'Отмена':
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Выберите фукнцию',
+            text='Выберите функцию',
             parse_mode='Markdown',
             reply_markup=markup_director_emp
         )

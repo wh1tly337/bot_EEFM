@@ -1,5 +1,3 @@
-import asyncio
-
 from aiogram import executor
 from loguru import logger
 
@@ -26,7 +24,6 @@ mh.register_handlers_authorization(dp)
 doch.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
-
 
 if __name__ == '__main__':
     logger.info('Bot successfully started')

@@ -1,16 +1,60 @@
-2023-02-20T12:21:55.429860+0500 | INFO | Bot successfully started
-2023-02-20T12:22:01.620128+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-20T12:22:01.620128+0500 | INFO | Logged user post | director
-2023-02-20T12:22:08.768808+0500 | ERROR | list index out of range
-2023-02-20T12:23:19.467556+0500 | INFO | Bot successfully started
-2023-02-20T12:23:24.350685+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-20T12:23:24.350685+0500 | INFO | Logged user post | director
-2023-02-20T12:23:33.365810+0500 | ERROR | list index out of range
-2023-02-20T12:24:11.391266+0500 | INFO | Added new user to table users | 374849, александр, Шешенин, doctor
-2023-02-20T12:26:36.899705+0500 | INFO | Bot successfully started
-2023-02-20T12:26:47.810198+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-20T12:26:47.812209+0500 | INFO | Logged user post | director
-2023-02-20T12:27:07.893030+0500 | ERROR | list index out of range
-2023-02-20T12:28:10.264146+0500 | INFO | Bot successfully started
-2023-02-20T12:28:13.532293+0500 | INFO | User log in | 577906481 Александр Владимирович AVCAMID
-2023-02-20T12:28:13.532293+0500 | INFO | Logged user post | director
+2023-02-20T15:55:36.438584+0500 | INFO | Bot successfully started
+2023-02-20T15:55:40.619338+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T15:55:40.619338+0500 | INFO | Logged user post | admin
+2023-02-20T16:00:05.334099+0500 | INFO | Bot successfully started
+2023-02-20T16:00:10.702712+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:00:10.702712+0500 | INFO | Logged user post | admin
+2023-02-20T16:00:29.652941+0500 | INFO | Bot successfully started
+2023-02-20T16:00:32.086811+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:00:32.087811+0500 | INFO | Logged user post | admin
+2023-02-20T16:01:12.099992+0500 | INFO | Bot successfully started
+2023-02-20T16:01:15.443519+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:01:15.443519+0500 | INFO | Logged user post | admin
+2023-02-20T16:01:36.764539+0500 | INFO | Bot successfully started
+2023-02-20T16:01:39.503199+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:01:39.503199+0500 | INFO | Logged user post | admin
+2023-02-20T16:02:07.072290+0500 | INFO | Bot successfully started
+2023-02-20T16:02:09.542605+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:02:09.543606+0500 | INFO | Logged user post | admin
+2023-02-20T16:02:41.734946+0500 | INFO | Bot successfully started
+2023-02-20T16:02:44.915317+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:02:44.916318+0500 | INFO | Logged user post | admin
+2023-02-20T16:03:11.958786+0500 | INFO | Bot successfully started
+2023-02-20T16:03:13.943932+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:03:13.943932+0500 | INFO | Logged user post | admin
+2023-02-20T16:03:39.753089+0500 | INFO | Bot successfully started
+2023-02-20T16:03:44.281520+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:03:44.281520+0500 | INFO | Logged user post | admin
+2023-02-20T16:03:56.973793+0500 | INFO | Bot successfully started
+2023-02-20T16:03:58.565832+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:03:58.565832+0500 | INFO | Logged user post | admin
+2023-02-20T16:05:04.845114+0500 | INFO | Bot successfully started
+2023-02-20T16:05:07.606401+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:05:07.607402+0500 | INFO | Logged user post | admin
+2023-02-20T16:11:39.637851+0500 | INFO | Bot successfully started
+2023-02-20T16:11:43.533235+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:11:43.533235+0500 | INFO | Logged user post | admin
+2023-02-20T16:13:44.539916+0500 | INFO | Bot successfully started
+2023-02-20T16:13:47.331617+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:13:47.332620+0500 | INFO | Logged user post | admin
+2023-02-20T16:14:44.104238+0500 | INFO | Bot successfully started
+2023-02-20T16:14:46.504018+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:14:46.505019+0500 | INFO | Logged user post | admin
+2023-02-20T16:20:51.447038+0500 | INFO | Bot successfully started
+2023-02-20T16:20:54.754921+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:20:54.754921+0500 | INFO | Logged user post | admin
+2023-02-20T16:23:00.650000+0500 | INFO | Bot successfully started
+2023-02-20T16:23:06.831999+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:23:06.831999+0500 | INFO | Logged user post | admin
+2023-02-20T16:25:09.731711+0500 | INFO | Bot successfully started
+2023-02-20T16:25:11.368214+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:25:11.368214+0500 | INFO | Logged user post | admin
+2023-02-20T16:27:17.616922+0500 | INFO | Bot successfully started
+2023-02-20T16:27:23.166336+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:27:23.167337+0500 | INFO | Logged user post | admin
+2023-02-20T16:27:55.889652+0500 | INFO | Bot successfully started
+2023-02-20T16:28:01.959961+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:28:01.959961+0500 | INFO | Logged user post | admin
+2023-02-20T16:31:44.117284+0500 | INFO | Bot successfully started
+2023-02-20T16:31:48.560245+0500 | INFO | User log in | 726420734 Ivan wh1tly337
+2023-02-20T16:31:48.560245+0500 | INFO | Logged user post | admin
