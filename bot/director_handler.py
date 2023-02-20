@@ -23,13 +23,9 @@ class Response(StatesGroup):
 async def register_director_handler(message: types.Message, state: FSMContext):
     """ Handler для стартовой страницы администратора """
     director_response = message.text
+    await state.update_data(user_response=director_response)
 
-    # TODO узнать у Саши куда делась строчка ниже
-    # await state.update_data(user_response=director_response)
-
-    # TODO узнать у Саши мб переменные ниже сделать одинаковыми,
-    #  они все равно каждый раз переопределяются
-    director_start_handlers = {
+    director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
             'response': Response.register_director_emp_manage.set(),
@@ -43,7 +39,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     }
     command_dict = director_start_handlers.get(director_response)  # noqa
     if not command_dict:
-        command_dict = director_start_handlers[None]
+        command_dict = director_handlers[None]
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=command_dict.get('message'),
@@ -59,7 +55,7 @@ async def register_director_emp_manage(message: types.Message,
     director_response = message.text
     await state.update_data(user_response=director_response)
 
-    director_emp_handlers = {
+    director_handlers = {
         'Добавить сотрудника': {
             'markup': markup_cancel,
             'response': Response.register_director_create_handler.set(),
@@ -95,7 +91,7 @@ async def register_director_emp_manage(message: types.Message,
 
     command_dict = director_emp_handlers.get(director_response)  # noqa
     if not command_dict:
-        command_dict = director_emp_handlers[None]
+        command_dict = director_handlers[None]
 
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -133,7 +129,7 @@ async def register_director_create_handler(message: types.Message,
 
     surname = emp_data[0]
     name = emp_data[1]
-    patronymic = emp_data[2]  # TODO не забыть внести эту переменную в бд
+    patronymic = emp_data[2]
     post = emp_data[3]
     posts = {
         'doctor': ['doctor', 'доктор', 'док'],
@@ -163,10 +159,12 @@ async def register_director_create_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=markup_director_emp
     )
-    # TODO Исправить БД, изменить поля, добавить Отчество.
+    # TODO проверить работоспособность
     await dbw.add_new_user(
         id_tg=temporary_password,
-        first_name=name,
+        surname=surname,
+        name=name,
+        patronymic=patronymic,
         username=surname,
         post=post,
     )

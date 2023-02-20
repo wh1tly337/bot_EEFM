@@ -7,9 +7,6 @@ from auxiliary.req_data import *
 global connection, cursor
 
 
-# TODO обновить таблицу в бд на рабочий вариант с ФИО и тд
-
-
 async def start_connection():
     """ Создание соединения с бд """
     global connection, cursor
@@ -78,7 +75,7 @@ async def get_data(field, value, what_need='all'):
         if what_need == 'id':
             result = cursor.fetchall()[0][0]
         elif what_need == 'post':
-            result = cursor.fetchall()[0][3]
+            result = cursor.fetchall()[0][5]
         else:
             result = cursor.fetchall()[0]
         await close_connection()
@@ -90,7 +87,9 @@ async def get_data(field, value, what_need='all'):
 
 async def add_new_user(
         id_tg,
-        first_name,
+        surname,
+        name,
+        patronymic,
         username,
         post,
         date_added=None,
@@ -101,14 +100,18 @@ async def add_new_user(
         await start_connection()
         cursor.execute(
             'INSERT INTO users '
-            '(id, first_name, username, post, date_added, date_removed) '
-            'VALUES (?,?,?,?,?,?);',
-            (id_tg, first_name, username, post, date_added, date_removed)
+            '(id, surname, name, patronymic, username, post, date_added,'
+            ' date_removed)'
+            'VALUES (?,?,?,?,?,?,?,?);',
+            (id_tg, surname, name, patronymic, username, post, date_added,
+             date_removed)
         )
         connection.commit()
         logger.info(f'Added new user to table users | '
                     f'{id_tg}, '
-                    f'{first_name}, '
+                    f'{surname}, '
+                    f'{name}, '
+                    f'{patronymic}, '
                     f'{username}, '
                     f'{post}')
         await close_connection()

@@ -70,25 +70,21 @@ async def admin_schedule_handler(message: types.Message,
             'markup': markup_cancel,
             'response': Response.admin_file_handler.set(),
             'message': 'Отправьте мне Excel файл с расписанием',
-            'func': None,
         },
         'Посмотреть расписание': {
             'markup': markup_admin_watch_schedule,
             'response': Response.admin_watch_schedule_handler.set(),
             'message': 'На какой период вы хотите посмотреть расписание?',
-            'func': None,
         },
         'Отмена': {
             'markup': markup_admin,
             'response': Response.admin_message_handler.set(),
             'message': 'Хорошо',
-            'func': None,
         },
         None: {
             'markup': markup_admin_make_schedule,
             'response': Response.admin_schedule_handler.set(),
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
-            'func': None,
         }
     }
 
@@ -101,11 +97,9 @@ async def admin_schedule_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    # Просто ебнутый костыль, но все работает
-    try:
+
+    if command_dict.get('func'):
         await command_dict.get('func')
-    except Exception:
-        pass
 
     await command_dict.get('response')
 
@@ -145,27 +139,25 @@ async def admin_watch_schedule_handler(message: types.Message,
             'markup': markup_admin,
             'response': Response.admin_message_handler.set(),
             'message': 'Расписание на сегодня:',
-            'func': None
+            'func': ...,
             # TODO добавить возможность смотреть расписание на сегодня
         },
         'На неделю': {
             'markup': markup_admin,
             'response': Response.admin_message_handler.set(),
             'message': 'Расписание на наделю:',
-            'func': None,
+            'func': ...,
             # TODO добавить возможность смотреть расписание на неделю
         },
         'Отмена': {
             'markup': markup_admin_make_schedule,
             'response': Response.admin_schedule_handler.set(),
             'message': 'Хорошо',
-            'func': None,
         },
         None: {
             'markup': markup_admin_watch_schedule,
             'response': Response.admin_watch_schedule_handler.set(),
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
-            'func': None,
         }
     }
 
@@ -178,11 +170,9 @@ async def admin_watch_schedule_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    # Просто ебнутый костыль, но все работает
-    try:
+
+    if command_dict.get('func'):
         await command_dict.get('func')
-    except Exception:
-        pass
 
     await command_dict.get('response')
 

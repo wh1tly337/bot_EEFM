@@ -61,25 +61,9 @@ async def start_message(message: types.Message):
                 dirh.Response.register_director_handler.set()
             ],
         }
-        # TODO убрать закомментированный код и узнать все ли тут норм работает
         markup = markup_to_handlers[result][0]
         response = markup_to_handlers[result][1]
-        print(response)
         await response
-        # match result:
-        #     case 'doctor':
-        #         markup = markup_doctor
-        #         await doch.Response.register_doctor_handler.set()
-        #     case 'admin':
-        #         markup = markup_admin
-        #         print('post = admin')
-        #         await ah.Response.admin_message_handler.set()
-        #     case 'director':
-        #         markup = markup_director
-        #         print('post = director')
-        #         await dirh.Response.register_director_handler.set()
-        #     case _:
-        #         markup = markup_start
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
