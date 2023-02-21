@@ -13,7 +13,6 @@ from workers import db_worker as dbw
 
 
 # функция отвечающая за команду /start
-@dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
     result = await dbw.get_data(
         field='id',

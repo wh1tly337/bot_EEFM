@@ -23,7 +23,7 @@ from bot import (
 logger.add(
     f"{src_logger}logger.txt",
     format='{time} | {level} | {message}',
-    rotation='00:00',
+    rotation='1 week',
     compression='zip'
 )
 
