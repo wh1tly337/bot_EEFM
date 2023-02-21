@@ -26,17 +26,17 @@ async def admin_message_handler(message: types.Message, state: FSMContext):
     admin_handlers = {
         'Расписание': {
             'markup': markup_admin_make_schedule,
-            'response': Response.admin_schedule_handler.set(),
+            'response': Response.admin_schedule_handler,
             'message': 'Что вы хотите сделать с расписанием',
         },
         'Отправить сообщение': {
             'markup': markup_admin_message,
-            'response': Response.admin_send_messages_handler.set(),
+            'response': Response.admin_send_messages_handler,
             'message': 'Кому вы хотите отправить сообщение?',
         },
         None: {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -49,7 +49,7 @@ async def admin_message_handler(message: types.Message, state: FSMContext):
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
 # функция-обработчик сообщений второй страницы расписания для админа
@@ -60,7 +60,7 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
     admin_handlers = {
         'Получить шаблон': {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Шаблон расписания:',
             'func': bot_aiogram.send_document(
                 chat_id=message.chat.id,
@@ -69,22 +69,22 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
         },
         'Загрузить расписание': {
             'markup': markup_cancel,
-            'response': state.finish(),
+            'finish': state.finish(),
             'message': 'Отправьте мне Excel файл с расписанием',
         },
         'Посмотреть расписание': {
             'markup': markup_admin_watch_schedule,
-            'response': Response.admin_watch_schedule_handler.set(),
+            'response': Response.admin_watch_schedule_handler,
             'message': 'На какой период вы хотите посмотреть расписание?',
         },
         'Отмена': {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Хорошо',
         },
         None: {
             'markup': markup_admin_make_schedule,
-            'response': Response.admin_schedule_handler.set(),
+            'response': Response.admin_schedule_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -102,7 +102,10 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
     if command_dict.get('func'):
         await command_dict.get('func')
 
-    await command_dict.get('response')
+    if command_dict.get('response'):
+        await command_dict.get('response').set()
+    elif command_dict.get('finish'):
+        await command_dict.get('finish')
 
 
 # функция-обработчик файла расписания от админа
@@ -126,7 +129,7 @@ async def admin_file_handler(message: types.Message):
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
-        await Response.admin_message_handler.set()
+        response = Response.admin_message_handler
 
         # TODO возможно сделать рассылку всему персоналу о том
         #  что расписание обновилось
@@ -142,7 +145,9 @@ async def admin_file_handler(message: types.Message):
             parse_mode='Markdown',
             reply_markup=markup_admin_make_schedule
         )
-        await Response.admin_schedule_handler.set()
+        response = Response.admin_schedule_handler
+
+    await response.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа
@@ -154,26 +159,26 @@ async def admin_watch_schedule_handler(message: types.Message,
     admin_handlers = {
         'На сегодня': {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Расписание на сегодня:',
             'func': ...,
             # TODO добавить возможность смотреть расписание на сегодня
         },
         'На неделю': {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Расписание на наделю:',
             'func': ...,
             # TODO добавить возможность смотреть расписание на неделю
         },
         'Отмена': {
             'markup': markup_admin_make_schedule,
-            'response': Response.admin_schedule_handler.set(),
+            'response': Response.admin_schedule_handler,
             'message': 'Хорошо',
         },
         None: {
             'markup': markup_admin_watch_schedule,
-            'response': Response.admin_watch_schedule_handler.set(),
+            'response': Response.admin_watch_schedule_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -191,7 +196,7 @@ async def admin_watch_schedule_handler(message: types.Message,
     if command_dict.get('func'):
         await command_dict.get('func')
 
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
 # функция-обработчик сообщений второй страницы рассылки для админа
@@ -203,23 +208,23 @@ async def admin_send_messages_handler(message: types.Message,
     admin_handlers = {
         'Рассылка': {
             'markup': markup_cancel,
-            'response': Response.admin_mailing_handler.set(),
+            'response': Response.admin_mailing_handler,
             'message': 'Отправьте мне сообщение, которое вы хотите '
                        'разослать всем сотрудникам',
         },
         'Директору': {
             'markup': markup_cancel,
-            'response': Response.admin_to_director_handler.set(),
+            'response': Response.admin_to_director_handler,
             'message': 'Отправьте мне сообщение для директора',
         },
         'Отмена': {
             'markup': markup_admin,
-            'response': Response.admin_message_handler.set(),
+            'response': Response.admin_message_handler,
             'message': 'Хорошо',
         },
         None: {
             'markup': markup_admin_message,
-            'response': Response.admin_send_messages_handler.set(),
+            'response': Response.admin_send_messages_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -233,7 +238,7 @@ async def admin_send_messages_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
 # функция-обработчик сообщений от админа для перенаправления получателю
@@ -248,7 +253,7 @@ async def admin_mailing_handler(message: types.Message, state: FSMContext):
             parse_mode='Markdown',
             reply_markup=markup_admin_message
         )
-        await Response.admin_send_messages_handler.set()
+        response = Response.admin_send_messages_handler
     else:
         # try на случай если id из бд по какой-то причине не существует
         try:
@@ -267,9 +272,11 @@ async def admin_mailing_handler(message: types.Message, state: FSMContext):
                     parse_mode='Markdown',
                     reply_markup=markup_admin
                 )
-            await Response.admin_message_handler.set()
+            response = Response.admin_message_handler
         except Exception:
-            await Response.admin_message_handler.set()
+            response = Response.admin_message_handler
+
+    await response.set()
 
 
 # функция-обработчик сообщений от админа для перенаправления получателю
@@ -284,7 +291,7 @@ async def admin_to_director_handler(message: types.Message, state: FSMContext):
             parse_mode='Markdown',
             reply_markup=markup_admin_message
         )
-        await Response.admin_send_messages_handler.set()
+        response = Response.admin_send_messages_handler
     else:
         director_id = await dbw.get_data('post', 'director', 'id')
         await bot_aiogram.send_message(
@@ -300,7 +307,9 @@ async def admin_to_director_handler(message: types.Message, state: FSMContext):
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
-        await Response.admin_message_handler.set()
+        response = Response.admin_message_handler
+
+    await response.set()
 
 
 # регистратор передающий данные в main_bot.py

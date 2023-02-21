@@ -42,26 +42,26 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
     doctor_handlers = {
         'На сегодня': {
             'markup': markup_doctor,
-            'response': Response.doctor_handler.set(),
+            'response': Response.doctor_handler,
             'message': 'Расписание на сегодня:',
             'func': ...,
             # TODO добавить возможность смотреть расписание на сегодня
         },
         'На неделю': {
             'markup': markup_doctor,
-            'response': Response.doctor_handler.set(),
+            'response': Response.doctor_handler,
             'message': 'Расписание на наделю:',
             'func': ...,
             # TODO добавить возможность смотреть расписание на неделю
         },
         'Отмена': {
             'markup': markup_doctor,
-            'response': Response.doctor_handler.set(),
+            'response': Response.doctor_handler,
             'message': 'Хорошо',
         },
         None: {
             'markup': markup_admin_watch_schedule,
-            'response': Response.doctor_schedule_handler.set(),
+            'response': Response.doctor_schedule_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -79,7 +79,7 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
     if command_dict.get('func'):
         await command_dict.get('func')
 
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
 # регистратор передающий данные в main_bot.py

@@ -10,17 +10,6 @@ from bot import (
     director_handler as dirh
 )
 
-# TODO почему-то в gitignore не добавилась папка logger
-
-# TODO убрать оповещение/незначительную ошибку, которая вылезает
-#  при старте программы/нажатиях на клавиши (сама ошибка ниже)
-
-# C:\Users\wh1tly337\AppData\Local\Programs\Python\Python311\Lib\site-packages
-# \aiogram\dispatcher\handler.py:117: RuntimeWarning: coroutine 'State.set'
-# was never awaited
-#   response = await handler_obj.handler(*args, **partial_data)
-# RuntimeWarning: Enable tracemalloc to get the object allocation traceback
-
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
     f"{src_logger}logger.txt",

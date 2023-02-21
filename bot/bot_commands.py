@@ -34,7 +34,7 @@ async def start_message(message: types.Message):
         # метод начинает считывание последующего сообщения пользователя
         # для его авторизации (нужен для работы функции authorization_handler
         # в файле message_handler.py)
-        await mh.Response.authorization_handler.set()
+        response = mh.Response.authorization_handler
     else:
 
         msg_log_in = 'User log in'
@@ -50,22 +50,22 @@ async def start_message(message: types.Message):
         markup_to_handlers = {  # noqa
             'doctor': {
                 'markup': markup_doctor,
-                'response': doch.Response.doctor_handler.set()
+                'response': doch.Response.doctor_handler
             },
             'admin': {
                 'markup': markup_admin,
-                'response': ah.Response.admin_message_handler.set()
+                'response': ah.Response.admin_message_handler
             },
             'director': {
                 'markup': markup_director,
-                'response': dirh.Response.register_director_handler.set()
+                'response': dirh.Response.register_director_handler
             },
         }
         command_dict = markup_to_handlers.get(result)  # noqa
         if not command_dict:
             command_dict = markup_to_handlers[None]
         markup = command_dict.get('markup')
-        await command_dict.get('response')
+        response = command_dict.get('response')
 
         fio = await dbw.get_data('id', message.chat.id)
         appeal = f"{fio[2]} {fio[3]}"
@@ -75,6 +75,8 @@ async def start_message(message: types.Message):
             parse_mode='Markdown',
             reply_markup=markup
         )
+
+    await response.set()
 
 
 # регистратор передающий данные в main_bot.py

@@ -20,7 +20,7 @@ from workers import db_worker as dbw
 # функция для улучшения читабельности кода и удобства (вызывает другие функции)
 def all_cycle(filename, ender):
     xlsx_to_csv(filename, ender)
-    dbw.add_schedule(filename)
+    # dbw.add_schedule(filename)
     file_delete(filename, ender)
 
 
@@ -40,6 +40,6 @@ def file_delete(filename, ender):
     os.remove(f"{src_files}{filename}.{ender}")
     os.remove(f"{src_files}{filename}.csv")
 
-# TODO automatically date update in schedule_template function
+# TODO automatically date update in schedule_template.xlsx function
 
 # TODO add watch schedule on today and on week function

@@ -28,12 +28,12 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage.set(),
+            'response': Response.register_director_emp_manage,
             'message': 'Доступные команды',
         },
         None: {
             'markup': markup_director,
-            'response': Response.register_director_handler.set(),
+            'response': Response.register_director_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -46,7 +46,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
 async def register_director_emp_manage(message: types.Message,
@@ -58,33 +58,33 @@ async def register_director_emp_manage(message: types.Message,
     director_handlers = {
         'Добавить сотрудника': {
             'markup': markup_cancel,
-            'response': Response.register_director_create_handler.set(),
+            'response': Response.register_director_create_handler,
             'message': 'Введите ФИО и должность в формате:'
                        'Фамилия Имя Отчество должность',
         },
         'Найти сотрудника': {
             'markup': markup_cancel,
-            'response': Response.register_director_find_handler.set(),
+            'response': Response.register_director_find_handler,
             'message': 'Введите фамилию сотрудника. :)',
         },
         'Удалить сотрудника': {
             'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage.set(),
+            'response': Response.register_director_emp_manage,
             'message': 'Введите фамилию сотрудника. :)',
         },
         'Передать права директора': {
             'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage.set(),
+            'response': Response.register_director_emp_manage,
             'message': 'Теперь ты никто!',
         },
         'Отмена': {
             'markup': markup_director,
-            'response': Response.register_director_handler.set(),
+            'response': Response.register_director_handler,
             'message': 'Выберите команду',
         },
         None: {
             'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage.set(),
+            'response': Response.register_director_emp_manage,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
     }
@@ -99,9 +99,11 @@ async def register_director_emp_manage(message: types.Message,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    await command_dict.get('response')
+    await command_dict.get('response').set()
 
 
+# TODO нужно как-то сделать один .set() на всю функцию
+#  (см пример в admin_handler)
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
     """ Handler для страницы добавления сотрудников администратора """
@@ -172,6 +174,8 @@ async def register_director_create_handler(message: types.Message,
     return
 
 
+# TODO нужно как-то сделать один .set() на всю функцию
+#  (см пример в admin_handler)
 async def register_director_find_handler(message: types.Message,
                                          state: FSMContext):
     """ Handler для страницы поиска сотрудников администратора """
