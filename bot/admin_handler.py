@@ -51,8 +51,7 @@ async def admin_message_handler(message: types.Message, state: FSMContext):
 
 
 # функция-обработчик сообщений второй страницы расписания для админа
-async def admin_schedule_handler(message: types.Message,
-                                 state: FSMContext):
+async def admin_schedule_handler(message: types.Message, state: FSMContext):
     admin_schedule_response = message.text
     await state.update_data(user_response=admin_schedule_response)
 

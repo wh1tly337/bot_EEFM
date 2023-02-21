@@ -6,7 +6,9 @@ from auxiliary.req_data import *
 from auxiliary.req_data import director_name
 from bot import (
     doctor_handler as doch,
-    admin_handler as ah
+    admin_handler as ah,
+    director_handler as dirh,
+
 )
 from bot.funcs import print_log_info
 from workers import db_worker as dbw
@@ -75,14 +77,24 @@ async def authorization_password_handler(message: types.Message,
                 what_need='post',
                 value=message.chat.id
             )
-            if result == 'doctor':
-                markup = markup_doctor
-                await doch.Response.register_doctor_handler.set()
-            elif result == 'admin':
-                markup = markup_admin
-                await ah.Response.admin_message_handler.set()
-            else:
-                markup = markup_director
+
+            markup_to_handlers = {  # noqa
+                'doctor': [
+                    markup_doctor,
+                    doch.Response.register_doctor_handler.set()
+                ],
+                'admin': [
+                    markup_admin,
+                    ah.Response.admin_message_handler.set()
+                ],
+                'director': [
+                    markup_director,
+                    dirh.Response.register_director_handler.set()
+                ],
+            }
+            markup = markup_to_handlers[result][0]
+            response = markup_to_handlers[result][1]
+            await response
 
             fio = await dbw.get_data('id', message.chat.id)
             appeal = f"{fio[2]} {fio[3]}"

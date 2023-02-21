@@ -47,7 +47,8 @@ async def start_message(message: types.Message):
             value=message.chat.id
         )
         logger.info(f'Logged user post | {result}')
-        markup_to_handlers = {
+
+        markup_to_handlers = {  # noqa
             'doctor': [
                 markup_doctor,
                 doch.Response.register_doctor_handler.set()
