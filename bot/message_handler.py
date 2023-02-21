@@ -79,22 +79,24 @@ async def authorization_password_handler(message: types.Message,
             )
 
             markup_to_handlers = {  # noqa
-                'doctor': [
-                    markup_doctor,
-                    doch.Response.register_doctor_handler.set()
-                ],
-                'admin': [
-                    markup_admin,
-                    ah.Response.admin_message_handler.set()
-                ],
-                'director': [
-                    markup_director,
-                    dirh.Response.register_director_handler.set()
-                ],
+                'doctor': {
+                    'markup': markup_doctor,
+                    'response': doch.Response.register_doctor_handler.set()
+                },
+                'admin': {
+                    'markup': markup_admin,
+                    'response': ah.Response.admin_message_handler.set()
+                },
+                'director': {
+                    'markup': markup_director,
+                    'response': dirh.Response.register_director_handler.set()
+                },
             }
-            markup = markup_to_handlers[result][0]
-            response = markup_to_handlers[result][1]
-            await response
+            command_dict = markup_to_handlers.get(result)  # noqa
+            if not command_dict:
+                command_dict = markup_to_handlers[None]
+            markup = command_dict.get('markup')
+            await command_dict.get('response')
 
             fio = await dbw.get_data('id', message.chat.id)
             appeal = f"{fio[2]} {fio[3]}"
