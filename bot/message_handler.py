@@ -84,11 +84,11 @@ async def authorization_password_handler(message: types.Message,
             else:
                 markup = markup_director
 
+            fio = await dbw.get_data('id', message.chat.id)
+            appeal = f"{fio[2]} {fio[3]}"
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
-                # TODO поменять вывод на вывод фио из бд
-                text=f"{message.from_user.full_name}"
-                     f", добро пожаловать в бот клиники ИТА!",
+                text=f"{appeal}, добро пожаловать в бот клиники ИТА!",
                 parse_mode='Markdown',
                 reply_markup=markup
             )

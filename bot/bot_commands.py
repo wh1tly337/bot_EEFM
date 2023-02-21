@@ -65,10 +65,12 @@ async def start_message(message: types.Message):
         response = markup_to_handlers[result][1]
         await response
 
+        fio = await dbw.get_data('id', message.chat.id)
+        appeal = f"{fio[2]} {fio[3]}"
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text=f"{message.from_user.full_name}"
-                 f", добро пожаловать в бот клиники ИТА!",
+            text=f"{appeal}, добро пожаловать в бот клиники ИТА!",
+            parse_mode='Markdown',
             reply_markup=markup
         )
 
