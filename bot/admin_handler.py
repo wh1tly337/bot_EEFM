@@ -114,9 +114,12 @@ async def admin_file_handler(message: types.Message):
         await message.document.download(
             destination_file=f"{src_files}{message.document.file_name}")
 
-        # TODO сюда вставить вызов обработчика информации из файла
+        # TODO закончить обработчик информации из файла
+        filename = message.document.file_name.split('.')
+        ender = filename[1]
+        filename = filename[0]
+        fw.all_cycle(filename, ender)
 
-        fw.file_delete(message.document.file_name)
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
             text='Расписание получено!',

@@ -151,3 +151,13 @@ async def remove_user(id_tg):
 
 async def add_user_manual():
     ...
+
+
+# функция для копирования информации из .csv файла в таблицу бд schedule
+async def add_schedule(filename):
+    await start_connection()
+    cursor.execute(
+        f"""COPY schedule 
+        FROM '{src_files}{filename}.csv' DELIMITER ';' CSV HEADER;""")
+    connection.commit()
+    await close_connection()
