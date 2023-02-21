@@ -36,7 +36,7 @@ dirh.register_handlers_director(dp)
 
 
 # функция для отправки стартового сообщения всем пользователям
-async def on_startup(_):
+async def startup_message(_):
     # рабочий вариант
     # all_ids = await dbw.get_all_ids()
     # for i in range(len(all_ids)):
@@ -53,4 +53,4 @@ async def on_startup(_):
 
 if __name__ == '__main__':
     logger.info('Bot successfully started')
-    executor.start_polling(dp, on_startup=on_startup)
+    executor.start_polling(dp, on_startup=startup_message)

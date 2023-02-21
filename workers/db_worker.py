@@ -77,7 +77,6 @@ async def get_data(field, value, what_need='all'):
         else:
             result = cursor.fetchall()[0]
         await close_connection()
-        print(result)
         return result
     except Exception as ex:
         logger.error(ex)
