@@ -50,7 +50,7 @@ async def start_message(message: types.Message):
         markup_to_handlers = {  # noqa
             'doctor': {
                 'markup': markup_doctor,
-                'response': doch.Response.register_doctor_handler.set()
+                'response': doch.Response.doctor_handler.set()
             },
             'admin': {
                 'markup': markup_admin,

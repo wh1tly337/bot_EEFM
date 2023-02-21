@@ -131,7 +131,7 @@ async def admin_file_handler(message: types.Message):
 # функция-обработчик сообщений третьей страницы расписания для админа
 async def admin_watch_schedule_handler(message: types.Message,
                                        state: FSMContext):
-    admin_watch_schedule_response = message.text
+    admin_watch_schedule_response = message.text  # noqa
     await state.update_data(user_response=admin_watch_schedule_response)
 
     admin_handlers = {
