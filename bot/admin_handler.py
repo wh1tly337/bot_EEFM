@@ -62,14 +62,11 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             'markup': markup_admin,
             'response': Response.admin_message_handler,
             'message': 'Шаблон расписания:',
-            'func': bot_aiogram.send_document(
-                chat_id=message.chat.id,
-                document=open(f"{src_schedule_template}", 'rb')
-            ),
+            'func': bot_aiogram,
         },
         'Загрузить расписание': {
             'markup': markup_cancel,
-            'finish': state.finish(),
+            'finish': state,
             'message': 'Отправьте мне Excel файл с расписанием',
         },
         'Посмотреть расписание': {
@@ -100,12 +97,15 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
     )
 
     if command_dict.get('func'):
-        await command_dict.get('func')
+        await command_dict.get('func').send_document(
+                chat_id=message.chat.id,
+                document=open(f"{src_schedule_template}", 'rb')
+            )
 
     if command_dict.get('response'):
         await command_dict.get('response').set()
     elif command_dict.get('finish'):
-        await command_dict.get('finish')
+        await command_dict.get('finish').finish()
 
 
 # функция-обработчик файла расписания от админа
