@@ -26,7 +26,6 @@ async def doctor_handler(message: types.Message, state: FSMContext):
             reply_markup=markup_admin_watch_schedule
         )
         await Response.doctor_schedule_handler.set()
-        # TODO добавить обращение по имени отчеству
     else:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
