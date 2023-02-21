@@ -3,7 +3,10 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
-from workers import db_worker as dbw
+from workers import (
+    db_worker as dbw,
+    file_worker as fw
+)
 
 
 class Response(StatesGroup):
@@ -106,8 +109,13 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 async def admin_file_handler(message: types.Message):
     # TODO не работает возможность отмены
     #  (нужно в любом случае прикрепить какой-то файл)
+
     await message.document.download(
         destination_file=f"{src_files}{message.document.file_name}")
+
+    # TODO сюда вставить вызов обработчика информации из файла
+
+    fw.file_delete(message.document.file_name)
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text='Расписание получено!',
@@ -115,6 +123,9 @@ async def admin_file_handler(message: types.Message):
         reply_markup=markup_admin
     )
     await Response.admin_message_handler.set()
+
+    # TODO возможно сделать рассылку всему персоналу о том
+    #  что расписание обновилось
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа

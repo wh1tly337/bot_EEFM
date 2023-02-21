@@ -19,6 +19,9 @@ async def register_doctor_handler(message: types.Message, state: FSMContext):
             parse_mode='Markdown',
             reply_markup=markup_doctor
         )
+        # TODO добавить обращение по имени отчеству
+
+        # TODO сделать возможность просмотра своего расписания на сегодня/неделю
     else:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
