@@ -55,10 +55,8 @@ async def get_all_ids():
         result = []
         for i in range(len(taken)):
             result.append(*taken[i])
-        print(result)
         await close_connection()
         return result
-
     except Exception as ex:
         logger.error(ex)
 

@@ -34,7 +34,23 @@ doch.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
 
+
+# функция для отправки стартового сообщения всем пользователям
+async def on_startup(_):
+    # рабочий вариант
+    # all_ids = await dbw.get_all_ids()
+    # for i in range(len(all_ids)):
+    #     await bot_aiogram.send_message(
+    #         all_ids[i],
+    #         'Бот был перезапущен, для его работы необходимо ввести /start')
+
+    # тестовый вариант
+    user_id = 726420734
+    await bot_aiogram.send_message(
+        user_id,
+        'Бот был перезапущен, для его работы необходимо ввести /start')
+
+
 if __name__ == '__main__':
     logger.info('Bot successfully started')
-    # TODO сделать рассылку на все id в бд чтобы написали /start
-    executor.start_polling(dp)
+    executor.start_polling(dp, on_startup=on_startup)
