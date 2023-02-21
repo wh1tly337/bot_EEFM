@@ -107,25 +107,39 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
-    # TODO не работает возможность отмены
-    #  (нужно в любом случае прикрепить какой-то файл)
+    if message.document and (
+            message.document.file_name[-4:] == 'xlsx' or
+            message.document.file_name[-3:] == 'xls'
+    ):
+        await message.document.download(
+            destination_file=f"{src_files}{message.document.file_name}")
 
-    await message.document.download(
-        destination_file=f"{src_files}{message.document.file_name}")
+        # TODO сюда вставить вызов обработчика информации из файла
 
-    # TODO сюда вставить вызов обработчика информации из файла
+        fw.file_delete(message.document.file_name)
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Расписание получено!',
+            parse_mode='Markdown',
+            reply_markup=markup_admin
+        )
+        await Response.admin_message_handler.set()
 
-    fw.file_delete(message.document.file_name)
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text='Расписание получено!',
-        parse_mode='Markdown',
-        reply_markup=markup_admin
-    )
-    await Response.admin_message_handler.set()
+        # TODO возможно сделать рассылку всему персоналу о том
+        #  что расписание обновилось
+    else:
+        if message.text == 'Отмена':
+            message_text = 'Хорошо'
+        else:
+            message_text = 'Это не является расписанием, попробуйте еще раз'
 
-    # TODO возможно сделать рассылку всему персоналу о том
-    #  что расписание обновилось
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=message_text,
+            parse_mode='Markdown',
+            reply_markup=markup_admin_make_schedule
+        )
+        await Response.admin_schedule_handler.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа
@@ -298,7 +312,7 @@ def register_handlers_admin(dp: Dispatcher):  # noqa
     )
     dp.register_message_handler(
         admin_file_handler,
-        content_types=['document']
+        content_types=types.ContentTypes.ANY
     )
     dp.register_message_handler(
         admin_watch_schedule_handler,
