@@ -9,7 +9,6 @@ from workers import db_worker as dbw
 class Response(StatesGroup):
     admin_message_handler = State()
     admin_schedule_handler = State()
-    admin_file_handler = State()
     admin_watch_schedule_handler = State()
     admin_send_messages_handler = State()
     admin_mailing_handler = State()
@@ -67,7 +66,7 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
         },
         'Загрузить расписание': {
             'markup': markup_cancel,
-            'response': Response.admin_file_handler.set(),
+            'response': state.finish(),
             'message': 'Отправьте мне Excel файл с расписанием',
         },
         'Посмотреть расписание': {
@@ -104,27 +103,18 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 
 # функция-обработчик файла расписания от админа
-async def admin_file_handler(message: types.Message, state: FSMContext):
-    admin_file_response = message.text
-    await state.update_data(user_response=admin_file_response)
-    # TODO функция обработке присылаемого файла расписания и загрузка его в бд
-
-    if admin_file_response == 'Отмена':
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Хорошо',
-            parse_mode='Markdown',
-            reply_markup=markup_admin_make_schedule
-        )
-        await Response.admin_schedule_handler.set()
-    else:
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Расписание получено!',
-            parse_mode='Markdown',
-            reply_markup=markup_admin
-        )
-        await Response.admin_message_handler.set()
+async def admin_file_handler(message: types.Message):
+    # TODO не работает возможность отмены
+    #  (нужно в любом случае прикрепить какой-то файл)
+    await message.document.download(
+        destination_file=f"{src_files}{message.document.file_name}")
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text='Расписание получено!',
+        parse_mode='Markdown',
+        reply_markup=markup_admin
+    )
+    await Response.admin_message_handler.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа
@@ -297,7 +287,7 @@ def register_handlers_admin(dp: Dispatcher):  # noqa
     )
     dp.register_message_handler(
         admin_file_handler,
-        state=Response.admin_file_handler
+        content_types=['document']
     )
     dp.register_message_handler(
         admin_watch_schedule_handler,
