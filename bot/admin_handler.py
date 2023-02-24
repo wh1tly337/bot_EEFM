@@ -17,6 +17,8 @@ class Response(StatesGroup):
     admin_mailing_handler = State()
     admin_to_director_handler = State()
 
+# TODO пофиксить баг незарег не пишет /start, он заходит в admin hendler
+# TODO подумать над проверкой должности
 
 # функция-обработчик сообщений стартовой страницы админа
 async def admin_message_handler(message: types.Message, state: FSMContext):

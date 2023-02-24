@@ -12,6 +12,12 @@ markup_cancel = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn_cancel = types.KeyboardButton('Отмена')
 markup_cancel.add(btn_cancel)
 
+''' Кнопки ДА/НЕТ '''
+markup_yes_no = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn_yes = types.KeyboardButton('Да')
+btn_no = types.KeyboardButton('Нет')
+markup_yes_no.add(btn_yes, btn_no)
+
 ''' Кнопки для нового пользователя '''
 markup_new_user = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_new_user = types.KeyboardButton('Получить доступ')
