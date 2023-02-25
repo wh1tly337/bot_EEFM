@@ -483,17 +483,17 @@ async def director_add_documents(message: types.Message,
             current_handler = director_handlers.get('Отмена')
             break
         document_data = document_data.split(' ')
+        
         if len(document_data) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break
         id = document_data[0]
         date_start = document_data[1]
         date_finish = document_data[2]
-
         # Проверка, что даты указаны в нужном формате
         try:
-            time.strptime(date_start, '%m.%d.%Y')
-            time.strptime(date_finish, '%m.%d.%Y')
+            time.strptime(date_start, '%d.%m.%Y')
+            time.strptime(date_finish, '%d.%m.%Y')
         except Exception as ex:
             logger.error(ex)
             current_handler = director_handlers.get('Неверные данные')
