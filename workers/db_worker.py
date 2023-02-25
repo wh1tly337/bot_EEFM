@@ -61,6 +61,24 @@ async def get_all_ids():
         logger.error(ex)
 
 
+async def get_id_with_fio(emp_data):
+    try:
+        await start_connection()
+        surname = emp_data[0]
+        name = emp_data[1]
+        patronymic = emp_data[2]
+        cursor.execute(f"""
+        SELECT id
+        FROM users
+        WHERE surname = '{surname}' AND
+        name = '{name}' AND
+        patronymic = '{patronymic}'
+        """)
+        return cursor.fetchall()
+    except Exception as ex:
+        logger.error(ex)
+
+
 async def get_data(field, value, what_need='all'):
     """ Функция поиска данных """
     # field - столбец в бд, по которому поиск
@@ -111,6 +129,25 @@ async def add_new_user(
                     f'{patronymic}, '
                     f'{username}, '
                     f'{post}')
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
+
+
+async def add_new_document(id, date_start, date_finish):
+    try:
+        await start_connection()
+        cursor.execute(
+            'INSERT INTO documents'
+            '(user_id, date_start, date_finish)'
+            'VALUES (?, ?, ?)',
+            (id, date_start, date_finish)
+        )
+        connection.commit()
+        logger.info(f'Added new user to table users | '
+                    f'{id}, '
+                    f'{date_start}, '
+                    f'{date_finish}')
         await close_connection()
     except Exception as ex:
         logger.error(ex)

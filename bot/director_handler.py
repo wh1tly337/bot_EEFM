@@ -1,7 +1,11 @@
 import random
+import time
+from loguru import logger
+
 
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
+
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
@@ -19,6 +23,8 @@ class Response(StatesGroup):
     register_director_find_handler = State()
     director_change_director = State()
     director_schedule_handler = State()
+    director_finder_id = State()
+    director_add_documents = State()
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
@@ -111,7 +117,7 @@ async def register_director_emp_manage(message: types.Message,
     """ Handler для страницы управления сотрудников администратора """
     director_response = message.text
     await state.update_data(user_response=director_response)
-
+    # TODO метод удаления сотрудника
     director_handlers = {
         'Добавить сотрудника': {
             'markup': markup_cancel,
@@ -129,10 +135,10 @@ async def register_director_emp_manage(message: types.Message,
             'response': Response.register_director_emp_manage,
             'message': 'Введите фамилию сотрудника. :)',
         },
-        'Передать права директора': {
-            'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage,
-            'message': 'Теперь ты никто!',
+        'Добавить документы сотруднику': {
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
+            'message': 'Введите ФИО сотрудника, которму хотите добавить документ',
         },
         'Отмена': {
             'markup': markup_director,
@@ -305,8 +311,6 @@ async def director_change_director(message: types.Message,
     await current_handler.get('response').set()
 
 
-# TODO нужно как-то сделать один .set() на всю функцию
-#  (см пример в admin_handler)
 async def register_director_find_handler(message: types.Message,
                                          state: FSMContext):
     """ Handler для страницы поиска сотрудников администратора """
@@ -350,6 +354,108 @@ async def register_director_find_handler(message: types.Message,
     await Response.register_director_emp_manage.set()
 
 
+async def director_finder_id(message: types.Message,
+                                         state: FSMContext):
+    """ Handler поиска ид для добавления документов сотруднику """
+    emp_fio = message.text
+    await state.update_data(user_response=emp_fio)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Сотрудник найден': {
+            'message': 'Сотрудник найден его id: ',
+            'markup': markup_cancel,
+            'response': Response.director_add_documents,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
+        },
+    }
+    while True:
+        current_handler = ''
+        if emp_fio == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+        print(emp_fio)
+        emp_fio = emp_fio.split(' ')
+        if len(emp_fio) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        id = await dbw.get_id_with_fio(emp_fio)
+
+        current_handler = director_handlers.get('Сотрудник найден')
+        current_handler['message'] = current_handler['message'] + str(id)
+        break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
+async def director_add_documents(message: types.Message,
+                                         state: FSMContext):
+    """ Handler добавления документов сотруднику """
+    document_data = message.text
+    await state.update_data(user_response=document_data)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+        },
+        'Добавление документа': {
+            'message': 'Документ добавлен, введите дату следующего документа',
+            'markup': markup_cancel,
+            'response': Response.director_add_documents,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_add_documents,
+        },
+    }
+    while True:
+        current_handler = ''
+        if document_data == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+        document_data = document_data.split(' ')
+        if len(document_data) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        id = document_data[0]
+        date_start = document_data[1]
+        date_finish = document_data[2]
+
+        # Проверка, что даты указаны в нужном формате
+        try:
+            time.strptime(date_start, '%m.%d.%Y')
+            time.strptime(date_finish, '%m.%d.%Y')
+        except Exception as ex:
+            logger.error(ex)
+            current_handler = director_handlers.get('Неверные данные')
+            break
+
+        await dbw.add_new_document(id, date_start, date_finish)
+        current_handler = director_handlers.get('Добавление документа')
+        break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
 def register_handlers_director(dp: Dispatcher):  # noqa
     """ Регистратор handler'ов передает данные в main_bot.py"""
     dp.register_message_handler(
@@ -375,4 +481,12 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_schedule_handler,
         state=Response.director_schedule_handler
+    )
+    dp.register_message_handler(
+        director_finder_id,
+        state=Response.director_finder_id
+    )
+    dp.register_message_handler(
+        director_add_documents,
+        state=Response.director_add_documents
     )
