@@ -118,8 +118,6 @@ async def register_director_emp_manage(message: types.Message,
     """ Handler для страницы управления сотрудников администратора """
     director_response = message.text
     await state.update_data(user_response=director_response)
-    # TODO метод удаления сотрудника
-    # TODO не работает поиск сотрудника
     director_handlers = {
         'Добавить сотрудника': {
             'markup': markup_cancel,
@@ -135,7 +133,7 @@ async def register_director_emp_manage(message: types.Message,
         'Удалить сотрудника': {
             'markup': markup_cancel,
             'response': Response.director_remove_user,
-            'message': 'Введите фамилию сотрудника. :)',
+            'message': 'Введите ФИО сотрудника. :)',
         },
         'Добавить документы сотруднику': {
             'markup': markup_cancel,
@@ -333,6 +331,7 @@ async def register_director_find_handler(message: types.Message,
         what_need='all',
         value=username
     )
+    print(emp_data)
     if not emp_data:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -342,10 +341,10 @@ async def register_director_find_handler(message: types.Message,
         )
         await Response.register_director_emp_manage.set()
         return
-    name = emp_data[2]
     surname = emp_data[1]
-    patronymic = emp_data[2]
-    post = emp_data[3]
+    name = emp_data[2]
+    patronymic = emp_data[3]
+    post = emp_data[5]
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=f'''Сотрудник найден, его данные.
