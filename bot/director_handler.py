@@ -1,19 +1,13 @@
 import random
 
-from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-from auxiliary.all_markups import (
-    markup_director,
-    markup_director_emp,
-    markup_cancel,
-    markup_yes_no,
-    markup_doctor
-)
+from auxiliary.all_markups import *
 from auxiliary.req_data import *
-from workers import db_worker as dbw
 from bot import doctor_handler as dh
+from workers import db_worker as dbw
+
 
 class Response(StatesGroup):
     register_director_handler = State()
@@ -21,6 +15,7 @@ class Response(StatesGroup):
     register_director_create_handler = State()
     register_director_find_handler = State()
     director_change_director = State()
+    director_schedule_handler = State()
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
@@ -28,11 +23,20 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     director_response = message.text
     await state.update_data(user_response=director_response)
 
+    fio = await dbw.get_data('id', message.chat.id)
+    appeal = f"{fio[2]} {fio[3]}"
+
     director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
             'response': Response.register_director_emp_manage,
             'message': 'Доступные команды',
+        },
+        'Получить расписание': {
+            'markup': markup_admin_watch_schedule,
+            'response': Response.director_schedule_handler,
+            'message': f"{appeal}, на какой период "
+                       f"вы хотите посмотреть расписание?",
         },
         None: {
             'markup': markup_director,
@@ -49,6 +53,53 @@ async def register_director_handler(message: types.Message, state: FSMContext):
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
+    await command_dict.get('response').set()
+
+
+async def director_schedule_handler(message: types.Message, state: FSMContext):
+    director_schedule_response = message.text  # noqa
+    await state.update_data(user_response=director_schedule_response)
+
+    director_handlers = {
+        'На сегодня': {
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+            'message': 'Расписание на сегодня:',
+            'func': ...,
+            # TODO добавить возможность смотреть расписание на сегодня
+        },
+        'На неделю': {
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+            'message': 'Расписание на наделю:',
+            'func': ...,
+            # TODO добавить возможность смотреть расписание на неделю
+        },
+        'Отмена': {
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+            'message': 'Хорошо',
+        },
+        None: {
+            'markup': markup_admin_watch_schedule,
+            'response': Response.director_schedule_handler,
+            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
+        }
+    }
+
+    command_dict = director_handlers.get(director_schedule_response)  # noqa
+    if not command_dict:
+        command_dict = director_handlers[None]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup')
+    )
+
+    if command_dict.get('func'):
+        await command_dict.get('func')
+
     await command_dict.get('response').set()
 
 
@@ -135,7 +186,8 @@ async def register_director_create_handler(message: types.Message,
             'response': Response.register_director_emp_manage,
         },
         'Смена директора': {
-            'message': 'Если вы действительно хотите сменить директора введите его ФИО повторно',
+            'message': 'Если вы действительно хотите сменить директора '
+                       'введите его ФИО повторно',
             'markup': markup_cancel,
             'response': Response.director_change_director,
         }
@@ -174,7 +226,8 @@ async def register_director_create_handler(message: types.Message,
         temporary_password = random.randint(100000, 1000000)
         if not command_dict:
             command_dict = director_handlers['Добавление пользователя']
-            command_dict['message'] = command_dict.get('message') + str(temporary_password)
+            command_dict['message'] = command_dict.get('message') + str(
+                temporary_password)
             await dbw.add_new_user(
                 id_tg=temporary_password,
                 surname=surname,
@@ -185,12 +238,13 @@ async def register_director_create_handler(message: types.Message,
             )
 
     await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=command_dict.get('message'),
-            parse_mode='Markdown',
-            reply_markup=command_dict.get('markup'),
-        )
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup'),
+    )
     await command_dict.get('response').set()
+
 
 async def director_change_director(message: types.Message,
                                    state: FSMContext):
@@ -215,19 +269,20 @@ async def director_change_director(message: types.Message,
     }
     while True:
         if director_response == 'Отмена':
-            current_hendler = director_handlers['Отмена']
+            current_handler = director_handlers.get('Отмена')
             break
         dir_data = director_response.split(' ')
-        if len(dir_data) != 3 and not current_hendler:
-            current_hendler = director_handlers['Неверные данные']
+        if len(dir_data) != 3 and not current_handler:
+            current_handler = director_handlers.get('Неверные данные')
             break
         dir_data = director_response.split(' ')
         surname = dir_data[0]
         name = dir_data[1]
         patronymic = dir_data[2]
         temporary_password = random.randint(100000, 1000000)
-        current_hendler = director_handlers['Смена директора']
-        current_hendler['message'] = current_hendler.get('message') + str(temporary_password)
+        current_handler = director_handlers.get('Смена директора')
+        current_handler['message'] = current_handler.get('message') + str(
+            temporary_password)
         await dbw.add_new_user(
             id_tg=temporary_password,
             surname=surname,
@@ -240,13 +295,12 @@ async def director_change_director(message: types.Message,
         break
 
     await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=current_hendler.get('message'),
-            parse_mode='Markdown',
-            reply_markup=current_hendler.get('markup'),
-        )
-    await current_hendler.get('response').set()
-
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup'),
+    )
+    await current_handler.get('response').set()
 
 
 # TODO нужно как-то сделать один .set() на всю функцию
@@ -315,4 +369,8 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_change_director,
         state=Response.director_change_director
+    )
+    dp.register_message_handler(
+        director_schedule_handler,
+        state=Response.director_schedule_handler
     )

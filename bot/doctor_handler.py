@@ -21,7 +21,7 @@ async def doctor_handler(message: types.Message, state: FSMContext):
 
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text=f"{appeal},на какой период вы хотите посмотреть расписание?",
+            text=f"{appeal}, на какой период вы хотите посмотреть расписание?",
             parse_mode='Markdown',
             reply_markup=markup_admin_watch_schedule
         )

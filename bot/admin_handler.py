@@ -3,6 +3,9 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
+from bot import (
+    message_handler as mh,
+)
 from workers import (
     db_worker as dbw,
     file_worker as fw
@@ -17,7 +20,7 @@ class Response(StatesGroup):
     admin_mailing_handler = State()
     admin_to_director_handler = State()
 
-# TODO пофиксить баг незарег не пишет /start, он заходит в admin hendler
+
 # TODO подумать над проверкой должности
 
 # функция-обработчик сообщений стартовой страницы админа
@@ -100,9 +103,9 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
     if command_dict.get('func'):
         await command_dict.get('func').send_document(
-                chat_id=message.chat.id,
-                document=open(f"{src_schedule_template}", 'rb')
-            )
+            chat_id=message.chat.id,
+            document=open(f"{src_schedule_template}", 'rb')
+        )
 
     if command_dict.get('response'):
         await command_dict.get('response').set()
@@ -112,42 +115,56 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
-    if message.document and (
-            message.document.file_name[-4:] == 'xlsx' or
-            message.document.file_name[-3:] == 'xls'
-    ):
-        await message.document.download(
-            destination_file=f"{src_files}{message.document.file_name}")
-
-        # TODO закончить обработчик информации из файла
-        filename = message.document.file_name.split('.')
-        ender = filename[1]
-        filename = filename[0]
-        fw.all_cycle(filename, ender)
-
+    admin_id = await dbw.get_data(
+        field='post',
+        what_need='id',
+        value='admin'
+    )
+    if message.chat.id != admin_id:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text='Расписание получено!',
-            parse_mode='Markdown',
-            reply_markup=markup_admin
+            text=f"{message.from_user.full_name}"
+                 f", к сожалению у вас нет доступа к данному боту",
+            reply_markup=markup_new_user
         )
-        response = Response.admin_message_handler
-
-        # TODO возможно сделать рассылку всему персоналу о том
-        #  что расписание обновилось
+        response = mh.Response.authorization_handler
     else:
-        if message.text == 'Отмена':
-            message_text = 'Хорошо'
-        else:
-            message_text = 'Это не является расписанием, попробуйте еще раз'
+        if message.document and (
+                message.document.file_name[-4:] == 'xlsx' or
+                message.document.file_name[-3:] == 'xls'
+        ):
+            await message.document.download(
+                destination_file=f"{src_files}{message.document.file_name}")
 
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=message_text,
-            parse_mode='Markdown',
-            reply_markup=markup_admin_make_schedule
-        )
-        response = Response.admin_schedule_handler
+            # TODO закончить обработчик информации из файла
+            filename = message.document.file_name.split('.')
+            ender = filename[1]
+            filename = filename[0]
+            fw.all_cycle(filename, ender)
+
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text='Расписание получено!',
+                parse_mode='Markdown',
+                reply_markup=markup_admin
+            )
+            response = Response.admin_message_handler
+
+            # TODO возможно сделать рассылку всему персоналу о том
+            #  что расписание обновилось
+        else:
+            if message.text == 'Отмена':
+                message_text = 'Хорошо'
+            else:
+                message_text = 'Это не является расписанием, попробуйте еще раз'
+
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text=message_text,
+                parse_mode='Markdown',
+                reply_markup=markup_admin_make_schedule
+            )
+            response = Response.admin_schedule_handler
 
     await response.set()
 
