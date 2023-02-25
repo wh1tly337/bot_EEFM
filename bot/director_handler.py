@@ -9,6 +9,9 @@ from bot import doctor_handler as dh
 from workers import db_worker as dbw
 
 
+# TODO написать функцию по обновлению информации персонала
+#  (вдруг опечатка в фамилии и тп)
+
 class Response(StatesGroup):
     register_director_handler = State()
     register_director_emp_manage = State()
@@ -156,8 +159,6 @@ async def register_director_emp_manage(message: types.Message,
     await command_dict.get('response').set()
 
 
-# TODO нужно как-то сделать один .set() на всю функцию
-#  (см пример в admin_handler)
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
     """ Handler для страницы добавления сотрудников администратора """
@@ -268,6 +269,7 @@ async def director_change_director(message: types.Message,
         },
     }
     while True:
+        current_handler = ''
         if director_response == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break

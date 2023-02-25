@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
 from bot import (
-    message_handler as mh,
+    bot_commands as bc,
 )
 from workers import (
     db_worker as dbw,
@@ -115,19 +115,8 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
-    admin_id = await dbw.get_data(
-        field='post',
-        what_need='id',
-        value='admin'
-    )
-    if message.chat.id != admin_id:
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=f"{message.from_user.full_name}"
-                 f", к сожалению у вас нет доступа к данному боту",
-            reply_markup=markup_new_user
-        )
-        response = mh.Response.authorization_handler
+    if message.text:
+        await bc.start_message(message)
     else:
         if message.document and (
                 message.document.file_name[-4:] == 'xlsx' or
@@ -166,7 +155,7 @@ async def admin_file_handler(message: types.Message):
             )
             response = Response.admin_schedule_handler
 
-    await response.set()
+        await response.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа
