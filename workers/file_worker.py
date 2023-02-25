@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import openpyxl
 import pandas as pd
@@ -6,22 +7,10 @@ import pandas as pd
 from auxiliary.req_data import *
 
 
-# import openpyxl as op
-
-
-# TODO xlsx to csv/db and handle info function.
-#  Нужно добавлять из excel таблицы информацию в отдельную таблицу бд, чтобы
-#  там хранилась информация о целом месяце, потом старая информация будет
-#  удалятся. Программа будет считывать дату из excel и вставлять информацию по
-#  этой дате в бд (ключевое поле дата), те администратор заполняет расписание
-#  на неделю, а в таблице бд информация хранится за прошлую, текущую и
-#  следующую неделю
-
 # функция для улучшения читабельности кода и удобства (вызывает другие функции)
 def all_cycle(filename, ender):
     xlsx_to_csv(filename, ender)
     get_some_info()
-    # dbw.add_schedule(filename)
     file_delete(filename, ender)
 
 
@@ -44,56 +33,59 @@ def file_delete(filename, ender):
 
 # TODO automatically date update in schedule_template.xlsx function
 
-# TODO add watch schedule on today and on week function
-
-def get_some_info():
+# Шешенин Владимир Киприянович
+# Газимов Игорь Грегорьевич
+def get_some_info(doctor='Газимов Игорь Грегорьевич', time_period='week'):
     wb_obj = openpyxl.load_workbook(src_schedule_template)  # обработка файла
-    # TODO лист нужно будет вызвать с функцией (по фамилии)
-    sheet_obj = wb_obj.active  # выбор листа для работы
+    sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фамилии)
 
-    row = sheet_obj.max_row  # максимальное количество строк
-    column = sheet_obj.max_column  # максимальное количество столбцов
+    max_row = sheet_obj.max_row  # максимальное количество строк
+    max_column = sheet_obj.max_column  # максимальное количество строк
 
-    counter, start, finish = 0, 1, 8
-    s1, s2 = 1, 2
-    # TODO поменять этот алгоритм, потому что это какой-то некрасивый пиздец
-    for _ in range(7):  # этот цикл проходит по 7 дням в неделе
-        day_none_counter = 0
-        # 1 = с заголовками, датой, днем неделей
-        # 4 = просто записи
-        for i in range(1, row + 1):  # цикл проходящий по всем строкам
-            if i == s1 or i == s2:
-                finish = start + 2
-                f1 = 2
-            else:
-                finish = start + 7
-                f1 = 7
+    if time_period == 'today':
+        today = datetime.now().strftime("%d-%m-%Y")
+        cords = None
+        for i in range(1, max_column + 1):
+            cell = sheet_obj.cell(row=2, column=i).value
+            try:
+                if cell.strftime("%d-%m-%Y") == today:
+                    cords = i
+            except Exception:
+                continue
 
-            none_counter = 0
-            result = []
-            for j in range(start, finish):  # цикл проходящий по столбцам
-                # от start до finish
-                cell_obj = sheet_obj.cell(row=i, column=j)
-
-                if cell_obj.value is None:
-                    none_counter += 1
-
-                result.append(cell_obj.value)
-
-                counter += 1
-                if counter == f1:
-                    if none_counter == f1:
-                        day_none_counter += 1
-                    else:
-                        print(*result)
-                        print("")
-
-                    counter = 0
-                    break
-
-        if day_none_counter == row - 3:
-            print('Сегодня нет записей')
-
-        start, finish = finish + 1, start + 7
-        print("")
-        print("")
+        if cords is None:
+            print("Нет такой даты")
+        else:
+            for i in range(4, max_row + 1):
+                none_counter = 0
+                counter = 0
+                result = []
+                for j in range(cords, cords + 7):
+                    cell = sheet_obj.cell(row=i, column=j).value
+                    result.append(cell)
+                    if cell is None:
+                        none_counter += 1
+                    counter += 1
+                    if counter == 7:
+                        if none_counter != 7:
+                            print(result)
+                        break
+    else:
+        counter, start, finish = 0, 1, 8
+        for _ in range(7):
+            for i in range(2, max_row + 1):
+                none_counter = 0
+                result = []
+                for j in range(start, finish):
+                    cell = sheet_obj.cell(row=i, column=j).value
+                    result.append(cell)
+                    if cell is None:
+                        none_counter += 1
+                    counter += 1
+                    if counter == 7:
+                        if none_counter != 7:
+                            print(result)
+                        else:
+                            print("Нет записей")
+                        break
+            start, finish = finish + 1, start + 7
