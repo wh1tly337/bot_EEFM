@@ -169,9 +169,7 @@ async def remove_user(id_tg):
     """ Функция удаления пользователя из бд"""
     try:
         await start_connection()
-        cursor.execute(
-            f"""DELETE FROM users WHERE id = '{id_tg}'""",
-        )
+        cursor.execute(f"""DELETE FROM users WHERE id = '{int(id_tg)}'""")
         connection.commit()
         logger.info(f'Delete user from table users | {id_tg}')
         await close_connection()

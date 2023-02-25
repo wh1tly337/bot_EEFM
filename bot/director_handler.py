@@ -25,6 +25,7 @@ class Response(StatesGroup):
     director_schedule_handler = State()
     director_finder_id = State()
     director_add_documents = State()
+    director_remove_user = State()
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
@@ -118,6 +119,7 @@ async def register_director_emp_manage(message: types.Message,
     director_response = message.text
     await state.update_data(user_response=director_response)
     # TODO метод удаления сотрудника
+    # TODO не работает поиск сотрудника
     director_handlers = {
         'Добавить сотрудника': {
             'markup': markup_cancel,
@@ -131,14 +133,14 @@ async def register_director_emp_manage(message: types.Message,
             'message': 'Введите фамилию сотрудника. :)',
         },
         'Удалить сотрудника': {
-            'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage,
+            'markup': markup_cancel,
+            'response': Response.director_remove_user,
             'message': 'Введите фамилию сотрудника. :)',
         },
         'Добавить документы сотруднику': {
             'markup': markup_cancel,
             'response': Response.director_finder_id,
-            'message': 'Введите ФИО сотрудника, которму хотите добавить документ',
+            'message': 'Введите ФИО сотрудника, которому хотите добавить документ',
         },
         'Отмена': {
             'markup': markup_director,
@@ -192,6 +194,7 @@ async def register_director_create_handler(message: types.Message,
             'markup': markup_director_emp,
             'response': Response.register_director_emp_manage,
         },
+        # TODO пофиксить смену директора, все директоры пропадают, появляются доктора
         'Смена директора': {
             'message': 'Если вы действительно хотите сменить директора '
                        'введите его ФИО повторно',
@@ -214,7 +217,7 @@ async def register_director_create_handler(message: types.Message,
         post = emp_data[3]
 
         posts = {
-            'doctor': ['doctor', 'доктор', 'док'],
+            'doctor': ['doctor', 'доктор', 'док', 'врач'],
             'director': ['director', 'директор'],
             'admin': ['admin', 'админ', 'администратор']
         }
@@ -326,7 +329,7 @@ async def register_director_find_handler(message: types.Message,
         await Response.register_director_emp_manage.set()
         return
     emp_data = await dbw.get_data(
-        field='username',
+        field='surname',
         what_need='all',
         value=username
     )
@@ -341,12 +344,14 @@ async def register_director_find_handler(message: types.Message,
         return
     name = emp_data[2]
     surname = emp_data[1]
+    patronymic = emp_data[2]
     post = emp_data[3]
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=f'''Сотрудник найден, его данные.
         Имя: {name}
         Фамилия: {surname}
+        Отчество: {patronymic}
         Должность: {post}''',
         parse_mode='Markdown',
         reply_markup=markup_director_emp
@@ -391,6 +396,57 @@ async def director_finder_id(message: types.Message,
         current_handler = director_handlers.get('Сотрудник найден')
         current_handler['message'] = current_handler['message'] + str(id)
         break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
+async def director_remove_user(message: types.Message,
+                                         state: FSMContext):
+    """ Handler удаления сотрудника """
+    emp_fio = message.text
+    await state.update_data(user_response=emp_fio)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Сотрудник удалён': {
+            'message': 'Сотрудник был удалён',
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
+        },
+    }
+    while True:
+        current_handler = ''
+
+        if emp_fio == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+
+        emp_fio = emp_fio.split(' ')
+        if len(emp_fio) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        id = await dbw.get_id_with_fio(emp_fio)
+        id = id[0][0]
+        await dbw.remove_user(id)
+
+        current_handler = director_handlers.get('Сотрудник удалён')
+
+        current_handler['message'] = current_handler['message'] + str(id)
+        break
+
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=current_handler.get('message'),
@@ -489,4 +545,8 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_add_documents,
         state=Response.director_add_documents
+    )
+    dp.register_message_handler(
+        director_remove_user,
+        state=Response.director_remove_user
     )
