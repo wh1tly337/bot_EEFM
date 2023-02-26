@@ -2,41 +2,36 @@ import os
 from datetime import datetime
 
 import openpyxl
-import pandas as pd
 
 from auxiliary.req_data import *
 
 
 # функция для улучшения читабельности кода и удобства (вызывает другие функции)
 def all_cycle(filename, ender):
-    xlsx_to_csv(filename, ender)
-    # get_schedule()
-    file_delete(filename, ender)
-
-
-# конвертирует xlsx файлы в csv
-def xlsx_to_csv(filename, ender):
-    converter = pd.read_excel(f"{src_files}{filename}.{ender}")
-    converter.to_csv(
-        f"{src_files}{filename}.csv",
-        index=False,
-        header=True,
-        sep=";"
-    )
+    file_delete()
+    file_renamer(filename, ender)
 
 
 # удаляет временные xlsx, csv файлы
-def file_delete(filename, ender):
-    os.remove(f"{src_files}{filename}.{ender}")
-    os.remove(f"{src_files}{filename}.csv")
+def file_delete():
+    try:
+        os.remove(src_current_schedule)
+    except Exception:
+        pass
+
+
+def file_renamer(filename, ender):
+    os.rename(
+        f"{src_files}{filename}.{ender}",
+        f"{src_files}current_schedule.xlsx"
+    )
 
 
 # TODO automatically date update in schedule_template.xlsx function
 
 # функция обработчик для получения расписания
 async def get_schedule(doctor, time_period):
-    # TODO поменять путь до расписания на нормальный
-    wb_obj = openpyxl.load_workbook(src_schedule_template)  # обработка файла
+    wb_obj = openpyxl.load_workbook(src_current_schedule)  # обработка файла
     sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
 
     max_row = sheet_obj.max_row  # максимальное количество строк

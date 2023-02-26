@@ -128,7 +128,6 @@ async def admin_file_handler(message: types.Message):
             await message.document.download(
                 destination_file=f"{src_files}{message.document.file_name}")
 
-            # TODO закончить обработчик информации из файла
             filename = message.document.file_name.split('.')
             ender = filename[1]
             filename = filename[0]
