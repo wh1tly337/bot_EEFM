@@ -12,6 +12,11 @@ from auxiliary.req_data import *
 from bot import doctor_handler as dh
 from workers import db_worker as dbw
 
+# переменная для функции добавления документов
+current_employee_id = 0
+
+#переменная для фукнции смены директора
+check_fio = ''
 
 # TODO написать функцию по обновлению информации персонала
 #  (вдруг опечатка в фамилии и тп)
@@ -168,6 +173,7 @@ async def register_director_emp_manage(message: types.Message,
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
     """ Handler для страницы добавления сотрудников администратора """
+    global check_fio
     director_response = message.text
     await state.update_data(user_response=director_response)
     command_dict = None
@@ -230,6 +236,9 @@ async def register_director_create_handler(message: types.Message,
 
         if post == 'director':
             command_dict = director_handlers['Смена директора']
+            check_fio = f'{surname} {name} {patronymic}'
+            logger.info(f'Redefine | check_fio: {check_fio}')
+            
 
         temporary_password = random.randint(100000, 1000000)
         if not command_dict:
@@ -256,6 +265,8 @@ async def register_director_create_handler(message: types.Message,
 
 async def director_change_director(message: types.Message,
                                    state: FSMContext):
+    global check_fio
+    logger.info(f'Director try to change | check_fio: {check_fio}')
     director_response = message.text
     await state.update_data(user_response=director_response)
     director_handlers = {
@@ -272,7 +283,7 @@ async def director_change_director(message: types.Message,
         'Неверные данные': {
             'message': 'Данные введены неверно, попробуйте ещё раз',
             'markup': markup_cancel,
-            'response': Response.register_director_handler,
+            'response': Response.register_director_create_handler,
         },
     }
     while True:
@@ -284,6 +295,11 @@ async def director_change_director(message: types.Message,
         if len(dir_data) != 3 and not current_handler:
             current_handler = director_handlers.get('Неверные данные')
             break
+
+        if director_response != check_fio:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+
         dir_data = director_response.split(' ')
         surname = dir_data[0]
         name = dir_data[1]
@@ -292,6 +308,7 @@ async def director_change_director(message: types.Message,
         current_handler = director_handlers.get('Смена директора')
         current_handler['message'] = current_handler.get('message') + str(
             temporary_password)
+        await dbw.update_user('post', 'director', 'doctor')
         await dbw.add_new_user(
             id_tg=temporary_password,
             surname=surname,
@@ -300,7 +317,6 @@ async def director_change_director(message: types.Message,
             username=surname,
             post='director',
         )
-        await dbw.update_user('post', 'director', 'doctor')
         break
 
     await bot_aiogram.send_message(
@@ -361,6 +377,7 @@ async def register_director_find_handler(message: types.Message,
 async def director_finder_id(message: types.Message,
                                          state: FSMContext):
     """ Handler поиска ид для добавления документов сотруднику """
+    global current_employee_id
     emp_fio = message.text
     await state.update_data(user_response=emp_fio)
     director_handlers = {
@@ -370,9 +387,15 @@ async def director_finder_id(message: types.Message,
             'response': Response.register_director_emp_manage,
         },
         'Сотрудник найден': {
-            'message': 'Сотрудник найден его id: ',
+            'message': 'Сотрудник найден, введите даты начала'
+                       'и окончания действия документа',
             'markup': markup_cancel,
             'response': Response.director_add_documents,
+        },
+        'Сотрудник не найден': {
+            'message': 'Сотрудник не найден, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
         },
         'Неверные данные': {
             'message': 'Данные введены неверно, попробуйте ещё раз',
@@ -390,10 +413,14 @@ async def director_finder_id(message: types.Message,
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break
-        id = await dbw.get_id_with_fio(emp_fio)
 
+        id = await dbw.get_id_with_fio(emp_fio)
+        if not id:
+            current_handler = director_handlers.get('Сотрудник не найден')
+            break
+
+        current_employee_id = id[0][0]
         current_handler = director_handlers.get('Сотрудник найден')
-        current_handler['message'] = current_handler['message'] + str(id)
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -457,6 +484,7 @@ async def director_remove_user(message: types.Message,
 
 async def director_add_documents(message: types.Message,
                                          state: FSMContext):
+    global current_employee_id
     """ Handler добавления документов сотруднику """
     document_data = message.text
     await state.update_data(user_response=document_data)
@@ -484,14 +512,11 @@ async def director_add_documents(message: types.Message,
             break
         document_data = document_data.split(' ')
         
-        if len(document_data) != 3:
-            current_handler = director_handlers.get('Неверные данные')
-            break
-        id = document_data[0]
-        date_start = document_data[1]
-        date_finish = document_data[2]
         # Проверка, что даты указаны в нужном формате
         try:
+            id = current_employee_id
+            date_start = document_data[0]
+            date_finish = document_data[1]
             time.strptime(date_start, '%d.%m.%Y')
             time.strptime(date_finish, '%d.%m.%Y')
         except Exception as ex:
