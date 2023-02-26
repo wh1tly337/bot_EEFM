@@ -36,10 +36,6 @@ async def start_message(message: types.Message):
         # в файле message_handler.py)
         response = mh.Response.authorization_handler
     else:
-
-        msg_log_in = 'User log in'
-        print_log_info(message, msg_log_in)
-
         result = await dbw.get_data(
             field='id',
             what_need='post',
@@ -75,6 +71,10 @@ async def start_message(message: types.Message):
             parse_mode='Markdown',
             reply_markup=markup
         )
+
+        await dbw.login_user(message.chat.id)
+        msg_log_in = 'User log in'
+        print_log_info(message, msg_log_in)
 
     await response.set()
 

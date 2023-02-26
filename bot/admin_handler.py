@@ -21,8 +21,6 @@ class Response(StatesGroup):
     admin_to_director_handler = State()
 
 
-# TODO подумать над проверкой должности
-
 # функция-обработчик сообщений стартовой страницы админа
 async def admin_message_handler(message: types.Message, state: FSMContext):
     admin_response = message.text
@@ -74,6 +72,13 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             'finish': state,
             'message': 'Отправьте мне Excel файл с расписанием',
         },
+        # TODO как реализовать просмотр расписание админом и директором?
+        #  1) через просмотр его сразу для всего персонала, но будет очень
+        #  очень много текста
+        #  2) через просмотр расписания для определенного сотрудника
+        #  3) через реализацию новой функции для просмотра по кабинетам
+        #  (но это вроде как тяжело)
+        #  4) через выбор кнопками для (2) и (3) вариантов
         'Посмотреть расписание': {
             'markup': markup_admin_watch_schedule,
             'response': Response.admin_watch_schedule_handler,
@@ -115,49 +120,59 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
-    # TODO в этой проверке ошибка
-    #  (загрузить расписание -> отмена -> заново регистрирует)
-    #  (не включается второй else, тк проходит проверку текст из первого if)
-    if message.text:
+    all_ids = await dbw.get_all_ids()
+    log_stat = (await dbw.get_data('id', message.chat.id))[6]
+    if (message.chat.id not in all_ids) or (log_stat == 0):
         await bc.start_message(message)
     else:
-        if message.document and (
-                message.document.file_name[-4:] == 'xlsx' or
-                message.document.file_name[-3:] == 'xls'
-        ):
-            await message.document.download(
-                destination_file=f"{src_files}{message.document.file_name}")
-
-            filename = message.document.file_name.split('.')
-            ender = filename[1]
-            filename = filename[0]
-            fw.all_cycle(filename, ender)
-
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text='Расписание получено!',
-                parse_mode='Markdown',
-                reply_markup=markup_admin
-            )
-            response = Response.admin_message_handler
-
-            # TODO возможно сделать рассылку всему персоналу о том
-            #  что расписание обновилось
-        else:
+        if message.text:
             if message.text == 'Отмена':
-                message_text = 'Хорошо'
+                text = 'Хорошо'
             else:
-                message_text = 'Это не является расписанием, попробуйте еще раз'
+                text = 'Это не является расписанием'
 
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
-                text=message_text,
+                text=text,
                 parse_mode='Markdown',
                 reply_markup=markup_admin_make_schedule
             )
-            response = Response.admin_schedule_handler
+            await Response.admin_schedule_handler.set()
+        else:
+            if message.document:
+                if message.document.file_name[-4:] == 'xlsx' or \
+                        message.document.file_name[-3:] == 'xls':
+                    await message.document.download(
+                        destination_file=f"{src_files}"
+                                         f"{message.document.file_name}")
 
-        await response.set()
+                    filename = message.document.file_name.split('.')
+                    ender = filename[1]
+                    filename = filename[0]
+                    fw.all_cycle(filename, ender)
+
+                    await bot_aiogram.send_message(
+                        chat_id=message.chat.id,
+                        text='Расписание получено!',
+                        parse_mode='Markdown',
+                        reply_markup=markup_admin
+                    )
+                    response = Response.admin_message_handler
+
+                    # TODO возможно сделать рассылку всему персоналу о том
+                    #  что расписание обновилось
+                else:
+                    message_text = 'Неверный формат файла расписания'
+
+                    await bot_aiogram.send_message(
+                        chat_id=message.chat.id,
+                        text=message_text,
+                        parse_mode='Markdown',
+                        reply_markup=markup_admin_make_schedule
+                    )
+                    response = Response.admin_schedule_handler
+
+                await response.set()
 
 
 # функция-обработчик сообщений третьей страницы расписания для админа

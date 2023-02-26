@@ -9,6 +9,7 @@ from bot import (
     admin_handler as ah,
     director_handler as dirh
 )
+from workers import db_worker as dbw
 
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
@@ -45,6 +46,14 @@ async def startup_message(_):
     )
 
 
+async def shutdown_move(_):
+    await dbw.logout_user()
+
+
 if __name__ == '__main__':
     logger.info('Bot successfully started')
-    executor.start_polling(dp, on_startup=startup_message)
+    executor.start_polling(
+        dp,
+        on_startup=startup_message,
+        on_shutdown=shutdown_move
+    )

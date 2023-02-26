@@ -100,6 +100,26 @@ async def get_data(field, value, what_need='all'):
         logger.error(ex)
 
 
+async def login_user(tg_id):
+    try:
+        await start_connection()
+        cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {tg_id}""")
+        connection.commit()
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
+
+
+async def logout_user():
+    try:
+        await start_connection()
+        cursor.execute(f"""UPDATE users SET log_stat = 0 WHERE log_stat = 1""")
+        connection.commit()
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
+
+
 async def add_new_user(
         id_tg,
         surname,

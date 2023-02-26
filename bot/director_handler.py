@@ -1,11 +1,9 @@
 import random
 import time
-from loguru import logger
-
 
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
-
+from loguru import logger
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
@@ -15,8 +13,9 @@ from workers import db_worker as dbw
 # переменная для функции добавления документов
 current_employee_id = 0
 
-#переменная для фукнции смены директора
+# переменная для фукнции смены директора
 check_fio = ''
+
 
 # TODO написать функцию по обновлению информации персонала
 #  (вдруг опечатка в фамилии и тп)
@@ -80,14 +79,14 @@ async def director_schedule_handler(message: types.Message, state: FSMContext):
             'markup': markup_director,
             'response': Response.register_director_handler,
             'message': 'Расписание на сегодня:',
-            'func': ...,
+            'func': 'hello day',
             # TODO добавить возможность смотреть расписание на сегодня
         },
         'На неделю': {
             'markup': markup_director,
             'response': Response.register_director_handler,
             'message': 'Расписание на наделю:',
-            'func': ...,
+            'func': 'hello week',
             # TODO добавить возможность смотреть расписание на неделю
         },
         'Отмена': {
@@ -113,7 +112,7 @@ async def director_schedule_handler(message: types.Message, state: FSMContext):
     )
 
     if command_dict.get('func'):
-        await command_dict.get('func')
+        print(command_dict.get('func'))
 
     await command_dict.get('response').set()
 
@@ -238,7 +237,6 @@ async def register_director_create_handler(message: types.Message,
             command_dict = director_handlers['Смена директора']
             check_fio = f'{surname} {name} {patronymic}'
             logger.info(f'Redefine | check_fio: {check_fio}')
-            
 
         temporary_password = random.randint(100000, 1000000)
         if not command_dict:
@@ -375,7 +373,7 @@ async def register_director_find_handler(message: types.Message,
 
 
 async def director_finder_id(message: types.Message,
-                                         state: FSMContext):
+                             state: FSMContext):
     """ Handler поиска ид для добавления документов сотруднику """
     global current_employee_id
     emp_fio = message.text
@@ -432,7 +430,7 @@ async def director_finder_id(message: types.Message,
 
 
 async def director_remove_user(message: types.Message,
-                                         state: FSMContext):
+                               state: FSMContext):
     """ Handler удаления сотрудника """
     emp_fio = message.text
     await state.update_data(user_response=emp_fio)
@@ -483,7 +481,7 @@ async def director_remove_user(message: types.Message,
 
 
 async def director_add_documents(message: types.Message,
-                                         state: FSMContext):
+                                 state: FSMContext):
     global current_employee_id
     """ Handler добавления документов сотруднику """
     document_data = message.text
@@ -511,7 +509,7 @@ async def director_add_documents(message: types.Message,
             current_handler = director_handlers.get('Отмена')
             break
         document_data = document_data.split(' ')
-        
+
         # Проверка, что даты указаны в нужном формате
         try:
             id = current_employee_id
