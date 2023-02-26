@@ -3,7 +3,10 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
-from workers import db_worker as dbw
+from workers import (
+    db_worker as dbw,
+    file_worker as fw,
+)
 
 
 class Response(StatesGroup):
@@ -43,16 +46,12 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
         'На сегодня': {
             'markup': markup_doctor,
             'response': Response.doctor_handler,
-            'message': 'Расписание на сегодня:',
-            'func': ...,
-            # TODO добавить возможность смотреть расписание на сегодня
+            'func': 'today',
         },
         'На неделю': {
             'markup': markup_doctor,
             'response': Response.doctor_handler,
-            'message': 'Расписание на наделю:',
-            'func': ...,
-            # TODO добавить возможность смотреть расписание на неделю
+            'func': 'week',
         },
         'Отмена': {
             'markup': markup_doctor,
@@ -69,17 +68,29 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
     command_dict = doctor_handlers.get(doctor_schedule_response)  # noqa
     if not command_dict:
         command_dict = doctor_handlers[None]
+
+    if command_dict.get('func'):
+        text = await get_data_form_schedule(message, command_dict.get('func'))
+    else:
+        text = command_dict.get('message')
+
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
-        text=command_dict.get('message'),
+        text=text,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
 
-    if command_dict.get('func'):
-        await command_dict.get('func')
-
     await command_dict.get('response').set()
+
+
+async def get_data_form_schedule(message, time_period):
+    fio = await dbw.get_data('id', message.chat.id),
+    fio = f"{fio[0][1]} {fio[0][2]} {fio[0][3]}"
+
+    result = await fw.get_schedule(fio, time_period)
+
+    return result
 
 
 # регистратор передающий данные в main_bot.py

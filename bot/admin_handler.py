@@ -115,6 +115,9 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
+    # TODO в этой проверке ошибка
+    #  (загрузить расписание -> отмена -> заново регистрирует)
+    #  (не включается второй else, тк проходит проверку текст из первого if)
     if message.text:
         await bc.start_message(message)
     else:
