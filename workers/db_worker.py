@@ -86,7 +86,6 @@ async def get_data(field, value, what_need='all'):
     # value - то, чему равен столбец в бд
     try:
         await start_connection()
-        # cursor.execute(f"""SELECT * FROM users""")
         cursor.execute(f"""SELECT * FROM users WHERE {field} = '{value}'""")
         if what_need == 'id':
             result = cursor.fetchall()[0][0]
@@ -94,6 +93,21 @@ async def get_data(field, value, what_need='all'):
             result = cursor.fetchall()[0][5]
         else:
             result = cursor.fetchall()[0]
+        await close_connection()
+        return result
+    except Exception as ex:
+        logger.error(ex)
+
+
+async def get_documents(id):
+    """ Функция поиска документов """
+    try:
+        await start_connection()
+        cursor.execute(f"""SELECT date_start, date_finish, name
+        FROM documents
+        WHERE user_id = {id}""")
+        result = cursor.fetchall()
+        print(result)
         await close_connection()
         return result
     except Exception as ex:
@@ -154,14 +168,15 @@ async def add_new_user(
         logger.error(ex)
 
 
-async def add_new_document(id, date_start, date_finish):
+async def add_new_document(id, date_start, date_finish, name):
+    ''' Функция добавления документа '''
     try:
         await start_connection()
         cursor.execute(
             'INSERT INTO documents'
-            '(user_id, date_start, date_finish)'
-            'VALUES (?, ?, ?)',
-            (id, date_start, date_finish)
+            '(user_id, date_start, date_finish, name)'
+            'VALUES (?, ?, ?, ?)',
+            (id, date_start, date_finish, name)
         )
         connection.commit()
         logger.info(f'Added new document to table documents | '

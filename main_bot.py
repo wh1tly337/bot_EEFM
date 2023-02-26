@@ -37,8 +37,8 @@ async def startup_message(_):
     #         'Бот был перезапущен, для его работы необходимо ввести /start')
 
     # тестовый вариант
-    user_id = 726420734
-    # user_id = 577906481
+    # user_id = 726420734
+    user_id = 577906481
     await bot_aiogram.send_message(
         user_id,
         'Бот был перезапущен, для его работы необходимо отправить /start '

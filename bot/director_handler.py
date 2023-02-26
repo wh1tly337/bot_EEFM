@@ -36,10 +36,9 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     """ Handler для стартовой страницы администратора """
     director_response = message.text
     await state.update_data(user_response=director_response)
-
     fio = await dbw.get_data('id', message.chat.id)
+    logger.info(f'Стартовая страница директора | {fio}')
     appeal = f"{fio[2]} {fio[3]}"
-
     director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
@@ -119,7 +118,8 @@ async def director_schedule_handler(message: types.Message, state: FSMContext):
 
 async def register_director_emp_manage(message: types.Message,
                                        state: FSMContext):
-    """ Handler для страницы управления сотрудников администратора """
+    """ Handler для страницы управления сотрудников директора """
+    logger.info('Страница управления сотрудниками')
     director_response = message.text
     await state.update_data(user_response=director_response)
     director_handlers = {
@@ -132,12 +132,12 @@ async def register_director_emp_manage(message: types.Message,
         'Найти сотрудника': {
             'markup': markup_cancel,
             'response': Response.register_director_find_handler,
-            'message': 'Введите фамилию сотрудника. :)',
+            'message': 'Введите фамилию сотрудника, информацию которого хотите увидеть',
         },
         'Удалить сотрудника': {
             'markup': markup_cancel,
             'response': Response.director_remove_user,
-            'message': 'Введите ФИО сотрудника. :)',
+            'message': 'Введите ФИО сотрудника, которого хотите удалить.',
         },
         'Добавить документы сотруднику': {
             'markup': markup_cancel,
@@ -197,7 +197,6 @@ async def register_director_create_handler(message: types.Message,
             'markup': markup_director_emp,
             'response': Response.register_director_emp_manage,
         },
-        # TODO пофиксить смену директора, все директоры пропадают, появляются доктора
         'Смена директора': {
             'message': 'Если вы действительно хотите сменить директора '
                        'введите его ФИО повторно',
@@ -205,39 +204,31 @@ async def register_director_create_handler(message: types.Message,
             'response': Response.director_change_director,
         }
     }
-
     if director_response == 'Отмена':
         command_dict = director_handlers['Отмена']
-
     emp_data = director_response.split()
     if len(emp_data) != 4 and not command_dict:
         command_dict = director_handlers['Некорректные данные']
-
     if not command_dict:
         surname = emp_data[0]
         name = emp_data[1]
         patronymic = emp_data[2]
         post = emp_data[3]
-
         posts = {
             'doctor': ['doctor', 'доктор', 'док', 'врач'],
             'director': ['director', 'директор'],
             'admin': ['admin', 'админ', 'администратор']
         }
-
         for key, names in posts.items():
             if post in names:
                 post = key
                 break
-
         if post not in posts:
             command_dict = director_handlers['Неверная должность']
-
         if post == 'director':
             command_dict = director_handlers['Смена директора']
             check_fio = f'{surname} {name} {patronymic}'
-            logger.info(f'Redefine | check_fio: {check_fio}')
-
+            logger.info(f'Redefine check_fio | check_fio: {check_fio}')
         temporary_password = random.randint(100000, 1000000)
         if not command_dict:
             command_dict = director_handlers['Добавление пользователя']
@@ -345,7 +336,6 @@ async def register_director_find_handler(message: types.Message,
         what_need='all',
         value=username
     )
-    print(emp_data)
     if not emp_data:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -355,13 +345,15 @@ async def register_director_find_handler(message: types.Message,
         )
         await Response.register_director_emp_manage.set()
         return
+    id = emp_data[0]
+    documents = await dbw.get_documents(id)
     surname = emp_data[1]
     name = emp_data[2]
     patronymic = emp_data[3]
     post = emp_data[5]
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
-        text=f'''Сотрудник найден, его данные.
+        text=f'''Сотрудник найден, общие данные данные.
         Имя: {name}
         Фамилия: {surname}
         Отчество: {patronymic}
@@ -369,6 +361,20 @@ async def register_director_find_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=markup_director_emp
     )
+    print(documents)
+    if documents:
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Название  Дата начала  Дата окончания',
+            parse_mode='Markdown',
+        )
+        for document in documents:
+            await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=f'"{document[2]}" {document[0]} {document[1]}',
+            parse_mode='Markdown',
+        )
+
     await Response.register_director_emp_manage.set()
 
 
@@ -386,7 +392,8 @@ async def director_finder_id(message: types.Message,
         },
         'Сотрудник найден': {
             'message': 'Сотрудник найден, введите даты начала'
-                       'и окончания действия документа',
+                       ', окончания действия документа в формате'
+                       'дд.мм.гггг и имя документа',
             'markup': markup_cancel,
             'response': Response.director_add_documents,
         },
@@ -406,17 +413,14 @@ async def director_finder_id(message: types.Message,
         if emp_fio == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
-        print(emp_fio)
         emp_fio = emp_fio.split(' ')
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break
-
         id = await dbw.get_id_with_fio(emp_fio)
         if not id:
             current_handler = director_handlers.get('Сотрудник не найден')
             break
-
         current_employee_id = id[0][0]
         current_handler = director_handlers.get('Сотрудник найден')
         break
@@ -453,11 +457,9 @@ async def director_remove_user(message: types.Message,
     }
     while True:
         current_handler = ''
-
         if emp_fio == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
-
         emp_fio = emp_fio.split(' ')
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
@@ -465,12 +467,9 @@ async def director_remove_user(message: types.Message,
         id = await dbw.get_id_with_fio(emp_fio)
         id = id[0][0]
         await dbw.remove_user(id)
-
         current_handler = director_handlers.get('Сотрудник удалён')
-
         current_handler['message'] = current_handler['message'] + str(id)
         break
-
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=current_handler.get('message'),
@@ -493,7 +492,7 @@ async def director_add_documents(message: types.Message,
             'response': Response.register_director_handler,
         },
         'Добавление документа': {
-            'message': 'Документ добавлен, введите дату следующего документа',
+            'message': 'Документ добавлен, введите информацию следующего документа',
             'markup': markup_cancel,
             'response': Response.director_add_documents,
         },
@@ -515,6 +514,7 @@ async def director_add_documents(message: types.Message,
             id = current_employee_id
             date_start = document_data[0]
             date_finish = document_data[1]
+            name = document_data[2]
             time.strptime(date_start, '%d.%m.%Y')
             time.strptime(date_finish, '%d.%m.%Y')
         except Exception as ex:
@@ -522,7 +522,7 @@ async def director_add_documents(message: types.Message,
             current_handler = director_handlers.get('Неверные данные')
             break
 
-        await dbw.add_new_document(id, date_start, date_finish)
+        await dbw.add_new_document(id, date_start, date_finish, name)
         current_handler = director_handlers.get('Добавление документа')
         break
     await bot_aiogram.send_message(
