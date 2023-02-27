@@ -15,7 +15,6 @@ from workers import (
 class Response(StatesGroup):
     admin_message_handler = State()
     admin_schedule_handler = State()
-    admin_watch_schedule_handler = State()
     admin_send_messages_handler = State()
     admin_mailing_handler = State()
     admin_to_director_handler = State()
@@ -65,24 +64,18 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             'markup': markup_admin,
             'response': Response.admin_message_handler,
             'message': 'Шаблон расписания:',
-            'func': bot_aiogram,
+            'func': src_schedule_template,
         },
         'Загрузить расписание': {
             'markup': markup_cancel,
             'finish': state,
             'message': 'Отправьте мне Excel файл с расписанием',
         },
-        # TODO как реализовать просмотр расписание админом и директором?
-        #  1) через просмотр его сразу для всего персонала, но будет очень
-        #  очень много текста
-        #  2) через просмотр расписания для определенного сотрудника
-        #  3) через реализацию новой функции для просмотра по кабинетам
-        #  (но это вроде как тяжело)
-        #  4) через выбор кнопками для (2) и (3) вариантов
-        'Посмотреть расписание': {
-            'markup': markup_admin_watch_schedule,
-            'response': Response.admin_watch_schedule_handler,
-            'message': 'На какой период вы хотите посмотреть расписание?',
+        'Получить расписание': {
+            'markup': markup_admin,
+            'response': Response.admin_message_handler,
+            'message': 'Расписание:',
+            'func': src_current_schedule,
         },
         'Отмена': {
             'markup': markup_admin,
@@ -107,9 +100,9 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
     )
 
     if command_dict.get('func'):
-        await command_dict.get('func').send_document(
+        await bot_aiogram.send_document(
             chat_id=message.chat.id,
-            document=open(f"{src_schedule_template}", 'rb')
+            document=open(f"{command_dict.get('func')}", 'rb')
         )
 
     if command_dict.get('response'):
@@ -173,55 +166,6 @@ async def admin_file_handler(message: types.Message):
                     response = Response.admin_schedule_handler
 
                 await response.set()
-
-
-# функция-обработчик сообщений третьей страницы расписания для админа
-async def admin_watch_schedule_handler(message: types.Message,
-                                       state: FSMContext):
-    admin_watch_schedule_response = message.text  # noqa
-    await state.update_data(user_response=admin_watch_schedule_response)
-
-    admin_handlers = {
-        'На сегодня': {
-            'markup': markup_admin,
-            'response': Response.admin_message_handler,
-            'message': 'Расписание на сегодня:',
-            'func': ...,
-            # TODO добавить возможность смотреть расписание на сегодня
-        },
-        'На неделю': {
-            'markup': markup_admin,
-            'response': Response.admin_message_handler,
-            'message': 'Расписание на наделю:',
-            'func': ...,
-            # TODO добавить возможность смотреть расписание на неделю
-        },
-        'Отмена': {
-            'markup': markup_admin_make_schedule,
-            'response': Response.admin_schedule_handler,
-            'message': 'Хорошо',
-        },
-        None: {
-            'markup': markup_admin_watch_schedule,
-            'response': Response.admin_watch_schedule_handler,
-            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
-        }
-    }
-
-    command_dict = admin_handlers.get(admin_watch_schedule_response)  # noqa
-    if not command_dict:
-        command_dict = admin_handlers[None]
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text=command_dict.get('message'),
-        parse_mode='Markdown',
-        reply_markup=command_dict.get('markup')
-    )
-
-    if command_dict.get('func'):
-        await command_dict.get('func')
-
-    await command_dict.get('response').set()
 
 
 # функция-обработчик сообщений второй страницы рассылки для админа
@@ -350,10 +294,6 @@ def register_handlers_admin(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         admin_file_handler,
         content_types=types.ContentTypes.ANY
-    )
-    dp.register_message_handler(
-        admin_watch_schedule_handler,
-        state=Response.admin_watch_schedule_handler
     )
     dp.register_message_handler(
         admin_send_messages_handler,

@@ -38,7 +38,7 @@ markup_admin.add(btn1_admin, btn2_admin)
 markup_admin_make_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_admin_make_schedule = types.KeyboardButton('Получить шаблон')
 btn2_admin_make_schedule = types.KeyboardButton('Загрузить расписание')
-btn3_admin_make_schedule = types.KeyboardButton('Посмотреть расписание')
+btn3_admin_make_schedule = types.KeyboardButton('Получить расписание')
 markup_admin_make_schedule.add(btn1_admin_make_schedule,
                                btn2_admin_make_schedule)
 markup_admin_make_schedule.add(btn3_admin_make_schedule)

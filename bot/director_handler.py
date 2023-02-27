@@ -26,7 +26,6 @@ class Response(StatesGroup):
     register_director_create_handler = State()
     register_director_find_handler = State()
     director_change_director = State()
-    director_schedule_handler = State()
     director_finder_id = State()
     director_add_documents = State()
     director_remove_user = State()
@@ -46,10 +45,10 @@ async def register_director_handler(message: types.Message, state: FSMContext):
             'message': 'Доступные команды',
         },
         'Получить расписание': {
-            'markup': markup_admin_watch_schedule,
-            'response': Response.director_schedule_handler,
-            'message': f"{appeal}, на какой период "
-                       f"вы хотите посмотреть расписание?",
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+            'message': 'Расписание:',
+            'func': src_current_schedule,
         },
         None: {
             'markup': markup_director,
@@ -66,53 +65,11 @@ async def register_director_handler(message: types.Message, state: FSMContext):
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
-    await command_dict.get('response').set()
-
-
-async def director_schedule_handler(message: types.Message, state: FSMContext):
-    director_schedule_response = message.text  # noqa
-    await state.update_data(user_response=director_schedule_response)
-
-    director_handlers = {
-        'На сегодня': {
-            'markup': markup_director,
-            'response': Response.register_director_handler,
-            'message': 'Расписание на сегодня:',
-            'func': 'hello day',
-            # TODO добавить возможность смотреть расписание на сегодня
-        },
-        'На неделю': {
-            'markup': markup_director,
-            'response': Response.register_director_handler,
-            'message': 'Расписание на наделю:',
-            'func': 'hello week',
-            # TODO добавить возможность смотреть расписание на неделю
-        },
-        'Отмена': {
-            'markup': markup_director,
-            'response': Response.register_director_handler,
-            'message': 'Хорошо',
-        },
-        None: {
-            'markup': markup_admin_watch_schedule,
-            'response': Response.director_schedule_handler,
-            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
-        }
-    }
-
-    command_dict = director_handlers.get(director_schedule_response)  # noqa
-    if not command_dict:
-        command_dict = director_handlers[None]
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text=command_dict.get('message'),
-        parse_mode='Markdown',
-        reply_markup=command_dict.get('markup')
-    )
-
     if command_dict.get('func'):
-        print(command_dict.get('func'))
-
+        await bot_aiogram.send_document(
+            chat_id=message.chat.id,
+            document=open(f"{command_dict.get('func')}", 'rb')
+        )
     await command_dict.get('response').set()
 
 
@@ -555,10 +512,6 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_change_director,
         state=Response.director_change_director
-    )
-    dp.register_message_handler(
-        director_schedule_handler,
-        state=Response.director_schedule_handler
     )
     dp.register_message_handler(
         director_finder_id,
