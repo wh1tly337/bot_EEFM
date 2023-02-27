@@ -20,7 +20,6 @@ async def start_message(message: types.Message):
         value=message.chat.id
     )
     if message.from_user.id != result:
-
         msg_new_user_start = 'New user start bot'
         print_log_info(message, msg_new_user_start)
 
@@ -31,9 +30,6 @@ async def start_message(message: types.Message):
             reply_markup=markup_new_user
         )
 
-        # метод начинает считывание последующего сообщения пользователя
-        # для его авторизации (нужен для работы функции authorization_handler
-        # в файле message_handler.py)
         response = mh.Response.authorization_handler
     else:
         result = await dbw.get_data(

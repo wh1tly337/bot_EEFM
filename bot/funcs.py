@@ -1,6 +1,7 @@
 from loguru import logger
 
 
+# функция для составления сообщения логгера
 def print_log_info(message, start_message):
     start_message += ' |'
     output = [

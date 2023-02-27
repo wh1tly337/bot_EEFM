@@ -114,7 +114,14 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
 # функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
     all_ids = await dbw.get_all_ids()
-    log_stat = (await dbw.get_data('id', message.chat.id))[6]
+    # если пользователь не залогиненный, то этот try избавит от ошибки
+    try:
+        log_stat = (await dbw.get_data('id', message.chat.id))[6]
+    except Exception:
+        log_stat = 0
+    # эта проверка нужна для исправления бага, при котором если пользователь
+    # не введет /start после старта бота то юзер будет считаться админом, даже
+    # если его не было в бд
     if (message.chat.id not in all_ids) or (log_stat == 0):
         await bc.start_message(message)
     else:
@@ -151,9 +158,6 @@ async def admin_file_handler(message: types.Message):
                         reply_markup=markup_admin
                     )
                     response = Response.admin_message_handler
-
-                    # TODO возможно сделать рассылку всему персоналу о том
-                    #  что расписание обновилось
                 else:
                     message_text = 'Неверный формат файла расписания'
 

@@ -28,6 +28,34 @@ markup_doctor = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_doctor = types.KeyboardButton('Получить расписание')
 markup_doctor.add(btn1_doctor)
 
+''' Кнопки 2-го уровня для доктора '''
+markup_doctor_watch_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn1_doctor_watch_schedule = types.KeyboardButton('Сегодня')
+btn2_doctor_watch_schedule = types.KeyboardButton('Неделя')
+btn3_doctor_watch_schedule = types.KeyboardButton('Определенный день')
+markup_doctor_watch_schedule.add(btn1_doctor_watch_schedule)
+markup_doctor_watch_schedule.add(btn2_doctor_watch_schedule,
+                                 btn3_doctor_watch_schedule)
+markup_doctor_watch_schedule.add(btn_cancel)
+
+''' Кнопки 3-го уровня для доктора (выбор определенного дня)'''
+markup_week_doctor = types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn1_week_doctor = types.KeyboardButton('Понедельник')
+btn2_week_doctor = types.KeyboardButton('Вторник')
+btn3_week_doctor = types.KeyboardButton('Среда')
+btn4_week_doctor = types.KeyboardButton('Четверг')
+btn5_week_doctor = types.KeyboardButton('Пятница')
+btn6_week_doctor = types.KeyboardButton('Суббота')
+btn7_week_doctor = types.KeyboardButton('Воскресенье')
+markup_week_doctor.add(btn1_week_doctor)
+markup_week_doctor.add(btn2_week_doctor)
+markup_week_doctor.add(btn3_week_doctor)
+markup_week_doctor.add(btn4_week_doctor)
+markup_week_doctor.add(btn5_week_doctor)
+markup_week_doctor.add(btn6_week_doctor)
+markup_week_doctor.add(btn7_week_doctor)
+markup_week_doctor.add(btn_cancel)
+
 ''' Кнопки 1-го уровня для админа '''
 markup_admin = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_admin = types.KeyboardButton('Расписание')
