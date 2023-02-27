@@ -31,17 +31,27 @@ def file_renamer(filename, ender):
 
 # функция обработчик для получения расписания
 async def get_schedule(doctor, time_period):
-    wb_obj = openpyxl.load_workbook(src_current_schedule)  # обработка файла
-    sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
+    try:
+        wb_obj = openpyxl.load_workbook(src_current_schedule)  # обработка файла
+        sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
 
-    max_row = sheet_obj.max_row  # максимальное количество строк
+        max_row = sheet_obj.max_row  # максимальное количество строк
 
-    if time_period == 'today':
-        result = await get_today_schedule(sheet_obj, max_row)
-    else:
-        result = await get_weekly_schedule(sheet_obj, max_row)
+        if time_period == 'today':
+            result = await get_today_schedule(sheet_obj, max_row)
+        else:
+            result = await get_weekly_schedule(sheet_obj, max_row)
 
-    return result
+        return result
+    except Exception as ex:
+        print(ex)
+        result = f"Вас нет в расписании на эту неделю.\n" \
+                 f"Возможные способы решения данной проблемы:\n" \
+                 f"1) Вас не добавили в расписание\n" \
+                 f"2) При записи вашего ФИО произошла опечатка в листе с " \
+                 f"расписанием (обращаться к администратору), либо в базе " \
+                 f"данных бота (доступ у {director_name})"
+        return result
 
 
 # функция для получения расписания только на сегодня
@@ -60,7 +70,7 @@ async def get_today_schedule(sheet_obj, max_row):
 
     result = []
     if cords is None:
-        result = 'На сегодня нет расписания'
+        result = 'На сегодня нет записей'
     else:
         for i in range(4, max_row + 1):
             none_counter = 0
@@ -78,7 +88,27 @@ async def get_today_schedule(sheet_obj, max_row):
                         result.append(pre_result)
                     break
 
-    return result
+    res = f"Расписание на {datetime.now().strftime('%d-%m-%Y')}:\n\n"
+    for i in range(len(result)):
+        cat = result[i][0]
+        time = result[i][1]
+        cabinet = result[i][2]
+        soed = result[i][3]
+        comment = result[i][4]
+        card = result[i][5]
+        fio = result[i][6]
+
+        asd = f"Категория пациента: {cat}\n" \
+              f"Время записи: {time.strftime('%H:%M')}\n" \
+              f"Номер кабинета: {cabinet}\n" \
+              f"Соединение: {soed}\n" \
+              f"Комментарий: {comment}\n" \
+              f"Номер карты: {card}\n" \
+              f"ФИО пациента: {fio}\n"
+
+        res += f"{asd}\n"
+
+    return res
 
 
 # функция для получения расписания на неделю
@@ -87,7 +117,7 @@ async def get_weekly_schedule(sheet_obj, max_row):
     result = []
     for _ in range(7):
         day_none_counter = 0
-        for i in range(1, max_row + 1):
+        for i in range(2, max_row + 1):
             if i in [1, 2]:
                 finish = start + 2
                 f1 = 2
@@ -116,4 +146,35 @@ async def get_weekly_schedule(sheet_obj, max_row):
                     break
         start, finish = finish + 1, start + 7
 
-    return result
+    print(result)
+    res = ''
+    for i in range(len(result)):
+        if len(result[i]) == 2:
+            date = result[i][0].strftime('%d-%m-%Y')
+            day = result[i][1]
+
+            res += f" ◉ {date} | {day}:\n\n"
+        else:
+            if result[i][0] != 'Категория':
+                if result[i][0] != 'В':
+                    cat = result[i][0]
+                    time = result[i][1]
+                    cabinet = result[i][2]
+                    soed = result[i][3]
+                    comment = result[i][4]
+                    card = result[i][5]
+                    fio = result[i][6]
+
+                    asd = f"Категория пациента: {cat}\n" \
+                          f"Время записи: {time}\n" \
+                          f"Номер кабинета: {cabinet}\n" \
+                          f"Соединение: {soed}\n" \
+                          f"Комментарий: {comment}\n" \
+                          f"Номер карты: {card}\n" \
+                          f"ФИО пациента: {fio}\n"
+
+                    res += f"{asd}\n"
+                else:
+                    res += f"{result[i]}\n\n"
+
+    return res
