@@ -29,6 +29,7 @@ class Response(StatesGroup):
     director_finder_id = State()
     director_add_documents = State()
     director_remove_user = State()
+    director_update_user = State()
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
@@ -143,6 +144,11 @@ async def register_director_create_handler(message: types.Message,
             'message': 'Данные введены неверное, попробуйте ещё раз',
             'markup': markup_cancel,
             'response': Response.register_director_create_handler,
+        },
+        'Обновить данные сотрудника': {
+            'markup': markup_cancel,
+            'response': Response.director_update_user,
+            'message': 'Введите ФИО сотрудника, поле, которое необходимо изменить, необходимое значение',
         },
         'Неверная должность': {
             'message': 'Такой должности нет',
@@ -436,6 +442,56 @@ async def director_remove_user(message: types.Message,
     await current_handler.get('response').set()
 
 
+async def director_update_user(message: types.Message,
+                               state: FSMContext):
+    """ Handler удаления сотрудника """
+    emp_data = message.text
+    await state.update_data(user_response=emp_data)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Данные обновлены': {
+            'message': 'Данные сотрудника обновлены',
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
+        },
+    }
+    while True:
+        current_handler = ''
+        if emp_data == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+        emp_data = emp_data.split(' ')
+        if len(emp_data) != 5:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        surname = emp_data[0]
+        name = emp_data[1]
+        patronymic = emp_data[2]
+        field = emp_data[3]
+        needed = emp_data[4]
+        user_id = await dbw.get_id_with_fio([surname, name, patronymic])
+        await dbw.update_with_id_user(field, user_id, needed)
+        current_handler = director_handlers.get('Данные обновлены')
+        current_handler['message'] = current_handler['message'] + str(id)
+        break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
 async def director_add_documents(message: types.Message,
                                  state: FSMContext):
     global current_employee_id
@@ -525,3 +581,7 @@ def register_handlers_director(dp: Dispatcher):  # noqa
         director_remove_user,
         state=Response.director_remove_user
     )
+    dp.register_message_handler(
+        director_update_user,
+        state=Response.director_update_user
+    )   

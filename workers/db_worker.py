@@ -200,6 +200,20 @@ async def update_user(field, current, needed):
         logger.error(ex)
 
 
+async def update_with_id_user(field, id, needed):
+    try:
+        id = id[0][0]
+        await start_connection()
+        cursor.execute(f"""UPDATE users SET {field} = '{needed}'
+        WHERE id = '{id}'""")
+        print(id)
+        print(cursor.fetchall())
+        connection.commit()
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
+
+
 async def remove_user(id_tg):
     """ Функция удаления пользователя из бд"""
     try:
