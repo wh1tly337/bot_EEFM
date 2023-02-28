@@ -13,12 +13,12 @@ from workers import db_worker as dbw
 # переменная для функции добавления документов
 current_employee_id = 0
 
-# переменная для фукнции смены директора
+# переменная для функции смены директора
 check_fio = ''
 
 
-# TODO написать функцию по обновлению информации персонала
-#  (вдруг опечатка в фамилии и тп)
+# TODO find_user если есть одинаковые фамилии
+
 
 class Response(StatesGroup):
     register_director_handler = State()
@@ -333,10 +333,10 @@ async def register_director_find_handler(message: types.Message,
         )
         for document in documents:
             await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text=f'"{document[2]}" {document[0]} {document[1]}',
-            parse_mode='Markdown',
-        )
+                chat_id=message.chat.id,
+                text=f'"{document[2]}" {document[0]} {document[1]}',
+                parse_mode='Markdown',
+            )
 
     await Response.register_director_emp_manage.set()
 
@@ -494,8 +494,8 @@ async def director_update_user(message: types.Message,
 
 async def director_add_documents(message: types.Message,
                                  state: FSMContext):
-    global current_employee_id
     """ Handler добавления документов сотруднику """
+    global current_employee_id
     document_data = message.text
     await state.update_data(user_response=document_data)
     director_handlers = {
@@ -584,4 +584,4 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_update_user,
         state=Response.director_update_user
-    )   
+    )

@@ -188,7 +188,8 @@ async def add_new_document(id, date_start, date_finish, name):
         logger.error(ex)
 
 
-# TODO async def update_user():
+# TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
+# TODO Саша хотел ее переписать !!!
 async def update_user(field, current, needed):
     try:
         await start_connection()
@@ -206,8 +207,6 @@ async def update_with_id_user(field, id, needed):
         await start_connection()
         cursor.execute(f"""UPDATE users SET {field} = '{needed}'
         WHERE id = '{id}'""")
-        print(id)
-        print(cursor.fetchall())
         connection.commit()
         await close_connection()
     except Exception as ex:
@@ -224,12 +223,6 @@ async def remove_user(id_tg):
         await close_connection()
     except Exception as ex:
         logger.error(ex)
-
-
-# TODO реализовать функцию чтобы директор вручную мог добавлять врачей
-
-async def add_user_manual():
-    ...
 
 
 # функция для копирования информации из .csv файла в таблицу бд schedule

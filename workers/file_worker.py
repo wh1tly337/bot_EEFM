@@ -161,6 +161,7 @@ async def get_weekly_schedule(sheet_obj, max_row):
 
     text = ''
     counter = 0
+    # TODO день недели отдельным сообщением (те их будет 7)
     # цикл для составления итогового текста сообщения с расписанием
     for i in range(len(result)):
         if len(result[i]) == 2:
@@ -182,20 +183,26 @@ async def get_weekly_schedule(sheet_obj, max_row):
 
 # вспомогательная функция форматирования текста сообщения для расписания
 async def text_formatter(i, result):
-    category = result[i][0]
-    time = result[i][1]
-    cabinet = result[i][2]
-    content = result[i][3]
-    comment = result[i][4]
-    card_number = result[i][5]
-    fio = result[i][6]
+    inserts = [
+        result[i][0],  # category
+        result[i][1],  # time
+        result[i][2],  # cabinet
+        result[i][3],  # content
+        result[i][4],  # comment
+        result[i][5],  # card_number
+        result[i][6],  # fio
+    ]
+    for i in range(7):
+        if inserts[i] is None:
+            inserts[i] = ' — '
 
-    text = f"Категория пациента: {category}\n" \
-           f"Время записи: {time}\n" \
-           f"Номер кабинета: {cabinet}\n" \
-           f"Соединение: {content}\n" \
-           f"Комментарий: {comment}\n" \
-           f"Номер карты: {card_number}\n" \
-           f"ФИО пациента: {fio}\n"
+    # noinspection PyUnresolvedReferences
+    text = f"Категория пациента: {inserts[0]}\n" \
+           f"Время записи: {inserts[1].strftime('%H:%M')}\n" \
+           f"Номер кабинета: {inserts[2]}\n" \
+           f"Соединение: {inserts[3]}\n" \
+           f"Комментарий: {inserts[4]}\n" \
+           f"Номер карты: {inserts[5]}\n" \
+           f"ФИО пациента: {inserts[6]}\n"
 
     return text

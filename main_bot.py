@@ -11,6 +11,16 @@ from bot import (
 )
 from workers import db_worker as dbw
 
+# TODO где-то поменять "Хорошо" при нажатии отмена на что-то другое
+
+# TODO отрефакторить код по pep8 через flake8
+
+# TODO добавить logger в функцию
+
+# TODO проработать комментарии
+
+# TODO добавить связь докторов с директором/администратором
+
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
     f"{src_logger}logger.txt",
@@ -29,6 +39,8 @@ dirh.register_handlers_director(dp)
 
 # функция для отправки стартового сообщения всем пользователям
 async def startup_message(_):
+    # TODO поменять на рабочий вариант
+
     # рабочий вариант
     # all_ids = await dbw.get_all_ids()
     # for i in range(len(all_ids)):

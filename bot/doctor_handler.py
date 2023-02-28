@@ -94,41 +94,16 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
     doctor_week_response = message.text  # noqa
     await state.update_data(user_response=doctor_week_response)
 
+    day_of_week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница',
+                   'Суббота', 'Воскресенье']
+    if doctor_week_response in day_of_week:
+        day_index = day_of_week.index(doctor_week_response)
+    # noinspection PyUnboundLocalVariable
     doctor_handlers = {
-        'Понедельник': {
+        f"{day_of_week[day_index]}": {
             'markup': markup_doctor,
             'response': Response.doctor_handler,
-            'day': 'Понедельник',
-        },
-        'Вторник': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Вторник',
-        },
-        'Среда': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Среда',
-        },
-        'Четверг': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Четверг',
-        },
-        'Пятница': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Пятница',
-        },
-        'Суббота': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Суббота',
-        },
-        'Воскресенье': {
-            'markup': markup_doctor,
-            'response': Response.doctor_handler,
-            'day': 'Воскресенье',
+            'day': f"{day_of_week[day_index]}",
         },
         'Отмена': {
             'markup': markup_doctor_watch_schedule,
