@@ -17,8 +17,6 @@ current_employee_id = 0
 check_fio = ''
 
 
-# TODO find_user если есть одинаковые фамилии
-
 # TODO реализовать функцию напоминания о завершении срока действия документа
 
 
@@ -92,7 +90,7 @@ async def register_director_emp_manage(message: types.Message,
         'Найти сотрудника': {
             'markup': markup_cancel,
             'response': Response.register_director_find_handler,
-            'message': 'Введите фамилию сотрудника, '
+            'message': 'Введите ФИО сотрудника, '
                        'информацию которого хотите увидеть',
         },
         'Удалить сотрудника': {
@@ -105,6 +103,12 @@ async def register_director_emp_manage(message: types.Message,
             'response': Response.director_finder_id,
             'message': 'Введите ФИО сотрудника, '
                        'которому хотите добавить документ',
+        },
+        'Обновить данные сотрудника': {
+            'markup': markup_cancel,
+            'response': Response.director_update_user,
+            'message': 'Введите ФИО сотрудника, поле, '
+                       'которое необходимо изменить, необходимое значение',
         },
         'Отмена': {
             'markup': markup_director,
@@ -148,12 +152,6 @@ async def register_director_create_handler(message: types.Message,
             'message': 'Данные введены неверное, попробуйте ещё раз',
             'markup': markup_cancel,
             'response': Response.register_director_create_handler,
-        },
-        'Обновить данные сотрудника': {
-            'markup': markup_cancel,
-            'response': Response.director_update_user,
-            'message': 'Введите ФИО сотрудника, поле, '
-                       'которое необходимо изменить, необходимое значение',
         },
         'Неверная должность': {
             'message': 'Такой должности нет',
@@ -203,7 +201,7 @@ async def register_director_create_handler(message: types.Message,
             command_dict['message'] = command_dict.get('message') + str(
                 temporary_password)
             await dbw.add_new_user(
-                id_tg=temporary_password,
+                user_id=temporary_password,
                 surname=surname,
                 name=name,
                 patronymic=patronymic,
@@ -218,6 +216,62 @@ async def register_director_create_handler(message: types.Message,
         reply_markup=command_dict.get('markup'),
     )
     await command_dict.get('response').set()
+
+
+async def register_director_find_handler(message: types.Message,
+                                         state: FSMContext):
+    """ Handler для страницы поиска сотрудников администратора """
+    emp_data = message.text
+    await state.update_data(user_response=emp_data)
+    if emp_data == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Выберите функцию',
+            parse_mode='Markdown',
+            reply_markup=markup_director_emp
+        )
+        await Response.register_director_emp_manage.set()
+        return
+    user_id = await dbw.get_id_with_fio(emp_data.split(' '))
+    user_id = user_id[0][0]
+    if not user_id:
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Сотрудник не найден!',
+            parse_mode='Markdown',
+            reply_markup=markup_cancel,
+        )
+        await Response.register_director_emp_manage.set()
+        return
+    documents = await dbw.get_documents(user_id)
+    db_emp_data = await dbw.get_data('id', user_id)
+    surname = db_emp_data[1]
+    name = db_emp_data[2]
+    patronymic = db_emp_data[3]
+    post = db_emp_data[5]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=f'''Сотрудник найден, общие данные данные.
+        Имя: {name}
+        Фамилия: {surname}
+        Отчество: {patronymic}
+        Должность: {post}''',
+        parse_mode='Markdown',
+        reply_markup=markup_director_emp
+    )
+    if documents:
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Название  Дата начала  Дата окончания',
+            parse_mode='Markdown',
+        )
+        for document in documents:
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text=f'"{document[2]}" {document[0]} {document[1]}',
+                parse_mode='Markdown',
+            )
+    await Response.register_director_emp_manage.set()
 
 
 async def director_change_director(message: types.Message,
@@ -265,9 +319,10 @@ async def director_change_director(message: types.Message,
         current_handler = director_handlers.get('Смена директора')
         current_handler['message'] = current_handler.get('message') + str(
             temporary_password)
-        await dbw.update_user('post', 'director', 'doctor')
+        user_id =  message.chat.id
+        await dbw.update_with_id_user('post', user_id, 'doctor')
         await dbw.add_new_user(
-            id_tg=temporary_password,
+            user_id=temporary_password,
             surname=surname,
             name=name,
             patronymic=patronymic,
@@ -285,65 +340,50 @@ async def director_change_director(message: types.Message,
     await current_handler.get('response').set()
 
 
-async def register_director_find_handler(message: types.Message,
-                                         state: FSMContext):
-    """ Handler для страницы поиска сотрудников администратора """
-    username = message.text
-    await state.update_data(user_response=username)
-    if username == 'Отмена':
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Выберите функцию',
-            parse_mode='Markdown',
-            reply_markup=markup_director_emp
-        )
-        await Response.register_director_emp_manage.set()
-        return
-    emp_data = await dbw.get_data(
-        field='surname',
-        what_need='all',
-        value=username
-    )
-    if not emp_data:
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Сотрудник не найден!',
-            parse_mode='Markdown',
-            reply_markup=markup_cancel,
-        )
-        await Response.register_director_emp_manage.set()
-        return
-    id = emp_data[0]
-    documents = await dbw.get_documents(id)
-    surname = emp_data[1]
-    name = emp_data[2]
-    patronymic = emp_data[3]
-    post = emp_data[5]
+async def director_remove_user(message: types.Message,
+                               state: FSMContext):
+    """ Handler удаления сотрудника """
+    emp_fio = message.text
+    await state.update_data(user_response=emp_fio)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Сотрудник удалён': {
+            'message': 'Сотрудник был удалён',
+            'markup': markup_director,
+            'response': Response.register_director_handler,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_id,
+        },
+    }
+    while True:
+        current_handler = ''
+        if emp_fio == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+        emp_fio = emp_fio.split(' ')
+        if len(emp_fio) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        id = await dbw.get_id_with_fio(emp_fio)
+        id = id[0][0]
+        await dbw.remove_user(id)
+        current_handler = director_handlers.get('Сотрудник удалён')
+        current_handler['message'] = current_handler['message'] + str(id)
+        break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
-        text=f'''Сотрудник найден, общие данные данные.
-        Имя: {name}
-        Фамилия: {surname}
-        Отчество: {patronymic}
-        Должность: {post}''',
+        text=current_handler.get('message'),
         parse_mode='Markdown',
-        reply_markup=markup_director_emp
+        reply_markup=current_handler.get('markup')
     )
-    print(documents)
-    if documents:
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Название  Дата начала  Дата окончания',
-            parse_mode='Markdown',
-        )
-        for document in documents:
-            await bot_aiogram.send_message(
-                chat_id=message.chat.id,
-                text=f'"{document[2]}" {document[0]} {document[1]}',
-                parse_mode='Markdown',
-            )
-
-    await Response.register_director_emp_manage.set()
+    await current_handler.get('response').set()
 
 
 async def director_finder_id(message: types.Message,
@@ -401,42 +441,52 @@ async def director_finder_id(message: types.Message,
     await current_handler.get('response').set()
 
 
-async def director_remove_user(message: types.Message,
-                               state: FSMContext):
-    """ Handler удаления сотрудника """
-    emp_fio = message.text
-    await state.update_data(user_response=emp_fio)
+async def director_add_documents(message: types.Message,
+                                 state: FSMContext):
+    """ Handler добавления документов сотруднику """
+    global current_employee_id
+    document_data = message.text
+    await state.update_data(user_response=document_data)
     director_handlers = {
         'Отмена': {
             'message': 'Выберите функцию',
-            'markup': markup_director_emp,
-            'response': Response.register_director_emp_manage,
-        },
-        'Сотрудник удалён': {
-            'message': 'Сотрудник был удалён',
             'markup': markup_director,
             'response': Response.register_director_handler,
+        },
+        'Добавление документа': {
+            'message': 'Документ добавлен, введите информацию следующего '
+                       'документа',
+            'markup': markup_cancel,
+            'response': Response.director_add_documents,
         },
         'Неверные данные': {
             'message': 'Данные введены неверно, попробуйте ещё раз',
             'markup': markup_cancel,
-            'response': Response.director_finder_id,
+            'response': Response.director_add_documents,
         },
     }
     while True:
         current_handler = ''
-        if emp_fio == 'Отмена':
+        if document_data == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
-        emp_fio = emp_fio.split(' ')
-        if len(emp_fio) != 3:
+        document_data = document_data.split(' ')
+
+        # Проверка, что даты указаны в нужном формате
+        try:
+            id = current_employee_id
+            date_start = document_data[0]
+            date_finish = document_data[1]
+            name = document_data[2]
+            time.strptime(date_start, '%d.%m.%Y')
+            time.strptime(date_finish, '%d.%m.%Y')
+        except Exception as ex:
+            logger.error(ex)
             current_handler = director_handlers.get('Неверные данные')
             break
-        id = await dbw.get_id_with_fio(emp_fio)
-        id = id[0][0]
-        await dbw.remove_user(id)
-        current_handler = director_handlers.get('Сотрудник удалён')
-        current_handler['message'] = current_handler['message'] + str(id)
+
+        await dbw.add_new_document(id, date_start, date_finish, name)
+        current_handler = director_handlers.get('Добавление документа')
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -487,62 +537,6 @@ async def director_update_user(message: types.Message,
         await dbw.update_with_id_user(field, user_id, needed)
         current_handler = director_handlers.get('Данные обновлены')
         current_handler['message'] = current_handler['message'] + str(id)
-        break
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text=current_handler.get('message'),
-        parse_mode='Markdown',
-        reply_markup=current_handler.get('markup')
-    )
-    await current_handler.get('response').set()
-
-
-async def director_add_documents(message: types.Message,
-                                 state: FSMContext):
-    """ Handler добавления документов сотруднику """
-    global current_employee_id
-    document_data = message.text
-    await state.update_data(user_response=document_data)
-    director_handlers = {
-        'Отмена': {
-            'message': 'Выберите функцию',
-            'markup': markup_director,
-            'response': Response.register_director_handler,
-        },
-        'Добавление документа': {
-            'message': 'Документ добавлен, введите информацию следующего '
-                       'документа',
-            'markup': markup_cancel,
-            'response': Response.director_add_documents,
-        },
-        'Неверные данные': {
-            'message': 'Данные введены неверно, попробуйте ещё раз',
-            'markup': markup_cancel,
-            'response': Response.director_add_documents,
-        },
-    }
-    while True:
-        current_handler = ''
-        if document_data == 'Отмена':
-            current_handler = director_handlers.get('Отмена')
-            break
-        document_data = document_data.split(' ')
-
-        # Проверка, что даты указаны в нужном формате
-        try:
-            id = current_employee_id
-            date_start = document_data[0]
-            date_finish = document_data[1]
-            name = document_data[2]
-            time.strptime(date_start, '%d.%m.%Y')
-            time.strptime(date_finish, '%d.%m.%Y')
-        except Exception as ex:
-            logger.error(ex)
-            current_handler = director_handlers.get('Неверные данные')
-            break
-
-        await dbw.add_new_document(id, date_start, date_finish, name)
-        current_handler = director_handlers.get('Добавление документа')
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,

@@ -83,13 +83,13 @@ async def get_data(field, value, what_need='all'):
         logger.error(ex)
 
 
-async def get_documents(id):
+async def get_documents(user_id):
     """ Функция поиска документов """
     try:
         await start_connection()
         cursor.execute(f"""SELECT date_start, date_finish, name
         FROM documents
-        WHERE user_id = {id}""")
+        WHERE user_id = {user_id}""")
         result = cursor.fetchall()
         print(result)
         await close_connection()
@@ -98,14 +98,14 @@ async def get_documents(id):
         logger.error(ex)
 
 
-async def login_user(tg_id):
+async def login_user(user_id):
     """ Функция регистрирования пользователя """
     # происходит каждый раз после перезапуска бота и написания пользователем
     # /start (нужно для корректной работы admin_file_handler) (меняет
     # переменную log_stat в бд)
     try:
         await start_connection()
-        cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {tg_id}""")
+        cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {user_id}""")
         connection.commit()
         await close_connection()
     except Exception as ex:
@@ -125,7 +125,7 @@ async def logout_user():
 
 
 async def add_new_user(
-        id_tg,
+        user_id,
         surname,
         name,
         patronymic,
@@ -142,12 +142,12 @@ async def add_new_user(
             '(id, surname, name, patronymic, username, post, date_added,'
             ' date_removed)'
             'VALUES (?,?,?,?,?,?,?,?);',
-            (id_tg, surname, name, patronymic, username, post, date_added,
+            (user_id, surname, name, patronymic, username, post, date_added,
              date_removed)
         )
         connection.commit()
         logger.info(f'Added new user to table users | '
-                    f'{id_tg}, '
+                    f'{user_id}, '
                     f'{surname}, '
                     f'{name}, '
                     f'{patronymic}, '
@@ -158,8 +158,7 @@ async def add_new_user(
         logger.error(ex)
 
 
-# TODO Саша поменяй имя переменной id
-async def add_new_document(id, date_start, date_finish, name):
+async def add_new_document(user_id, date_start, date_finish, name):
     """ Функция добавления документа """
     try:
         await start_connection()
@@ -167,11 +166,11 @@ async def add_new_document(id, date_start, date_finish, name):
             'INSERT INTO documents'
             '(user_id, date_start, date_finish, name)'
             'VALUES (?, ?, ?, ?)',
-            (id, date_start, date_finish, name)
+            (user_id, date_start, date_finish, name)
         )
         connection.commit()
         logger.info(f'Added new document to table documents | '
-                    f'{id}, '
+                    f'{user_id}, '
                     f'{date_start}, '
                     f'{date_finish}')
         await close_connection()
@@ -180,39 +179,37 @@ async def add_new_document(id, date_start, date_finish, name):
 
 
 # TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
-# TODO Саша хотел ее переписать !!!
-# TODO Саша поменяй в своих функциях переменную id на что-то другое
-async def update_user(field, current, needed):
-    try:
-        await start_connection()
-        cursor.execute(f"""UPDATE users SET {field} = '{needed}' WHERE {field} 
-        = '{current}'""")
-        connection.commit()
-        await close_connection()
-    except Exception as ex:
-        logger.error(ex)
+# Функция не нужна, закомитил если все в ебеня улетит
+# async def update_user(field, current, needed):
+#     try:
+#         await start_connection()
+#         cursor.execute(f"""UPDATE users SET {field} = '{needed}' WHERE {field} 
+#         = '{current}'""")
+#         connection.commit()
+#         await close_connection()
+#     except Exception as ex:
+#         logger.error(ex)
 
 
-# TODO Саша пропиши комментарии для твоих функций (что они делают)
-async def update_with_id_user(field, id, needed):
+async def update_with_id_user(field, user_id, needed):
+    """ Изменение данные сотрудника по id"""
     try:
-        id = id[0][0]
         await start_connection()
         cursor.execute(f"""UPDATE users SET {field} = '{needed}'
-        WHERE id = '{id}'""")
+        WHERE id = '{user_id}'""")
         connection.commit()
         await close_connection()
     except Exception as ex:
         logger.error(ex)
 
 
-async def remove_user(id_tg):
+async def remove_user(user_id):
     """ Функция удаления пользователя из бд"""
     try:
         await start_connection()
-        cursor.execute(f"""DELETE FROM users WHERE id = '{id_tg}'""")
+        cursor.execute(f"""DELETE FROM users WHERE id = '{user_id}'""")
         connection.commit()
-        logger.info(f'Delete user from table users | {id_tg}')
+        logger.info(f'Delete user from table users | {user_id}')
         await close_connection()
     except Exception as ex:
         logger.error(ex)
