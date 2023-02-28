@@ -1,6 +1,7 @@
 from loguru import logger
 
 from auxiliary.all_markups import *
+from auxiliary.funcs import print_log_info
 from auxiliary.req_data import *
 from bot import (
     message_handler as mh,
@@ -8,18 +9,17 @@ from bot import (
     admin_handler as ah,
     director_handler as dirh,
 )
-from bot.funcs import print_log_info
 from workers import db_worker as dbw
 
 
-# функция отвечающая за команду /start
 async def start_message(message: types.Message):
+    """ Функция отвечающая за команду /start """
     result = await dbw.get_data(
         field='id',
         what_need='id',
         value=message.chat.id
     )
-    if message.from_user.id != result:
+    if message.from_user.id != result:  # проверка на нового юзера
         msg_new_user_start = 'New user start bot'
         print_log_info(message, msg_new_user_start)
 
@@ -75,8 +75,8 @@ async def start_message(message: types.Message):
     await response.set()
 
 
-# регистратор передающий данные в main_bot.py
 def register_handlers_default_commands(dp: Dispatcher):  # noqa
+    """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         start_message,
         commands=['start']

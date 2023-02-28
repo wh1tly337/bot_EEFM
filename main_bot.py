@@ -11,15 +11,14 @@ from bot import (
 )
 from workers import db_worker as dbw
 
-# TODO где-то поменять "Хорошо" при нажатии отмена на что-то другое
-
 # TODO отрефакторить код по pep8 через flake8
 
 # TODO добавить logger в функцию
 
-# TODO проработать комментарии
+# TODO проработать комментарии (осталось только Саше в director_handler
+#  и свои функции в db_worker)
 
-# TODO добавить связь докторов с директором/администратором
+# TODO добавить связь докторов с директором/администратором (ждем ответ от Вани)
 
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
@@ -29,7 +28,7 @@ logger.add(
     compression='zip'
 )
 
-# регистрация команд в боте (берутся из других файлов, смотреть в импорте)
+# регистрация команд/сообщений в боте
 bc.register_handlers_default_commands(dp)
 mh.register_handlers_authorization(dp)
 doch.register_handlers_doctor(dp)
@@ -37,8 +36,9 @@ ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
 
 
-# функция для отправки стартового сообщения всем пользователям
 async def startup_message(_):
+    """ Функция для отправки стартового сообщения о перезапуске всем юзерам """
+
     # TODO поменять на рабочий вариант
 
     # рабочий вариант
@@ -59,6 +59,7 @@ async def startup_message(_):
 
 
 async def shutdown_move(_):
+    """ Функция для logout user для корректной работы admin_file_handler """
     await dbw.logout_user()
 
 

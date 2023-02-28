@@ -2,6 +2,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from auxiliary.all_markups import *
+from auxiliary.funcs import print_log_info
 from auxiliary.req_data import *
 from auxiliary.req_data import director_name
 from bot import (
@@ -10,21 +11,18 @@ from bot import (
     director_handler as dirh,
 
 )
-from bot.funcs import print_log_info
 from workers import db_worker as dbw
 
 
-# класс для регистрации состояния сообщений пользователя
-# (можете сильно не вникать это просто необходимо для правильной работы,
-# просто копируйте и меняйте названия переменных под свою задачу)
+# класс для регистрации состояния сообщений пользователя (используется везде,
+# где нужно обрабатывать текстовые сообщения от пользователя)
 class Response(StatesGroup):
     authorization_handler = State()
     authorization_password_handler = State()
 
 
-# функция для обработки сообщения после нажатия кнопки "Получить доступ",
-# вызывается из файла bot_commands.py строка 16
 async def authorization_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщения после нажатия кнопки "Получить доступ" """
     authorization_response = message.text
     await state.update_data(user_response=authorization_response)
 
@@ -48,11 +46,12 @@ async def authorization_handler(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-# функция для обработки временного пароля, вызывается в 40 строке этого файла
 async def authorization_password_handler(message: types.Message,
                                          state: FSMContext):
+    """ Функция-обработчик временного пароля и добавления пользователя в бд """
     authorization_password_response = message.text
     await state.update_data(user_response=authorization_password_response)
+    # try для корректной обработки/работы данных из бд
     try:
         authorization_password_response = int(authorization_password_response)
     except Exception:
@@ -122,8 +121,8 @@ async def authorization_password_handler(message: types.Message,
     await response.set()
 
 
-# регистратор передающий данные в main_bot.py
 def register_handlers_authorization(dp: Dispatcher):  # noqa
+    """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         authorization_handler,
         state=Response.authorization_handler

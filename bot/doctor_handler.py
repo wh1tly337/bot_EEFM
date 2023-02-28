@@ -9,6 +9,8 @@ from workers import (
 )
 
 
+# класс для регистрации состояния сообщений пользователя (используется везде,
+# где нужно обрабатывать текстовые сообщения от пользователя)
 class Response(StatesGroup):
     doctor_handler = State()
     doctor_schedule_handler = State()
@@ -16,6 +18,7 @@ class Response(StatesGroup):
 
 
 async def doctor_handler(message: types.Message, state: FSMContext):
+    """ Стартовая функция-обработчик сообщений от доктора """
     doctor_response = message.text
     await state.update_data(user_response=doctor_response)
 
@@ -40,6 +43,7 @@ async def doctor_handler(message: types.Message, state: FSMContext):
 
 
 async def doctor_schedule_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений доктора для получения расписания """
     doctor_schedule_response = message.text  # noqa
     await state.update_data(user_response=doctor_schedule_response)
 
@@ -62,7 +66,7 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
         'Отмена': {
             'markup': markup_doctor,
             'response': Response.doctor_handler,
-            'message': 'Хорошо',
+            'message': 'Выберите команду',
         },
         None: {
             'markup': markup_admin_watch_schedule,
@@ -100,6 +104,7 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
 
 
 async def doctor_week_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений доктора для выбора определенного дня """
     doctor_week_response = message.text  # noqa
     await state.update_data(user_response=doctor_week_response)
 
@@ -145,8 +150,8 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
     await command_dict.get('response').set()
 
 
-# функция для обработки информации из расписания
 async def get_data_form_schedule(message, time_period):
+    """ Функция-обработчик информации с расписанием для вызвавшего доктора """
     fio = await dbw.get_data('id', message.chat.id),
     fio = f"{fio[0][1]} {fio[0][2]} {fio[0][3]}"
 
@@ -155,8 +160,8 @@ async def get_data_form_schedule(message, time_period):
     return result
 
 
-# регистратор передающий данные в main_bot.py
 def register_handlers_doctor(dp: Dispatcher):  # noqa
+    """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         doctor_handler,
         state=Response.doctor_handler

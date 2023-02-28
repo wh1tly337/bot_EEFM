@@ -29,27 +29,10 @@ async def close_connection():
         logger.error(ex)
 
 
-# код для создания таблицы. Только нужно добавлять данные о документах
-# в эту же бд, но можно в другую таблицу только с документами
-# (связывать по primary key или id пользователя)
-# async def make_table():
-#     await start_connection()
-#     cursor.execute(f"""CREATE TABLE users
-#  (
-#     id           SERIAL PRIMARY KEY,
-#     id_tg        INTEGER,
-#     first_name   VARCHAR(255),
-#     username     VARCHAR(255),
-#     post         VARCHAR(13),
-#     date_added   DATE,
-#     date_removed DATE
-#  );""")
-#     await close_connection()
-
 async def get_all_ids():
+    """ Функция для получения всех id из бд"""
     try:
         await start_connection()
-        # cursor.execute(f"""SELECT * FROM users""")
         cursor.execute(f"""SELECT id FROM users""")
         taken = cursor.fetchall()
         result = []
@@ -62,6 +45,7 @@ async def get_all_ids():
 
 
 async def get_id_with_fio(emp_data):
+    """ Функция для получения id и фамилии"""
     try:
         await start_connection()
         surname = emp_data[0]
@@ -80,7 +64,7 @@ async def get_id_with_fio(emp_data):
 
 
 async def get_data(field, value, what_need='all'):
-    """ Функция поиска данных """
+    """ Функция поиска запрашиваемых данных """
     # field - столбец в бд, по которому поиск
     # what_need - если что-то конкретное надо вывести (необязательный)
     # value - то, чему равен столбец в бд
@@ -115,6 +99,10 @@ async def get_documents(id):
 
 
 async def login_user(tg_id):
+    """ Функция регистрирования пользователя """
+    # происходит каждый раз после перезапуска бота и написания пользователем 
+    # /start (нужно для корректной работы admin_file_handler) (меняет 
+    # переменную log_stat в бд)
     try:
         await start_connection()
         cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {tg_id}""")
@@ -125,6 +113,8 @@ async def login_user(tg_id):
 
 
 async def logout_user():
+    """ Функция разлогинивания пользователя """
+    # происходит каждый перед выключением бота (меняет переменную log_stat в бд)
     try:
         await start_connection()
         cursor.execute(f"""UPDATE users SET log_stat = 0 WHERE log_stat = 1""")
@@ -169,7 +159,7 @@ async def add_new_user(
 
 
 async def add_new_document(id, date_start, date_finish, name):
-    ''' Функция добавления документа '''
+    """ Функция добавления документа """
     try:
         await start_connection()
         cursor.execute(
@@ -190,6 +180,7 @@ async def add_new_document(id, date_start, date_finish, name):
 
 # TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
 # TODO Саша хотел ее переписать !!!
+# TODO Саша поменяй в своих функциях переменную id на что-то другое
 async def update_user(field, current, needed):
     try:
         await start_connection()
@@ -201,6 +192,7 @@ async def update_user(field, current, needed):
         logger.error(ex)
 
 
+# TODO Саша пропиши комментарии для твоих функций (что они делают)
 async def update_with_id_user(field, id, needed):
     try:
         id = id[0][0]
@@ -223,13 +215,3 @@ async def remove_user(id_tg):
         await close_connection()
     except Exception as ex:
         logger.error(ex)
-
-
-# функция для копирования информации из .csv файла в таблицу бд schedule
-async def add_schedule(filename):
-    await start_connection()
-    cursor.execute(
-        f"""COPY schedule 
-        FROM '{src_files}{filename}.csv' DELIMITER ';' CSV HEADER;""")
-    connection.commit()
-    await close_connection()

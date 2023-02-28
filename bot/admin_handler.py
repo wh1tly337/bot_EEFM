@@ -12,6 +12,15 @@ from workers import (
 )
 
 
+# TODO сделать напоминание админу о том что нужно обновить расписание
+#  (например в воскресенье)
+
+# TODO сделать возможность загружать расписание сейчас, либо через отсрочку
+#  (те админ загрузит расписание в пятницу, а применится оно только
+#  в понедельник следующей недели в 00:00)
+
+# класс для регистрации состояния сообщений пользователя (используется везде,
+# где нужно обрабатывать текстовые сообщения от пользователя)
 class Response(StatesGroup):
     admin_message_handler = State()
     admin_schedule_handler = State()
@@ -20,8 +29,8 @@ class Response(StatesGroup):
     admin_to_director_handler = State()
 
 
-# функция-обработчик сообщений стартовой страницы админа
 async def admin_message_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений стартовой страницы админа """
     admin_response = message.text
     await state.update_data(user_response=admin_response)
 
@@ -54,8 +63,8 @@ async def admin_message_handler(message: types.Message, state: FSMContext):
     await command_dict.get('response').set()
 
 
-# функция-обработчик сообщений второй страницы расписания для админа
 async def admin_schedule_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений второй страницы расписания для админа """
     admin_schedule_response = message.text
     await state.update_data(user_response=admin_schedule_response)
 
@@ -80,7 +89,7 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
         'Отмена': {
             'markup': markup_admin,
             'response': Response.admin_message_handler,
-            'message': 'Хорошо',
+            'message': 'Выберите команду',
         },
         None: {
             'markup': markup_admin_make_schedule,
@@ -111,8 +120,8 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
         await command_dict.get('finish').finish()
 
 
-# функция-обработчик файла расписания от админа
 async def admin_file_handler(message: types.Message):
+    """ Функция-обработчик файла расписания загружаемого админом """
     all_ids = await dbw.get_all_ids()
     # если пользователь не залогиненный, то этот try избавит от ошибки
     try:
@@ -140,6 +149,7 @@ async def admin_file_handler(message: types.Message):
             await Response.admin_schedule_handler.set()
         else:
             if message.document:
+                # проверка на формат документа
                 if message.document.file_name[-4:] == 'xlsx' or \
                         message.document.file_name[-3:] == 'xls':
                     await message.document.download(
@@ -172,9 +182,9 @@ async def admin_file_handler(message: types.Message):
                 await response.set()
 
 
-# функция-обработчик сообщений второй страницы рассылки для админа
 async def admin_send_messages_handler(message: types.Message,
                                       state: FSMContext):
+    """ Функция-обработчик сообщений второй страницы рассылки для админа """
     admin_mailing_response = message.text
     await state.update_data(user_response=admin_mailing_response)
 
@@ -193,7 +203,7 @@ async def admin_send_messages_handler(message: types.Message,
         'Отмена': {
             'markup': markup_admin,
             'response': Response.admin_message_handler,
-            'message': 'Хорошо',
+            'message': 'Выберите команду',
         },
         None: {
             'markup': markup_admin_message,
@@ -214,8 +224,8 @@ async def admin_send_messages_handler(message: types.Message,
     await command_dict.get('response').set()
 
 
-# функция-обработчик сообщений от админа для перенаправления получателю
 async def admin_mailing_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений для рассылки персоналу """
     admin_sending_response = message.text
     await state.update_data(user_response=admin_sending_response)
 
@@ -254,6 +264,7 @@ async def admin_mailing_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик сообщений от админа для перенаправления получателю
 async def admin_to_director_handler(message: types.Message, state: FSMContext):
+    """ Функция-обработчик сообщений для перенаправления директору """
     admin_director_sending_response = message.text
     await state.update_data(user_response=admin_director_sending_response)
 
@@ -285,8 +296,8 @@ async def admin_to_director_handler(message: types.Message, state: FSMContext):
     await response.set()
 
 
-# регистратор передающий данные в main_bot.py
 def register_handlers_admin(dp: Dispatcher):  # noqa
+    """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         admin_message_handler,
         state=Response.admin_message_handler

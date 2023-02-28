@@ -7,41 +7,41 @@ from loguru import logger
 from auxiliary.req_data import *
 
 
-# функция для улучшения читабельности кода и удобства (вызывает другие функции)
 def all_cycle(filename, ender):
+    """ Функция для улучшения читабельности кода и удобства """
     file_delete()
     file_renamer(filename, ender)
 
 
-# удаляет старые файлы с расписанием
 def file_delete():
+    """ Функция удаляет старые файлы с расписанием"""
     try:
         os.remove(src_current_schedule)
     except Exception:
         pass
 
 
-# переименует получаемый файл
 def file_renamer(filename, ender):
+    """ Функция переименует получаемый файл"""
     os.rename(
         f"{src_files}{filename}.{ender}",
         f"{src_files}current_schedule.xlsx"
     )
 
 
-# функция обработчик для получения расписания
 async def get_schedule(doctor, time_period):
+    """ Функция обработчик для получения расписания """
     try:
         wb_obj = openpyxl.load_workbook(src_current_schedule)  # обработка файла
         sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
 
         max_row = sheet_obj.max_row  # максимальное количество строк
 
-        if time_period == 'today':
+        if time_period == 'today':  # получения расписания на сегодня
             text = await get_today_schedule(sheet_obj, max_row, 'today')
-        elif time_period == 'week':
+        elif time_period == 'week':  # получения расписания на неделю
             text = await get_weekly_schedule(sheet_obj, max_row)
-        else:
+        else:  # получения расписания на определенный день
             text = await get_today_schedule(sheet_obj, max_row, time_period)
 
         return text
@@ -55,8 +55,8 @@ async def get_schedule(doctor, time_period):
         return text
 
 
-# функция для получения расписания только на сегодня
 async def get_today_schedule(sheet_obj, max_row, what_need):
+    """ Функция для получения расписания на сегодня/определенный день недели """
     max_column = sheet_obj.max_column  # максимальное количество столбцов
 
     # для расписания на сегодня
@@ -68,8 +68,8 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
         day = what_need
         text = f"Расписание на {what_need.lower()}:\n\n"
 
-    cords = None
-    counter = 0
+    cords = None  # переменная координат даты/дня недели в таблице
+    counter = 0  # переменная считающая сколько дней нужно прибавить (line 80)
     # цикл для получения координат крайней левой части таблицы каждого дня
     for i in range(1, max_column + 1):
         # список столбцов в которых находится ячейка с датой
@@ -93,8 +93,7 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
                 continue
 
     result = []
-    # если нет расписания на текущую дату
-    if cords is None:
+    if cords is None:  # если нет расписания на текущую дату
         text += f"Нет расписания на этот день (необходимо сообщить " \
                 f"администратору об обновлении расписания)\n"
     else:
@@ -114,17 +113,18 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
                     if none_counter != 7:
                         result.append(pre_result)
                     break
-        if len(result) == 0:
+        length = len(result)
+        if length == 0:
             text += f"Нет записей\n"
         else:
-            for i in range(len(result)):
+            for i in range(length):
                 text += f"{await text_formatter(i, result)}\n"
 
     return text
 
 
-# функция для получения расписания на неделю
 async def get_weekly_schedule(sheet_obj, max_row):
+    """ Функция для получения расписания на неделю """
     counter, start, finish = 0, 1, 8
     result = []
     # цикл для прохода по каждому дню недели
@@ -132,7 +132,7 @@ async def get_weekly_schedule(sheet_obj, max_row):
         day_none_counter = 0
         # цикл для прохода по каждому ряду
         for i in range(2, max_row + 1):
-            if i in [1, 2]:
+            if i in [1, 2]:  # определяю конец таблицы каждого дня
                 finish = start + 2
                 f1 = 2
             else:
@@ -207,8 +207,8 @@ async def get_weekly_schedule(sheet_obj, max_row):
     #     return res[1::]
 
 
-# вспомогательная функция форматирования текста сообщения для расписания
 async def text_formatter(i, result):
+    """ Функция форматирования текста сообщения для расписания """
     inserts = [
         result[i][0],  # category
         result[i][1],  # time

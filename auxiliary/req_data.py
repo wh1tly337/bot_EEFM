@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-# файл для хранения каких-либо данных
+# файл для хранения константных данных
 
 # токен и диспетчер бота
 bot_aiogram = Bot(token='5951899941:AAFS1oW1HLkIxR8AQP8i9sSGNEQ0YRtGh50')
@@ -14,5 +14,19 @@ src_schedule_template = 'auxiliary/schedule_template.xlsx'
 src_current_schedule = 'workers/current_schedule.xlsx'
 src_files = 'workers/'
 
-# ФИО директора, для удобной смены в коде. Файл message_handler.py строка 24
+# ФИО директора, для удобной смены в коде
 director_name = 'Шешенина Ивана Владимировича'
+
+# код создания таблицы бд
+# CREATE TABLE users
+# (
+#     id           INTEGER,
+#     surname      VARCHAR(255),
+#     name         VARCHAR(255),
+#     patronymic   VARCHAR(255),
+#     username     VARCHAR(255),
+#     post         VARCHAR(13),
+#     log_stat     INTEGER DEFAULT 0,
+#     date_added   DATE,
+#     date_removed DATE
+# );
