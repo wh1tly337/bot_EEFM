@@ -40,7 +40,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     await state.update_data(user_response=director_response)
     fio = await dbw.get_data('id', message.chat.id)
     logger.info(f'Стартовая страница директора | {fio}')
-    appeal = f"{fio[2]} {fio[3]}"
+    appeal = f"{fio[2]} {fio[3]}"  # TODO мб убрать это обращение (line 53)
     director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
@@ -50,7 +50,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
         'Получить расписание': {
             'markup': markup_director,
             'response': Response.register_director_handler,
-            'message': 'Расписание:',
+            'message': f"{appeal}, вот файл с расписанием",
             'func': src_current_schedule,
         },
         None: {
@@ -92,7 +92,8 @@ async def register_director_emp_manage(message: types.Message,
         'Найти сотрудника': {
             'markup': markup_cancel,
             'response': Response.register_director_find_handler,
-            'message': 'Введите фамилию сотрудника, информацию которого хотите увидеть',
+            'message': 'Введите фамилию сотрудника, '
+                       'информацию которого хотите увидеть',
         },
         'Удалить сотрудника': {
             'markup': markup_cancel,
@@ -102,7 +103,8 @@ async def register_director_emp_manage(message: types.Message,
         'Добавить документы сотруднику': {
             'markup': markup_cancel,
             'response': Response.director_finder_id,
-            'message': 'Введите ФИО сотрудника, которому хотите добавить документ',
+            'message': 'Введите ФИО сотрудника, '
+                       'которому хотите добавить документ',
         },
         'Отмена': {
             'markup': markup_director,
@@ -150,7 +152,8 @@ async def register_director_create_handler(message: types.Message,
         'Обновить данные сотрудника': {
             'markup': markup_cancel,
             'response': Response.director_update_user,
-            'message': 'Введите ФИО сотрудника, поле, которое необходимо изменить, необходимое значение',
+            'message': 'Введите ФИО сотрудника, поле, '
+                       'которое необходимо изменить, необходимое значение',
         },
         'Неверная должность': {
             'message': 'Такой должности нет',
@@ -304,9 +307,9 @@ async def register_director_find_handler(message: types.Message,
     if not emp_data:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
-            text=f'Сотрудник не найден!',
+            text='Сотрудник не найден!',
             parse_mode='Markdown',
-            reply_markup=markup_cancel
+            reply_markup=markup_cancel,
         )
         await Response.register_director_emp_manage.set()
         return
@@ -507,7 +510,8 @@ async def director_add_documents(message: types.Message,
             'response': Response.register_director_handler,
         },
         'Добавление документа': {
-            'message': 'Документ добавлен, введите информацию следующего документа',
+            'message': 'Документ добавлен, введите информацию следующего '
+                       'документа',
             'markup': markup_cancel,
             'response': Response.director_add_documents,
         },

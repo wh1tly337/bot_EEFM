@@ -33,7 +33,7 @@ async def get_all_ids():
     """ Функция для получения всех id из бд"""
     try:
         await start_connection()
-        cursor.execute(f"""SELECT id FROM users""")
+        cursor.execute("""SELECT id FROM users""")
         taken = cursor.fetchall()
         result = []
         for i in range(len(taken)):
@@ -100,8 +100,8 @@ async def get_documents(id):
 
 async def login_user(tg_id):
     """ Функция регистрирования пользователя """
-    # происходит каждый раз после перезапуска бота и написания пользователем 
-    # /start (нужно для корректной работы admin_file_handler) (меняет 
+    # происходит каждый раз после перезапуска бота и написания пользователем
+    # /start (нужно для корректной работы admin_file_handler) (меняет
     # переменную log_stat в бд)
     try:
         await start_connection()
@@ -114,10 +114,10 @@ async def login_user(tg_id):
 
 async def logout_user():
     """ Функция разлогинивания пользователя """
-    # происходит каждый перед выключением бота (меняет переменную log_stat в бд)
+    # происходит каждый перед выключением бота (меняет переменную log_stat)
     try:
         await start_connection()
-        cursor.execute(f"""UPDATE users SET log_stat = 0 WHERE log_stat = 1""")
+        cursor.execute("""UPDATE users SET log_stat = 0 WHERE log_stat = 1""")
         connection.commit()
         await close_connection()
     except Exception as ex:
@@ -158,6 +158,7 @@ async def add_new_user(
         logger.error(ex)
 
 
+# TODO Саша поменяй имя переменной id
 async def add_new_document(id, date_start, date_finish, name):
     """ Функция добавления документа """
     try:
@@ -184,8 +185,8 @@ async def add_new_document(id, date_start, date_finish, name):
 async def update_user(field, current, needed):
     try:
         await start_connection()
-        cursor.execute(f"""UPDATE users SET {field} = '{needed}' 
-        WHERE {field} = '{current}'""")
+        cursor.execute(f"""UPDATE users SET {field} = '{needed}' WHERE {field} 
+        = '{current}'""")
         connection.commit()
         await close_connection()
     except Exception as ex:

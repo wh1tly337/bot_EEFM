@@ -133,53 +133,48 @@ async def admin_file_handler(message: types.Message):
     # если его не было в бд
     if (message.chat.id not in all_ids) or (log_stat == 0):
         await bc.start_message(message)
-    else:
-        if message.text:
-            if message.text == 'Отмена':
-                text = 'Хорошо'
-            else:
-                text = 'Это не является расписанием'
+    elif message.text:
+        text = 'Хорошо' if message.text == 'Отмена' else \
+            'Это не является расписанием'
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=text,
+            parse_mode='Markdown',
+            reply_markup=markup_admin_make_schedule
+        )
+        await Response.admin_schedule_handler.set()
+    elif message.document:
+        # проверка на формат документа
+        if message.document.file_name[-4:] == 'xlsx' or \
+                message.document.file_name[-3:] == 'xls':
+            await message.document.download(
+                destination_file=f"{src_files}"
+                                 f"{message.document.file_name}")
+
+            filename = message.document.file_name.split('.')
+            ender = filename[1]
+            filename = filename[0]
+            fw.all_cycle(filename, ender)
 
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
-                text=text,
+                text='Расписание получено!',
+                parse_mode='Markdown',
+                reply_markup=markup_admin
+            )
+            response = Response.admin_message_handler
+        else:
+            message_text = 'Неверный формат файла расписания'
+
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text=message_text,
                 parse_mode='Markdown',
                 reply_markup=markup_admin_make_schedule
             )
-            await Response.admin_schedule_handler.set()
-        else:
-            if message.document:
-                # проверка на формат документа
-                if message.document.file_name[-4:] == 'xlsx' or \
-                        message.document.file_name[-3:] == 'xls':
-                    await message.document.download(
-                        destination_file=f"{src_files}"
-                                         f"{message.document.file_name}")
+            response = Response.admin_schedule_handler
 
-                    filename = message.document.file_name.split('.')
-                    ender = filename[1]
-                    filename = filename[0]
-                    fw.all_cycle(filename, ender)
-
-                    await bot_aiogram.send_message(
-                        chat_id=message.chat.id,
-                        text='Расписание получено!',
-                        parse_mode='Markdown',
-                        reply_markup=markup_admin
-                    )
-                    response = Response.admin_message_handler
-                else:
-                    message_text = 'Неверный формат файла расписания'
-
-                    await bot_aiogram.send_message(
-                        chat_id=message.chat.id,
-                        text=message_text,
-                        parse_mode='Markdown',
-                        reply_markup=markup_admin_make_schedule
-                    )
-                    response = Response.admin_schedule_handler
-
-                await response.set()
+        await response.set()
 
 
 async def admin_send_messages_handler(message: types.Message,

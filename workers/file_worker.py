@@ -35,32 +35,30 @@ def file_renamer(filename, ender):
 async def get_schedule(doctor, time_period):
     """ Функция обработчик для получения расписания """
     try:
-        wb_obj = openpyxl.load_workbook(src_current_schedule)  # обработка файла
+        wb_obj = openpyxl.load_workbook(src_current_schedule)  # открытие файла
         sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
 
         max_row = sheet_obj.max_row  # максимальное количество строк
 
         if time_period == 'today':  # получения расписания на сегодня
-            text = await get_today_schedule(sheet_obj, max_row, 'today')
+            return await get_today_schedule(sheet_obj, max_row, 'today')
         elif time_period == 'week':  # получения расписания на неделю
-            text = await get_weekly_schedule(sheet_obj, max_row)
+            return await get_weekly_schedule(sheet_obj, max_row)
         else:  # получения расписания на определенный день
-            text = await get_today_schedule(sheet_obj, max_row, time_period)
+            return await get_today_schedule(sheet_obj, max_row, time_period)
 
-        return text
     except Exception:
         logger.error(f"Доктора - {doctor} нет в расписании")
-        text = f"Вас нет в листе с расписанием на эту неделю.\n" \
+        return f"Вас нет в листе с расписанием на эту неделю.\n" \
                f"Возможные способы решения данной проблемы:\n" \
                f"1) Вас не добавили в расписание\n" \
                f"2) При записи вашего ФИО произошла опечатка в листе с " \
-               f"расписанием (обращаться к администратору), либо в базе " \
-               f"данных бота (доступ у {director_name})"
-        return text
+               f"расписанием (обращаться к администратору), " \
+               f"либо в базе данных бота (доступ у {director_name})"
 
 
 async def get_today_schedule(sheet_obj, max_row, what_need):
-    """ Функция для получения расписания на сегодня/определенный день недели """
+    """ Функция для получения расписания на сегодня или определенный день """
     try:
         max_column = sheet_obj.max_column  # максимальное количество столбцов
 
@@ -99,8 +97,8 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
 
         result = []
         if cords is None:  # если нет расписания на текущую дату
-            text += f"Нет расписания на этот день (необходимо сообщить " \
-                    f"администратору об обновлении расписания)\n"
+            text += 'Нет расписания на этот день (необходимо сообщить ' \
+                    'администратору об обновлении расписания)\n'
         else:
             # прохожусь по рядам самих таблиц
             for i in range(4, max_row + 1):
@@ -120,7 +118,7 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
                         break
             length = len(result)
             if length == 0:
-                text += f"Нет записей\n"
+                text += 'Нет записей\n'
             else:
                 for i in range(length):
                     text += f"{await text_formatter(i, result)}\n"
@@ -159,8 +157,7 @@ async def get_weekly_schedule(sheet_obj, max_row):
                         if none_counter != f1:
                             result.append(pre_result)
                         else:
-                            if none_counter == f1:
-                                day_none_counter += 1
+                            day_none_counter += 1
                             if day_none_counter == max_row - 3:
                                 result.append('В этот день нет записей')
                         counter = 0
@@ -179,13 +176,12 @@ async def get_weekly_schedule(sheet_obj, max_row):
 
                 text += f"◉ {date} | {day}:\n\n"
                 counter += 1
-            else:
-                if result[i][0] != 'Категория':  # проверка строки с заголовками
-                    if result[i][0] != 'В':  # если в этот день нет записей
-                        text += f"{await text_formatter(i, result)}\n"
-                    else:  # если записи есть
-                        text += f"{result[i]}\n\n"
-
+            elif result[i][0] != 'Категория':  # проверка строки с заголовками
+                text += (
+                    f"{await text_formatter(i, result)}\n"
+                    if result[i][0] != 'В'
+                    else f"{result[i]}\n\n"
+                )
         return text
 
         # вариант несколькими сообщениями
@@ -234,12 +230,10 @@ async def text_formatter(i, result):
             inserts[i] = ' — '
 
     # noinspection PyUnresolvedReferences
-    text = f"Категория пациента: {inserts[0]}\n" \
+    return f"Категория пациента: {inserts[0]}\n" \
            f"Время записи: {inserts[1].strftime('%H:%M')}\n" \
            f"Номер кабинета: {inserts[2]}\n" \
            f"Соединение: {inserts[3]}\n" \
            f"Комментарий: {inserts[4]}\n" \
            f"Номер карты: {inserts[5]}\n" \
            f"ФИО пациента: {inserts[6]}\n"
-
-    return text

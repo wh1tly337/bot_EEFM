@@ -26,7 +26,15 @@ async def authorization_handler(message: types.Message, state: FSMContext):
     authorization_response = message.text
     await state.update_data(user_response=authorization_response)
 
-    if authorization_response == 'Получить доступ':
+    if authorization_response == 'Отмена':
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text='Хорошо',
+            parse_mode='Markdown',
+            reply_markup=markup_new_user
+        )
+        await state.finish()
+    elif authorization_response == 'Получить доступ':
         message_text = f"Введите временный пароль. " \
                        f"Его нужно уточнить у {director_name}"
         await bot_aiogram.send_message(
@@ -36,14 +44,6 @@ async def authorization_handler(message: types.Message, state: FSMContext):
             reply_markup=markup_cancel
         )
         await Response.authorization_password_handler.set()
-    elif authorization_response == 'Отмена':
-        await bot_aiogram.send_message(
-            chat_id=message.chat.id,
-            text='Хорошо',
-            parse_mode='Markdown',
-            reply_markup=markup_new_user
-        )
-        await state.finish()
 
 
 async def authorization_password_handler(message: types.Message,
@@ -106,7 +106,6 @@ async def authorization_password_handler(message: types.Message,
                 reply_markup=markup
             )
             msg_new_user = 'New user log in and added to database'
-            print_log_info(message, msg_new_user)
         else:
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
@@ -115,9 +114,9 @@ async def authorization_password_handler(message: types.Message,
                 reply_markup=markup_new_user
             )
             msg_new_user = 'User unsuccessfully tried to log in'
-            print_log_info(message, msg_new_user)
             response = Response.authorization_handler
 
+        print_log_info(message, msg_new_user)
     await response.set()
 
 

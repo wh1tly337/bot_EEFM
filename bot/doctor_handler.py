@@ -157,9 +157,7 @@ async def get_data_form_schedule(message, time_period):
         fio = await dbw.get_data('id', message.chat.id),
         fio = f"{fio[0][1]} {fio[0][2]} {fio[0][3]}"
 
-        result = await fw.get_schedule(fio, time_period)
-
-        return result
+        return await fw.get_schedule(fio, time_period)
     except Exception as ex:
         logger.error(ex)
 
