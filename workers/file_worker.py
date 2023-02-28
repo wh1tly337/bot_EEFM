@@ -161,24 +161,50 @@ async def get_weekly_schedule(sheet_obj, max_row):
 
     text = ''
     counter = 0
-    # TODO день недели отдельным сообщением (те их будет 7)
+    # вариант одним сообщением
     # цикл для составления итогового текста сообщения с расписанием
     for i in range(len(result)):
-        if len(result[i]) == 2:
+        if len(result[i]) == 2:  # проверка на строку для получения даты и дня
             date = sheet_obj['A2'].value + timedelta(days=counter)
             date = date.strftime('%d-%m-%Y')
             day = result[i][1]
 
-            text += f" ◉ {date} | {day}:\n\n"
+            text += f"◉ {date} | {day}:\n\n"
             counter += 1
         else:
-            if result[i][0] != 'Категория':
-                if result[i][0] != 'В':
+            if result[i][0] != 'Категория':  # проверка на строку с заголовками
+                if result[i][0] != 'В':  # если в этот день нет записей
                     text += f"{await text_formatter(i, result)}\n"
-                else:
+                else:  # если записи есть
                     text += f"{result[i]}\n\n"
 
     return text
+
+    # вариант несколькими сообщениями
+    # res = []
+    #     # цикл для составления итогового текста сообщения с расписанием
+    #     for i in range(len(result)):
+    #         if len(result[i]) == 2:  # проверка на строку для получения
+    #         даты и дня
+    #             res.append(text)
+    #             text = ''
+    #
+    #             date = sheet_obj['A2'].value + timedelta(days=counter)
+    #             date = date.strftime('%d-%m-%Y')
+    #             day = result[i][1]
+    #
+    #             text += f"◉ {date} | {day}:\n\n"
+    #             counter += 1
+    #         else:
+    #             if result[i][0] != 'Категория':  # проверка на строку
+    #             с заголовками
+    #                 if result[i][0] != 'В':  # если в этот день нет записей
+    #                     text += f"{await text_formatter(i, result)}\n"
+    #                 else:  # если записи есть
+    #                     text += f"{result[i]}\n\n"
+    #     res.append(text)
+    #
+    #     return res[1::]
 
 
 # вспомогательная функция форматирования текста сообщения для расписания

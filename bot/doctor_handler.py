@@ -80,12 +80,21 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
     else:
         text = command_dict.get('message')
 
+    # вариант одним сообщением
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
         text=text,
         parse_mode='Markdown',
         reply_markup=command_dict.get('markup')
     )
+    # вариант несколькими сообщениями
+    # for i in range(len(text)):
+    #     await bot_aiogram.send_message(
+    #         chat_id=message.chat.id,
+    #         text=str(text[i]),
+    #         parse_mode='Markdown',
+    #         reply_markup=command_dict.get('markup')
+    #     )
 
     await command_dict.get('response').set()
 
