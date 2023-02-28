@@ -178,6 +178,19 @@ async def add_new_document(user_id, date_start, date_finish, name):
         logger.error(ex)
 
 
+async def get_all_documents():
+    try:
+        await start_connection()
+        cursor.execute(
+            ''' SELECT *
+                FROM documents
+            '''
+        )
+        return cursor.fetchall()
+    except Exception as ex:
+        logger.error(ex)
+
+
 # TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
 # Функция не нужна, закомитил если все в ебеня улетит
 # async def update_user(field, current, needed):

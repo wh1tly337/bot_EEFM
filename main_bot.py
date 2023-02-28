@@ -1,5 +1,11 @@
 from aiogram import executor
 from loguru import logger
+import threading
+import time
+import asyncio
+from datetime import (
+    datetime as dt,
+)
 
 from auxiliary.req_data import *
 from bot import (
@@ -36,10 +42,41 @@ ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
 
 
+# TODO сделать удаление директором документов, у которых вышел срок
+# TODO 
+
+deep_counter = 0
+async def check_documents():
+    global deep_counter
+    documents = await dbw.get_all_documents()
+    now_time = dt.now()
+    director_id = await dbw.get_data('post', 'director', 'id')
+    for document in documents:
+        doc_time = dt.strptime(document[2], '%d.%m.%Y')
+        delta_time = (doc_time - now_time).days
+        if delta_time < 100:
+            emp_fio = await dbw.get_data('id', document[0])
+
+            await bot_aiogram.send_message(
+                director_id,
+                f"Документ: {document[1]}\n"
+                f"Сотрудник: {emp_fio[1]} {emp_fio[2]} {emp_fio[3]}\n"
+                f"До конца действия: {delta_time} дней\n"
+                f"Истекает: {doc_time.strftime('%d.%m.%Y')}"
+            )
+    if deep_counter == 1:
+        deep_counter = 0
+        return
+    while True:
+        time.sleep(10)
+        deep_counter += 1
+        await check_documents()
+
+
+
 async def startup_message(_):
     """ Функция для отправки стартового сообщения о перезапуске всем юзерам """
     try:
-
         # TODO поменять на рабочий вариант
 
         # рабочий вариант
@@ -74,6 +111,7 @@ async def shutdown_move(_):
 
 if __name__ == '__main__':
     logger.info('Bot successfully started')
+    # asyncio.run(check_documents())
     executor.start_polling(
         dp,
         on_startup=startup_message,
