@@ -13,7 +13,8 @@ from workers import db_worker as dbw
 
 # TODO отрефакторить код по pep8 через flake8
 
-# TODO добавить logger в функцию
+# TODO добавить logger в функцию (осталось только Саше в director_handler
+#  и свои функции в db_worker)
 
 # TODO проработать комментарии (осталось только Саше в director_handler
 #  и свои функции в db_worker)
@@ -38,29 +39,38 @@ dirh.register_handlers_director(dp)
 
 async def startup_message(_):
     """ Функция для отправки стартового сообщения о перезапуске всем юзерам """
+    try:
 
-    # TODO поменять на рабочий вариант
+        # TODO поменять на рабочий вариант
 
-    # рабочий вариант
-    # all_ids = await dbw.get_all_ids()
-    # for i in range(len(all_ids)):
-    #     await bot_aiogram.send_message(
-    #         all_ids[i],
-    #         'Бот был перезапущен, для его работы необходимо ввести /start')
+        # рабочий вариант
+        # all_ids = await dbw.get_all_ids()
+        # for i in range(len(all_ids)):
+        #     await bot_aiogram.send_message(
+        #         all_ids[i],
+        #         'Бот был перезапущен, для его работы необходимо ' \
+        #         'отправить /start или любое сообщение боту'
 
-    # тестовый вариант
-    user_id = 726420734
-    # user_id = 577906481
-    await bot_aiogram.send_message(
-        user_id,
-        'Бот был перезапущен, для его работы необходимо отправить /start '
-        'или любое сообщение боту'
-    )
+        # тестовый вариант
+        user_id = 726420734
+        # user_id = 577906481
+        await bot_aiogram.send_message(
+            user_id,
+            'Бот был перезапущен, для его работы необходимо отправить /start '
+            'или любое сообщение боту'
+        )
+        logger.info('The initial mailing was made successfully')
+    except Exception as ex:
+        logger.error(ex)
 
 
 async def shutdown_move(_):
     """ Функция для logout user для корректной работы admin_file_handler """
-    await dbw.logout_user()
+    try:
+        await dbw.logout_user()
+        logger.info('All users have been successfully logged out')
+    except Exception as ex:
+        logger.error(ex)
 
 
 if __name__ == '__main__':

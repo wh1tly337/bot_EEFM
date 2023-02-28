@@ -1,5 +1,6 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
+from loguru import logger
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
@@ -152,12 +153,15 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
 
 async def get_data_form_schedule(message, time_period):
     """ Функция-обработчик информации с расписанием для вызвавшего доктора """
-    fio = await dbw.get_data('id', message.chat.id),
-    fio = f"{fio[0][1]} {fio[0][2]} {fio[0][3]}"
+    try:
+        fio = await dbw.get_data('id', message.chat.id),
+        fio = f"{fio[0][1]} {fio[0][2]} {fio[0][3]}"
 
-    result = await fw.get_schedule(fio, time_period)
+        result = await fw.get_schedule(fio, time_period)
 
-    return result
+        return result
+    except Exception as ex:
+        logger.error(ex)
 
 
 def register_handlers_doctor(dp: Dispatcher):  # noqa

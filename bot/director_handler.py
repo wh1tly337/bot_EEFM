@@ -19,6 +19,8 @@ check_fio = ''
 
 # TODO find_user если есть одинаковые фамилии
 
+# TODO реализовать функцию напоминания о завершении срока действия документа
+
 
 class Response(StatesGroup):
     register_director_handler = State()
