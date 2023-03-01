@@ -1,7 +1,7 @@
 import asyncio
 
 from aiogram import executor
-from datatime import datetime as dt
+from datetime import datetime as dt
 from loguru import logger
 
 from auxiliary.req_data import *
@@ -109,7 +109,8 @@ if __name__ == '__main__':
     logger.info('Bot successfully started')
 
     try:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         asyncio.ensure_future(check_documents(), loop=loop)
         asyncio.ensure_future(executor.start_polling(
             dp,
