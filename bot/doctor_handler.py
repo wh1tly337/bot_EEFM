@@ -109,11 +109,10 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
     await state.update_data(user_response=doctor_week_response)
 
     day_of_week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница',
-                   'Суббота', 'Воскресенье']
+                   'Суббота', 'Воскресенье', 'Отмена']
     if doctor_week_response in day_of_week:
         day_index = day_of_week.index(doctor_week_response)
     # noinspection PyUnboundLocalVariable
-    # TODO при нажатии отмена вылезает ошибка
     doctor_handlers = {
         f"{day_of_week[day_index]}": {
             'markup': markup_doctor,

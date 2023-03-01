@@ -57,7 +57,6 @@ async def get_schedule(doctor, time_period):
                f"либо в базе данных бота (доступ у {director_name})"
 
 
-# TODO отрефакторить функцию
 async def get_today_schedule(sheet_obj, max_row, what_need):
     """ Функция для получения расписания на сегодня или определенный день """
     try:
@@ -97,7 +96,7 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
                     continue
 
         result = []
-        res = []
+        formatted_result = []
         if cords is None:  # если нет расписания на текущую дату
             text += 'Нет расписания на этот день (необходимо сообщить ' \
                     'администратору об обновлении расписания)\n'
@@ -125,9 +124,9 @@ async def get_today_schedule(sheet_obj, max_row, what_need):
                 for i in range(length):
                     text += f"{await text_formatter(i, result)}\n"
 
-        res.append(text)
+        formatted_result.append(text)
 
-        return res
+        return formatted_result
     except Exception as ex:
         logger.error(ex)
 
@@ -170,12 +169,11 @@ async def get_weekly_schedule(sheet_obj, max_row):
 
         text = ''
         counter = 0
-        res = []
+        formatted_result = []
         # цикл для составления итогового текста сообщения с расписанием
         for i in range(len(result)):
-            if len(result[i]) == 2:  # проверка на строку для получения даты
-                # и дня
-                res.append(text)
+            if len(result[i]) == 2:  # проверка строки для получения даты и дня
+                formatted_result.append(text)
                 text = ''
 
                 date = sheet_obj['A2'].value + timedelta(days=counter)
@@ -185,15 +183,14 @@ async def get_weekly_schedule(sheet_obj, max_row):
                 text += f"◉ {date} | {day}:\n\n"
                 counter += 1
             else:
-                if result[i][0] != 'Категория':  # проверка на строку с
-                    # заголовками
+                if result[i][0] != 'Категория':  # проверка строк с заголовками
                     if result[i][0] != 'В':  # если в этот день нет записей
                         text += f"{await text_formatter(i, result)}\n"
                     else:  # если записи есть
                         text += f"{result[i]}\n\n"
-        res.append(text)
+        formatted_result.append(text)
 
-        return res[1::]
+        return formatted_result[1::]
     except Exception as ex:
         logger.error(ex)
 
