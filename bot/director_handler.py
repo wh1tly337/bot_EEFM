@@ -527,7 +527,7 @@ async def director_finder_delete_id(message: types.Message,
         },
         'Сотрудник найден': {
             'message': 'Сотрудник найден, введите название'
-                       'документа, который необходимо удалить',
+                       ' документа, который необходимо удалить',
             'markup': markup_cancel,
             'response': Response.director_remove_document,
         },
@@ -572,8 +572,8 @@ async def director_remove_document(message: types.Message,
                              state: FSMContext):
     """Handler для удаления документов сотруднику."""
     global current_employee_id_delete
-    emp_fio = message.text
-    await state.update_data(user_response=emp_fio)
+    name = message.text
+    await state.update_data(user_response=name)
     director_handlers = {
         'Отмена': {
             'message': 'Выберите функцию',
@@ -582,8 +582,8 @@ async def director_remove_document(message: types.Message,
         },
         'Документ удалён': {
             'message': 'Документ удален.',
-            'markup': markup_cancel,
-            'response': Response.director_add_documents,
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
         },
         'Документ не найден': {
             'message': 'Документа с таким названием нет, '
@@ -594,19 +594,17 @@ async def director_remove_document(message: types.Message,
     }
     while True:
         current_handler = ''
-        if emp_fio == 'Отмена':
+        if name == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
-        emp_fio = emp_fio.split(' ')
-        if len(emp_fio) != 3:
-            current_handler = director_handlers.get('Неверные данные')
-            break
-        id = await dbw.get_id_with_fio(emp_fio)
+        id = await dbw.get_document_with_name(name)
+        print(id)
         if not id:
-            current_handler = director_handlers.get('Сотрудник не найден')
+            current_handler = director_handlers.get('Документ не найден')
             break
         current_employee_id_delete = id[0][0]
-        current_handler = director_handlers.get('Сотрудник найден')
+        await dbw.delete_document(name)
+        current_handler = director_handlers.get('Документ удалён')
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -707,9 +705,9 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     )
     dp.register_message_handler(
         director_finder_delete_id,
-        state=director_finder_delete_id
+        state=Response.director_finder_delete_id
     )
     dp.register_message_handler(
         director_remove_document,
-        state=director_remove_document
+        state=Response.director_remove_document
     )

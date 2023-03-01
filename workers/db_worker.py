@@ -191,10 +191,24 @@ async def get_all_documents():
         logger.error(ex)
 
 
+async def get_document_with_name(name):
+    try:
+        await start_connection()
+        cursor.execute(
+           f''' SELECT user_id
+                FROM documents
+                WHERE name = '{name}'
+            '''
+        )
+        return cursor.fetchall()
+    except Exception as ex:
+        logger.error(ex)
+
+
 async def delete_document(name):
     try:
         await start_connection()
-        cursor.executes(f'''
+        cursor.execute(f'''
         DELETE FROM documents
         WHERE name = '{name}'
         ''')
