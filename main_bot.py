@@ -1,9 +1,7 @@
-import time
-from datetime import (
-    datetime as dt,
-)
+import asyncio
 
 from aiogram import executor
+from datatime import datetime as dt
 from loguru import logger
 
 from auxiliary.req_data import *
@@ -67,7 +65,7 @@ async def check_documents():
         deep_counter = 0
         return
     while True:
-        time.sleep(10)
+        await asyncio.sleep(10)
         deep_counter += 1
         await check_documents()
 
@@ -109,9 +107,15 @@ async def shutdown_move(_):
 
 if __name__ == '__main__':
     logger.info('Bot successfully started')
-    # asyncio.run(check_documents())
-    executor.start_polling(
-        dp,
-        on_startup=startup_message,
-        on_shutdown=shutdown_move
-    )
+
+    try:
+        loop = asyncio.get_event_loop()
+        asyncio.ensure_future(check_documents(), loop=loop)
+        asyncio.ensure_future(executor.start_polling(
+            dp,
+            on_startup=startup_message,
+            on_shutdown=shutdown_move
+        ), loop=loop)
+        loop.run_forever()
+    except Exception:
+        pass
