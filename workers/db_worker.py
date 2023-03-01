@@ -191,6 +191,19 @@ async def get_all_documents():
         logger.error(ex)
 
 
+async def delete_document(name):
+    try:
+        await start_connection()
+        cursor.executes(f'''
+        DELETE FROM documents
+        WHERE name = '{name}'
+        ''')
+        connection.commit()
+        await close_connection()
+    except Exception as ex:
+        logger.error(ex)
+
+
 # TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
 # Функция не нужна, закомитил если все в ебеня улетит
 # async def update_user(field, current, needed):

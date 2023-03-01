@@ -13,6 +13,9 @@ from workers import db_worker as dbw
 # переменная для функции добавления документов
 current_employee_id = 0
 
+# переменная для функции удаления документов
+current_employee_id_delete = 0
+
 # переменная для функции смены директора
 check_fio = ''
 
@@ -30,6 +33,8 @@ class Response(StatesGroup):
     director_add_documents = State()
     director_remove_user = State()
     director_update_user = State()
+    director_finder_delete_id = State()
+    director_remove_document = State()
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
@@ -105,6 +110,12 @@ async def register_director_emp_manage(message: types.Message,
             'response': Response.director_finder_id,
             'message': 'Введите ФИО сотрудника, '
                        'которому хотите добавить документ',
+        },
+        'Удалить документ у сотрудника': {
+            'markup': markup_cancel,
+            'response': Response.director_finder_delete_id,
+            'message': 'Введите ФИО сотрудника, '
+                       'у которого хотите удалить документ',
         },
         'Обновить данные сотрудника': {
             'markup': markup_cancel,
@@ -500,6 +511,112 @@ async def director_add_documents(message: types.Message,
     await current_handler.get('response').set()
 
 
+async def director_finder_delete_id(message: types.Message,
+                             state: FSMContext):
+    """Handler поиска ид для удаления документов сотруднику."""
+    print('enter')
+    global current_employee_id_delete
+    logger.info('Поиск ид для удаления')
+    emp_fio = message.text
+    await state.update_data(user_response=emp_fio)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Сотрудник найден': {
+            'message': 'Сотрудник найден, введите название'
+                       'документа, который необходимо удалить',
+            'markup': markup_cancel,
+            'response': Response.director_remove_document,
+        },
+        'Сотрудник не найден': {
+            'message': 'Сотрудник не найден, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_delete_id,
+        },
+        'Неверные данные': {
+            'message': 'Данные введены неверно, попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_finder_delete_id,
+        },
+    }
+    while True:
+        current_handler = ''
+        if emp_fio == 'Отмена':
+            current_employee_id_delete = 0
+            current_handler = director_handlers.get('Отмена')
+            break
+        emp_fio = emp_fio.split(' ')
+        if len(emp_fio) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        user_id = await dbw.get_id_with_fio(emp_fio)
+        if not user_id:
+            current_handler = director_handlers.get('Сотрудник не найден')
+            break
+        current_employee_id_delete = user_id[0][0]
+        current_handler = director_handlers.get('Сотрудник найден')
+        break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
+async def director_remove_document(message: types.Message,
+                             state: FSMContext):
+    """Handler для удаления документов сотруднику."""
+    global current_employee_id_delete
+    emp_fio = message.text
+    await state.update_data(user_response=emp_fio)
+    director_handlers = {
+        'Отмена': {
+            'message': 'Выберите функцию',
+            'markup': markup_director_emp,
+            'response': Response.register_director_emp_manage,
+        },
+        'Документ удалён': {
+            'message': 'Документ удален.',
+            'markup': markup_cancel,
+            'response': Response.director_add_documents,
+        },
+        'Документ не найден': {
+            'message': 'Документа с таким названием нет, '
+                       'попробуйте ещё раз',
+            'markup': markup_cancel,
+            'response': Response.director_remove_document,
+        },
+    }
+    while True:
+        current_handler = ''
+        if emp_fio == 'Отмена':
+            current_handler = director_handlers.get('Отмена')
+            break
+        emp_fio = emp_fio.split(' ')
+        if len(emp_fio) != 3:
+            current_handler = director_handlers.get('Неверные данные')
+            break
+        id = await dbw.get_id_with_fio(emp_fio)
+        if not id:
+            current_handler = director_handlers.get('Сотрудник не найден')
+            break
+        current_employee_id_delete = id[0][0]
+        current_handler = director_handlers.get('Сотрудник найден')
+        break
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=current_handler.get('message'),
+        parse_mode='Markdown',
+        reply_markup=current_handler.get('markup')
+    )
+    await current_handler.get('response').set()
+
+
 async def director_update_user(message: types.Message,
                                state: FSMContext):
     """Handler удаления сотрудника."""
@@ -587,4 +704,12 @@ def register_handlers_director(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         director_update_user,
         state=Response.director_update_user
+    )
+    dp.register_message_handler(
+        director_finder_delete_id,
+        state=director_finder_delete_id
+    )
+    dp.register_message_handler(
+        director_remove_document,
+        state=director_remove_document
     )
