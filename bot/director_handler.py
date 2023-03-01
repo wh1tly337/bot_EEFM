@@ -71,6 +71,8 @@ async def register_director_handler(message: types.Message, state: FSMContext):
             chat_id=message.chat.id,
             document=open(f"{command_dict.get('func')}", 'rb')
         )
+        logger.info('Current schedule was sent to director')
+
     await command_dict.get('response').set()
 
 

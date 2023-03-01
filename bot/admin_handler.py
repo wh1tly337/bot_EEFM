@@ -1,5 +1,6 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
+from loguru import logger
 
 from auxiliary.all_markups import *
 from auxiliary.req_data import *
@@ -113,6 +114,7 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             chat_id=message.chat.id,
             document=open(f"{command_dict.get('func')}", 'rb')
         )
+        logger.info('Current schedule was sent to admin')
 
     if command_dict.get('response'):
         await command_dict.get('response').set()

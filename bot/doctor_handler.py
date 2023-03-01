@@ -82,24 +82,23 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
 
     if command_dict.get('func'):
         text = await get_data_form_schedule(message, command_dict.get('func'))
+
+        for i in range(len(text)):
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text=str(text[i]),
+                parse_mode='Markdown',
+                reply_markup=command_dict.get('markup')
+            )
     else:
         text = command_dict.get('message')
 
-    # вариант одним сообщением
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text=text,
-        parse_mode='Markdown',
-        reply_markup=command_dict.get('markup')
-    )
-    # вариант несколькими сообщениями
-    # for i in range(len(text)):
-    #     await bot_aiogram.send_message(
-    #         chat_id=message.chat.id,
-    #         text=str(text[i]),
-    #         parse_mode='Markdown',
-    #         reply_markup=command_dict.get('markup')
-    #     )
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=text,
+            parse_mode='Markdown',
+            reply_markup=command_dict.get('markup')
+        )
 
     await command_dict.get('response').set()
 
@@ -114,6 +113,7 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
     if doctor_week_response in day_of_week:
         day_index = day_of_week.index(doctor_week_response)
     # noinspection PyUnboundLocalVariable
+    # TODO при нажатии отмена вылезает ошибка
     doctor_handlers = {
         f"{day_of_week[day_index]}": {
             'markup': markup_doctor,
@@ -138,15 +138,23 @@ async def doctor_week_handler(message: types.Message, state: FSMContext):
 
     if command_dict.get('day'):
         text = await get_data_form_schedule(message, command_dict.get('day'))
+
+        for i in range(len(text)):
+            await bot_aiogram.send_message(
+                chat_id=message.chat.id,
+                text=str(text[i]),
+                parse_mode='Markdown',
+                reply_markup=command_dict.get('markup')
+            )
     else:
         text = command_dict.get('message')
 
-    await bot_aiogram.send_message(
-        chat_id=message.chat.id,
-        text=text,
-        parse_mode='Markdown',
-        reply_markup=command_dict.get('markup')
-    )
+        await bot_aiogram.send_message(
+            chat_id=message.chat.id,
+            text=text,
+            parse_mode='Markdown',
+            reply_markup=command_dict.get('markup')
+        )
 
     await command_dict.get('response').set()
 

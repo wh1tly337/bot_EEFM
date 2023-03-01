@@ -1,11 +1,10 @@
-from aiogram import executor
-from loguru import logger
-import threading
 import time
-import asyncio
 from datetime import (
     datetime as dt,
 )
+
+from aiogram import executor
+from loguru import logger
 
 from auxiliary.req_data import *
 from bot import (
@@ -23,8 +22,8 @@ from workers import db_worker as dbw
 # TODO проработать комментарии (осталось только Саше в director_handler
 #  и свои функции в db_worker)
 
-# TODO добавить связь докторов с директором/администратором
-#  (ждем ответ от Вани)
+# TODO вывод расписания для админа и директора в формате pdf
+
 
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
@@ -41,11 +40,11 @@ doch.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
 
-
 # TODO сделать удаление директором документов, у которых вышел срок
-# TODO 
 
 deep_counter = 0
+
+
 async def check_documents():
     global deep_counter
     documents = await dbw.get_all_documents()
@@ -73,7 +72,6 @@ async def check_documents():
         await check_documents()
 
 
-
 async def startup_message(_):
     """ Функция для отправки стартового сообщения о перезапуске всем юзерам """
     try:
@@ -88,8 +86,8 @@ async def startup_message(_):
         #         'отправить /start или любое сообщение боту'
 
         # тестовый вариант
-        # user_id = 726420734
-        user_id = 577906481
+        user_id = 726420734
+        # user_id = 577906481
         await bot_aiogram.send_message(
             user_id,
             'Бот был перезапущен, для его работы необходимо отправить /start '
