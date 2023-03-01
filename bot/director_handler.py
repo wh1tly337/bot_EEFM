@@ -33,12 +33,12 @@ class Response(StatesGroup):
 
 
 async def register_director_handler(message: types.Message, state: FSMContext):
-    """ Handler для стартовой страницы администратора """
+    """Handler для стартовой страницы администратора."""
     director_response = message.text
     await state.update_data(user_response=director_response)
     fio = await dbw.get_data('id', message.chat.id)
     logger.info(f'Стартовая страница директора | {fio}')
-    appeal = f"{fio[2]} {fio[3]}"  # TODO мб убрать это обращение (line 53)
+    appeal = f"{fio[2]} {fio[3]}"
     director_handlers = {
         'Управление персоналом': {
             'markup': markup_director_emp,
@@ -76,7 +76,7 @@ async def register_director_handler(message: types.Message, state: FSMContext):
 
 async def register_director_emp_manage(message: types.Message,
                                        state: FSMContext):
-    """ Handler для страницы управления сотрудников директора """
+    """Handler для страницы управления сотрудников директора."""
     logger.info('Страница управления сотрудниками')
     director_response = message.text
     await state.update_data(user_response=director_response)
@@ -137,7 +137,7 @@ async def register_director_emp_manage(message: types.Message,
 
 async def register_director_create_handler(message: types.Message,
                                            state: FSMContext):
-    """ Handler для страницы добавления сотрудников администратора """
+    """Handler для страницы добавления сотрудников администратора."""
     global check_fio
     director_response = message.text
     await state.update_data(user_response=director_response)
@@ -220,7 +220,7 @@ async def register_director_create_handler(message: types.Message,
 
 async def register_director_find_handler(message: types.Message,
                                          state: FSMContext):
-    """ Handler для страницы поиска сотрудников администратора """
+    """Handler для страницы поиска сотрудников администратора."""
     emp_data = message.text
     await state.update_data(user_response=emp_data)
     if emp_data == 'Отмена':
@@ -276,6 +276,7 @@ async def register_director_find_handler(message: types.Message,
 
 async def director_change_director(message: types.Message,
                                    state: FSMContext):
+    """Функция смены директора."""
     global check_fio
     logger.info(f'Director try to change | check_fio: {check_fio}')
     director_response = message.text
@@ -342,7 +343,7 @@ async def director_change_director(message: types.Message,
 
 async def director_remove_user(message: types.Message,
                                state: FSMContext):
-    """ Handler удаления сотрудника """
+    """Handler удаления сотрудника."""
     emp_fio = message.text
     await state.update_data(user_response=emp_fio)
     director_handlers = {
@@ -388,7 +389,7 @@ async def director_remove_user(message: types.Message,
 
 async def director_finder_id(message: types.Message,
                              state: FSMContext):
-    """ Handler поиска ид для добавления документов сотруднику """
+    """Handler поиска ид для добавления документов сотруднику."""
     global current_employee_id
     emp_fio = message.text
     await state.update_data(user_response=emp_fio)
@@ -443,7 +444,7 @@ async def director_finder_id(message: types.Message,
 
 async def director_add_documents(message: types.Message,
                                  state: FSMContext):
-    """ Handler добавления документов сотруднику """
+    """Handler добавления документов сотруднику."""
     global current_employee_id
     document_data = message.text
     await state.update_data(user_response=document_data)
@@ -499,7 +500,7 @@ async def director_add_documents(message: types.Message,
 
 async def director_update_user(message: types.Message,
                                state: FSMContext):
-    """ Handler удаления сотрудника """
+    """Handler удаления сотрудника."""
     emp_data = message.text
     await state.update_data(user_response=emp_data)
     director_handlers = {
@@ -548,7 +549,7 @@ async def director_update_user(message: types.Message,
 
 
 def register_handlers_director(dp: Dispatcher):  # noqa
-    """ Регистратор handler'ов передает данные в main_bot.py"""
+    """Регистратор handler'ов передает данные в main_bot.py."""
     dp.register_message_handler(
         register_director_handler,
         state=Response.register_director_handler

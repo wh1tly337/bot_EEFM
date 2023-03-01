@@ -71,8 +71,6 @@ async def authorization_password_handler(message: types.Message,
             value=authorization_password_response)
         if authorization_password_response == temporary_password:
             await dbw.update_with_id_user('id', message.chat.id, temporary_password)
-            await dbw.update_user()
-            await dbw.update_user('id', temporary_password, message.chat.id)
             result = await dbw.get_data(
                 field='id',
                 what_need='post',
