@@ -16,10 +16,6 @@ from workers import (
 # TODO сделать напоминание админу о том что нужно обновить расписание
 #  (например в воскресенье)
 
-# TODO сделать возможность загружать расписание сейчас, либо через отсрочку
-#  (те админ загрузит расписание в пятницу, а применится оно только
-#  в понедельник следующей недели в 00:00)
-
 # класс для регистрации состояния сообщений пользователя (используется везде,
 # где нужно обрабатывать текстовые сообщения от пользователя)
 class Response(StatesGroup):
@@ -28,6 +24,7 @@ class Response(StatesGroup):
     admin_send_messages_handler = State()
     admin_mailing_handler = State()
     admin_to_director_handler = State()
+    admin_deferred_handler = State()
 
 
 async def admin_message_handler(message: types.Message, state: FSMContext):
@@ -77,9 +74,15 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             'func': src_schedule_template,
         },
         'Загрузить расписание': {
-            'markup': markup_cancel,
-            'finish': state,
-            'message': 'Отправьте мне Excel файл с расписанием',
+            'markup': markup_admin_load_schedule,
+            'response': Response.admin_deferred_handler,
+            'message': 'Как вы хотите отправить расписание?\n'
+                       '"Сразу" - расписание загружается вами сейчас и '
+                       'применяется тоже сейчас\n'
+                       '"Отложено" - расписание загружается вами сейчас, но '
+                       'становится активным в следующий понедельник утром '
+                       '(чтобы загружать расписание на следующую неделю '
+                       'заранее)',
         },
         'Получить расписание': {
             'markup': markup_admin,
@@ -115,6 +118,64 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
             document=open(f"{command_dict.get('func')}", 'rb')
         )
         logger.info('Current schedule was sent to admin')
+
+    if command_dict.get('response'):
+        await command_dict.get('response').set()
+
+
+# TODO сделать функцию проверки даты и времени в бесконечной функции
+#  (как с документами), чтобы загружать расписание в определенное время
+
+# TODO понять как после отложенной загрузки документов заканчивать бесконечный
+#  цикл, не останавливая/перезапуская бота. А как снова понадобится бесконечный
+#  цикл, запускать его не при старте бота, а уже во время его работы
+
+# TODO после того как применится отложенное расписание удалять старое
+#  (по идее все и так должно работать, но стоит проверить)
+async def admin_deferred_handler(message: types.Message, state: FSMContext):
+    """  """
+    admin_deferred_response = message.text
+    await state.update_data(user_response=admin_deferred_response)
+
+    admin_handlers = {
+        'Сразу': {
+            'markup': markup_cancel,
+            'finish': state,
+            'message': 'Отправьте мне Excel файл с расписанием',
+        },
+        'Отложено': {
+            'markup': markup_cancel,
+            'finish': state,
+            'message': 'Отправьте мне Excel файл с расписанием '
+                       '(сам загрузится утром в пн)',
+            'func': 'yes',  # функция для проверки на день недели и время, если
+            # нужное, то она применит загруженное расписание в
+            # запланированное время
+        },
+        'Отмена': {
+            'markup': markup_admin_make_schedule,
+            'response': Response.admin_schedule_handler,
+            'message': 'Хорошо',
+        },
+        None: {
+            'markup': markup_admin_load_schedule,
+            'response': Response.admin_deferred_handler,
+            'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
+        }
+    }
+
+    command_dict = admin_handlers.get(admin_deferred_response)  # noqa
+    if not command_dict:
+        command_dict = admin_handlers[None]
+    await bot_aiogram.send_message(
+        chat_id=message.chat.id,
+        text=command_dict.get('message'),
+        parse_mode='Markdown',
+        reply_markup=command_dict.get('markup')
+    )
+
+    if command_dict.get('func'):
+        print(f"{command_dict.get('func')}")
 
     if command_dict.get('response'):
         await command_dict.get('response').set()
@@ -318,4 +379,8 @@ def register_handlers_admin(dp: Dispatcher):  # noqa
     dp.register_message_handler(
         admin_to_director_handler,
         state=Response.admin_to_director_handler
+    )
+    dp.register_message_handler(
+        admin_deferred_handler,
+        state=Response.admin_deferred_handler
     )

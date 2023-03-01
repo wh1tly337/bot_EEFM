@@ -111,7 +111,7 @@ if __name__ == '__main__':
     try:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        asyncio.ensure_future(check_documents(), loop=loop)
+        # asyncio.ensure_future(check_documents(), loop=loop)
         asyncio.ensure_future(executor.start_polling(
             dp,
             on_startup=startup_message,

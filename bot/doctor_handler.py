@@ -70,7 +70,7 @@ async def doctor_schedule_handler(message: types.Message, state: FSMContext):
             'message': 'Выберите команду',
         },
         None: {
-            'markup': markup_admin_watch_schedule,
+            'markup': markup_doctor_watch_schedule,
             'response': Response.doctor_schedule_handler,
             'message': 'Такой команды нет, воспользуйтесь кнопками ниже',
         }
