@@ -35,7 +35,7 @@ class Response(StatesGroup):
 
 
 async def admin_message_handler(message: types.Message, state: FSMContext):
-    """ Функция-обработчик сообщений стартовой страницы админа """
+    """Функция-обработчик сообщений стартовой страницы админа."""
     admin_response = message.text
     await state.update_data(user_response=admin_response)
 
@@ -69,7 +69,7 @@ async def admin_message_handler(message: types.Message, state: FSMContext):
 
 
 async def admin_schedule_handler(message: types.Message, state: FSMContext):
-    """ Функция-обработчик сообщений второй страницы расписания для админа """
+    """Функция-обработчик сообщений второй страницы расписания для админа."""
     admin_schedule_response = message.text
     await state.update_data(user_response=admin_schedule_response)
 
@@ -185,7 +185,6 @@ async def admin_deferred_handler(message: types.Message, state: FSMContext):
 
 async def admin_deferred_doc_handler():
     """Рекурсивная функция для автоматической загрузки расписания."""
-
     global deep_counter, need_check
 
     if (
@@ -206,8 +205,11 @@ async def admin_deferred_doc_handler():
             admin_id,
             "Расписание автоматически загружено на текущую неделю"
         )
-        need_check = False
+        need_check = False  # изменение переменной, чтобы бот только один раз
+        # отправил сообщение
 
+    # реализация самой рекурсии и проверка чтобы он не уходил глубже одного
+    # раза в рекурсию
     if deep_counter == 1:
         deep_counter = 0
         return
@@ -218,7 +220,7 @@ async def admin_deferred_doc_handler():
 
 
 async def admin_file_handler(message: types.Message):
-    """ Функция-обработчик файла расписания загружаемого админом """
+    """Функция-обработчик файла расписания загружаемого админом."""
     all_ids = await dbw.get_all_ids()
     # если пользователь не залогиненный, то этот try избавит от ошибки
     try:
@@ -291,7 +293,7 @@ async def admin_file_handler(message: types.Message):
 
 async def admin_send_messages_handler(message: types.Message,
                                       state: FSMContext):
-    """ Функция-обработчик сообщений второй страницы рассылки для админа """
+    """Функция-обработчик сообщений второй страницы рассылки для админа."""
     admin_mailing_response = message.text
     await state.update_data(user_response=admin_mailing_response)
 
@@ -332,7 +334,7 @@ async def admin_send_messages_handler(message: types.Message,
 
 
 async def admin_mailing_handler(message: types.Message, state: FSMContext):
-    """ Функция-обработчик сообщений для рассылки персоналу """
+    """Функция-обработчик сообщений для рассылки персоналу."""
     admin_sending_response = message.text
     await state.update_data(user_response=admin_sending_response)
 
@@ -371,7 +373,7 @@ async def admin_mailing_handler(message: types.Message, state: FSMContext):
 
 # функция-обработчик сообщений от админа для перенаправления получателю
 async def admin_to_director_handler(message: types.Message, state: FSMContext):
-    """ Функция-обработчик сообщений для перенаправления директору """
+    """Функция-обработчик сообщений для перенаправления директору."""
     admin_director_sending_response = message.text
     await state.update_data(user_response=admin_director_sending_response)
 
@@ -403,8 +405,9 @@ async def admin_to_director_handler(message: types.Message, state: FSMContext):
     await response.set()
 
 
-def register_handlers_admin(dp: Dispatcher):  # noqa
-    """ Регистратор данных для main_bot.py """
+# noinspection PyShadowingNames,DuplicatedCode
+def register_handlers_admin(dp: Dispatcher):
+    """Регистратор данных для main_bot.py."""
     dp.register_message_handler(
         admin_message_handler,
         state=Response.admin_message_handler

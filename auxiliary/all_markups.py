@@ -39,7 +39,7 @@ markup_doctor_watch_schedule.add(btn2_doctor_watch_schedule,
                                  btn3_doctor_watch_schedule)
 markup_doctor_watch_schedule.add(btn_cancel)
 
-""" Кнопки 3-го уровня для доктора (выбор определенного дня)"""
+""" Кнопки 3-го уровня (выбор определенного дня) для доктора """
 markup_week_doctor = types.ReplyKeyboardMarkup(resize_keyboard=True)
 btn1_week_doctor = types.KeyboardButton('Понедельник')
 btn2_week_doctor = types.KeyboardButton('Вторник')
@@ -105,5 +105,5 @@ btn6_director_emp = types.KeyboardButton('Удалить документ у с�
 btn7_director_emp = types.KeyboardButton('Отмена')
 markup_director_emp.add(btn2_director_emp, btn4_director_emp)
 markup_director_emp.add(btn3_director_emp, btn6_director_emp)
-markup_director_emp.add(btn1_director_emp,btn5_director_emp)
+markup_director_emp.add(btn1_director_emp, btn5_director_emp)
 markup_director_emp.add(btn7_director_emp)

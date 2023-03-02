@@ -70,7 +70,11 @@ async def authorization_password_handler(message: types.Message,
             what_need='id',
             value=authorization_password_response)
         if authorization_password_response == temporary_password:
-            await dbw.update_with_id_user('id', message.chat.id, temporary_password)
+            await dbw.update_with_id_user(
+                'id',
+                message.chat.id,
+                temporary_password
+            )
             result = await dbw.get_data(
                 field='id',
                 what_need='post',
@@ -120,7 +124,8 @@ async def authorization_password_handler(message: types.Message,
     await response.set()
 
 
-def register_handlers_authorization(dp: Dispatcher):  # noqa
+# noinspection PyShadowingNames,DuplicatedCode
+def register_handlers_authorization(dp: Dispatcher):
     """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         authorization_handler,

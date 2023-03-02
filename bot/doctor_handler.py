@@ -169,7 +169,8 @@ async def get_data_form_schedule(message, time_period):
         logger.error(ex)
 
 
-def register_handlers_doctor(dp: Dispatcher):  # noqa
+# noinspection PyShadowingNames,DuplicatedCode
+def register_handlers_doctor(dp: Dispatcher):
     """ Регистратор данных для main_bot.py """
     dp.register_message_handler(
         doctor_handler,

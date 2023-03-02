@@ -105,7 +105,8 @@ async def login_user(user_id):
     # переменную log_stat в бд)
     try:
         await start_connection()
-        cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {user_id}""")
+        cursor.execute(f"""UPDATE users SET log_stat = 1 WHERE id = {user_id}
+        """)
         connection.commit()
         await close_connection()
     except Exception as ex:
@@ -219,11 +220,13 @@ async def delete_document(name):
 
 
 # TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
-# Функция не нужна, закомитил если все в ебеня улетит
+# TODO Саня, если это не нужно то удали и TODO и закомментированную функцию
+# Функция не нужна, закомитил если все в беня улетит
 # async def update_user(field, current, needed):
 #     try:
 #         await start_connection()
-#         cursor.execute(f"""UPDATE users SET {field} = '{needed}' WHERE {field} 
+#         cursor.execute(f"""UPDATE users SET {field} = '{needed}'
+#         WHERE {field}
 #         = '{current}'""")
 #         connection.commit()
 #         await close_connection()

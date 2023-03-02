@@ -2,7 +2,7 @@ from loguru import logger
 
 
 def print_log_info(message, start_message):
-    """ Функция для составления сообщения логгера """
+    """Функция для составления сообщения логгера."""
     start_message += ' |'
     output = [
         start_message,

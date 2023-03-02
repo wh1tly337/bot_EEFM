@@ -22,6 +22,8 @@ check_fio = ''
 
 # TODO реализовать функцию напоминания о завершении срока действия документа
 
+# TODO поменять переменные с id на что-то другое
+
 
 class Response(StatesGroup):
     register_director_handler = State()
@@ -333,7 +335,7 @@ async def director_change_director(message: types.Message,
         current_handler = director_handlers.get('Смена директора')
         current_handler['message'] = current_handler.get('message') + str(
             temporary_password)
-        user_id =  message.chat.id
+        user_id = message.chat.id
         await dbw.update_with_id_user('post', user_id, 'doctor')
         await dbw.add_new_user(
             user_id=temporary_password,
@@ -377,6 +379,12 @@ async def director_remove_user(message: types.Message,
         },
     }
     while True:
+        # TODO Саша, пишет что у тебя дубликаты кода, так что подумай,
+        #  может можно вывести этот код в отдельную функцию и просто из двух
+        #  мест ее вызывать
+
+        # TODO Саша, проверь нужно ли это присвоение, потому что оно выделяется
+        #  как не используемое
         current_handler = ''
         if emp_fio == 'Отмена':
             current_handler = director_handlers.get('Отмена')
@@ -511,8 +519,7 @@ async def director_add_documents(message: types.Message,
     await current_handler.get('response').set()
 
 
-async def director_finder_delete_id(message: types.Message,
-                             state: FSMContext):
+async def director_finder_delete_id(message: types.Message, state: FSMContext):
     """Handler поиска ид для удаления документов сотруднику."""
     print('enter')
     global current_employee_id_delete
@@ -568,8 +575,7 @@ async def director_finder_delete_id(message: types.Message,
     await current_handler.get('response').set()
 
 
-async def director_remove_document(message: types.Message,
-                             state: FSMContext):
+async def director_remove_document(message: types.Message, state: FSMContext):
     """Handler для удаления документов сотруднику."""
     global current_employee_id_delete
     name = message.text
@@ -665,7 +671,8 @@ async def director_update_user(message: types.Message,
     await current_handler.get('response').set()
 
 
-def register_handlers_director(dp: Dispatcher):  # noqa
+# noinspection PyShadowingNames,DuplicatedCode
+def register_handlers_director(dp: Dispatcher):
     """Регистратор handler'ов передает данные в main_bot.py."""
     dp.register_message_handler(
         register_director_handler,
