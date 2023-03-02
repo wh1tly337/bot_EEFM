@@ -1,3 +1,8 @@
+import asyncio
+import os
+import shutil
+from datetime import datetime
+
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from loguru import logger
@@ -11,6 +16,11 @@ from workers import (
     db_worker as dbw,
     file_worker as fw
 )
+
+# переменные для работы автоматической загрузке расписания
+deep_counter = 0
+need_check = False
+deferred = False
 
 
 # TODO сделать напоминание админу о том что нужно обновить расписание
@@ -123,17 +133,10 @@ async def admin_schedule_handler(message: types.Message, state: FSMContext):
         await command_dict.get('response').set()
 
 
-# TODO сделать функцию проверки даты и времени в бесконечной функции
-#  (как с документами), чтобы загружать расписание в определенное время
-
-# TODO понять как после отложенной загрузки документов заканчивать бесконечный
-#  цикл, не останавливая/перезапуская бота. А как снова понадобится бесконечный
-#  цикл, запускать его не при старте бота, а уже во время его работы
-
-# TODO после того как применится отложенное расписание удалять старое
-#  (по идее все и так должно работать, но стоит проверить)
 async def admin_deferred_handler(message: types.Message, state: FSMContext):
-    """  """
+    """Функция-обработчик для выбора когда загружать расписание."""
+    global need_check, deferred
+
     admin_deferred_response = message.text
     await state.update_data(user_response=admin_deferred_response)
 
@@ -142,15 +145,16 @@ async def admin_deferred_handler(message: types.Message, state: FSMContext):
             'markup': markup_cancel,
             'finish': state,
             'message': 'Отправьте мне Excel файл с расписанием',
+            'deferred_value': False,
+            'value': False,
         },
         'Отложено': {
             'markup': markup_cancel,
             'finish': state,
             'message': 'Отправьте мне Excel файл с расписанием '
                        '(сам загрузится утром в пн)',
-            'func': 'yes',  # функция для проверки на день недели и время, если
-            # нужное, то она применит загруженное расписание в
-            # запланированное время
+            'deferred_value': True,
+            'value': True,
         },
         'Отмена': {
             'markup': markup_admin_make_schedule,
@@ -174,13 +178,46 @@ async def admin_deferred_handler(message: types.Message, state: FSMContext):
         reply_markup=command_dict.get('markup')
     )
 
-    if command_dict.get('func'):
-        print(f"{command_dict.get('func')}")
-
     if command_dict.get('response'):
         await command_dict.get('response').set()
     elif command_dict.get('finish'):
         await command_dict.get('finish').finish()
+        deferred = command_dict.get('deferred_value')
+        need_check = command_dict.get('value')
+
+
+async def admin_deferred_doc_handler():
+    """Рекурсивная функция для автоматической загрузки расписания."""
+
+    global deep_counter, need_check
+
+    if (
+            datetime.weekday(datetime.now()) == 0 and  # проверка на пн
+            datetime.now().strftime('%H') == '08' and  # проверка на время
+            os.path.exists('auxiliary/deferred_schedule.xlsx') is True and
+            need_check is True
+    ):
+        fw.file_delete('now')  # удаление текущего расписания
+        shutil.copyfile(
+            f"{src_deferred_schedule}deferred_schedule.xlsx",
+            f"{src_current_schedule}"
+        )  # копирования файла с расписанием в нужную директорию
+        fw.file_delete('monday')  # удаление файла который теперь лежит в
+        # другой дирректории
+        admin_id = await dbw.get_data('post', 'admin', 'id')
+        await bot_aiogram.send_message(
+            admin_id,
+            "Расписание автоматически загружено на текущую неделю"
+        )
+        need_check = False
+
+    if deep_counter == 1:
+        deep_counter = 0
+        return
+    while need_check is True:
+        await asyncio.sleep(1)
+        deep_counter += 1
+        await admin_deferred_doc_handler()
 
 
 async def admin_file_handler(message: types.Message):
@@ -210,18 +247,29 @@ async def admin_file_handler(message: types.Message):
         # проверка на формат документа
         if message.document.file_name[-4:] == 'xlsx' or \
                 message.document.file_name[-3:] == 'xls':
+
+            if deferred is False:
+                src_docs = src_files
+                message_text = 'Расписание получено!'
+                when = 'now'
+            else:
+                src_docs = src_deferred_schedule
+                message_text = 'Расписание получено! Оно будет ' \
+                               'автоматически загружено в понедельник утром'
+                when = 'monday'
+
             await message.document.download(
-                destination_file=f"{src_files}"
+                destination_file=f"{src_docs}"
                                  f"{message.document.file_name}")
 
             filename = message.document.file_name.split('.')
             ender = filename[1]
             filename = filename[0]
-            fw.all_cycle(filename, ender)
+            fw.all_cycle(filename, ender, when)
 
             await bot_aiogram.send_message(
                 chat_id=message.chat.id,
-                text='Расписание получено!',
+                text=message_text,
                 parse_mode='Markdown',
                 reply_markup=markup_admin
             )
@@ -238,6 +286,10 @@ async def admin_file_handler(message: types.Message):
             response = Response.admin_schedule_handler
 
         await response.set()
+
+        # вызов рекурсивной функции для автоматической загрузки расписания
+        if deferred:
+            await admin_deferred_doc_handler()
 
 
 async def admin_send_messages_handler(message: types.Message,

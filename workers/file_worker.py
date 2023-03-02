@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime, timedelta
 
 import openpyxl
@@ -7,27 +8,43 @@ from loguru import logger
 from auxiliary.req_data import *
 
 
-def all_cycle(filename, ender):
-    """ Функция для улучшения читабельности кода и удобства """
-    file_delete()
-    file_renamer(filename, ender)
+def all_cycle(filename, ender, from_where):
+    """Функция для улучшения читабельности кода и удобства."""
+    file_delete(from_where)
+    file_renamer(filename, ender, from_where)
 
 
-def file_delete():
-    """ Функция удаляет старые файлы с расписанием"""
+def file_delete(from_where):
+    """Функция удаляет старые файлы с расписанием."""
     try:
-        os.remove(src_current_schedule)
+        if from_where == 'now':
+            os.remove(src_current_schedule)
+        else:
+            os.remove(f"{src_deferred_schedule}deferred_schedule.xlsx")
     except Exception:
         pass
 
 
-def file_renamer(filename, ender):
-    """ Функция переименует получаемый файл"""
+def file_renamer(filename, ender, from_where):
+    """Функция переименует получаемый файл."""
     try:
-        os.rename(
-            f"{src_files}{filename}.{ender}",
-            f"{src_files}current_schedule.xlsx"
-        )
+        if from_where == 'now':
+            os.rename(
+                f"{src_files}{filename}.{ender}",
+                f"{src_files}current_schedule.xlsx"
+            )
+        else:
+            if f"{src_deferred_schedule}{filename}." \
+               f"{ender}" == 'auxiliary/schedule_template.xlsx':
+                shutil.copyfile(
+                    f"{src_deferred_schedule}{filename}.{ender}",
+                    f"{src_deferred_schedule}deferred_schedule.xlsx"
+                )
+            else:
+                os.rename(
+                    f"{src_deferred_schedule}{filename}.{ender}",
+                    f"{src_deferred_schedule}deferred_schedule.xlsx"
+                )
     except Exception as ex:
         logger.error(ex)
 
