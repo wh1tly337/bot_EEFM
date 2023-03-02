@@ -1,7 +1,11 @@
 import asyncio
+import os
+from datetime import (
+    datetime as dt,
+    timedelta as td,
+)
 
 from aiogram import executor
-from datetime import datetime as dt
 from loguru import logger
 
 from auxiliary.req_data import *
@@ -12,7 +16,10 @@ from bot import (
     admin_handler as ah,
     director_handler as dirh
 )
-from workers import db_worker as dbw
+from workers import (
+    db_worker as dbw,
+    file_worker as fw
+)
 
 # TODO добавить logger в функцию (осталось только Саше в director_handler
 #  и свои функции в db_worker)
@@ -41,6 +48,57 @@ dirh.register_handlers_director(dp)
 # TODO сделать удаление директором документов, у которых вышел срок
 
 deep_counter = 0
+today = None
+
+
+async def admin_schedule_notification():
+    """Функция для напоминания админу о необходимости обновления расписания."""
+    global deep_counter, today
+
+    if (
+            dt.weekday(dt.now()) == 6 and
+            os.path.exists('auxiliary/deferred_schedule.xlsx') is False and
+            dt.now != today and
+            int(dt.now().strftime('%H')) > 10
+    ):
+        admin_id = await dbw.get_data('post', 'admin', 'id')
+        await bot_aiogram.send_message(
+            admin_id,
+            "Не забудьте, завтра расписание перестанет быть актуальным.\n"
+            "Для вашего удобства в боте реализована функция отложенной "
+            "загрузки расписания, благодаря ей вы точно не забудете его "
+            "обновить, а если вы не доверяете боту, то просто сами загрузите "
+            "расписание в понедельник\n"
+            "P.S. Это автоматическое напоминание и оно приходит только в том "
+            "случае, если вы не загрузили расписание отложено"
+        )
+        today = dt.now().strftime('%d.%m.%Y')
+    else:
+        doctor = await dbw.get_data('post', 'doctor')
+        doctor = f"{doctor[1]} {doctor[2]} {doctor[3]}"
+        result = fw.get_data_from_schedule(doctor)
+
+        if (
+                dt.weekday(dt.now()) == 0 and
+                result == (dt.now() - td(days=2)).strftime('%d.%m.%Y') and
+                dt.now != today and
+                int(dt.now().strftime('%H')) > 8
+        ):
+            admin_id = await dbw.get_data('post', 'admin', 'id')
+            await bot_aiogram.send_message(
+                admin_id,
+                "Вы не обновили расписание, доктора в растерянности, они не "
+                "знают что сегодня им нужно работать"
+            )
+            today = dt.now().strftime('%d.%m.%Y')
+
+    if deep_counter == 1:
+        deep_counter = 0
+        return
+    while True:
+        await asyncio.sleep(1800)
+        deep_counter += 1
+        await admin_schedule_notification()
 
 
 async def check_documents():
@@ -71,7 +129,7 @@ async def check_documents():
 
 
 async def startup_message(_):
-    """ Функция для отправки стартового сообщения о перезапуске всем юзерам """
+    """Функция для отправки стартового сообщения о перезапуске всем юзерам."""
     try:
         # TODO поменять на рабочий вариант
 
@@ -97,7 +155,7 @@ async def startup_message(_):
 
 
 async def shutdown_move(_):
-    """ Функция для logout user для корректной работы admin_file_handler """
+    """Функция для logout user для корректной работы admin_file_handler."""
     try:
         await dbw.logout_user()
         logger.info('All users have been successfully logged out')
@@ -111,7 +169,9 @@ if __name__ == '__main__':
     try:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
+        # TODO не забыть включить вызов функций проверки
         # asyncio.ensure_future(check_documents(), loop=loop)
+        asyncio.ensure_future(admin_schedule_notification(), loop=loop)
         asyncio.ensure_future(executor.start_polling(
             dp,
             on_startup=startup_message,

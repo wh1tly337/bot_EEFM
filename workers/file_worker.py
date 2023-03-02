@@ -49,6 +49,17 @@ def file_renamer(filename, ender, from_where):
         logger.error(ex)
 
 
+def get_data_from_schedule(doctor):
+    """Функция возвещающая последнюю дату в расписании."""
+    wb_obj = openpyxl.load_workbook(src_current_schedule)  # открытие файла
+    sheet_obj = wb_obj[doctor]  # выбор листа для работы (по фио)
+
+    date = sheet_obj['A2'].value + timedelta(days=6)
+    date = date.strftime('%d.%m.%Y')
+
+    return date
+
+
 async def get_schedule(doctor, time_period):
     """ Функция обработчик для получения расписания """
     try:

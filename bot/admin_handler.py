@@ -1,7 +1,7 @@
 import asyncio
 import os
 import shutil
-from datetime import datetime
+from datetime import datetime as dt
 
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -17,14 +17,11 @@ from workers import (
     file_worker as fw
 )
 
-# переменные для работы автоматической загрузке расписания
+# глобальные переменные для работы автоматической загрузке расписания
 deep_counter = 0
 need_check = False
 deferred = False
 
-
-# TODO сделать напоминание админу о том что нужно обновить расписание
-#  (например в воскресенье)
 
 # класс для регистрации состояния сообщений пользователя (используется везде,
 # где нужно обрабатывать текстовые сообщения от пользователя)
@@ -192,8 +189,8 @@ async def admin_deferred_doc_handler():
     global deep_counter, need_check
 
     if (
-            datetime.weekday(datetime.now()) == 0 and  # проверка на пн
-            datetime.now().strftime('%H') == '08' and  # проверка на время
+            dt.weekday(dt.now()) == 0 and  # проверка на пн
+            dt.now().strftime('%H') == '08' and  # проверка на время
             os.path.exists('auxiliary/deferred_schedule.xlsx') is True and
             need_check is True
     ):
@@ -203,7 +200,7 @@ async def admin_deferred_doc_handler():
             f"{src_current_schedule}"
         )  # копирования файла с расписанием в нужную директорию
         fw.file_delete('monday')  # удаление файла который теперь лежит в
-        # другой дирректории
+        # другой директории
         admin_id = await dbw.get_data('post', 'admin', 'id')
         await bot_aiogram.send_message(
             admin_id,
@@ -215,7 +212,7 @@ async def admin_deferred_doc_handler():
         deep_counter = 0
         return
     while need_check is True:
-        await asyncio.sleep(1)
+        await asyncio.sleep(1800)
         deep_counter += 1
         await admin_deferred_doc_handler()
 
