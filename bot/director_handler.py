@@ -20,11 +20,6 @@ current_employee_id_delete = 0
 check_fio = ''
 
 
-# TODO реализовать функцию напоминания о завершении срока действия документа
-
-# TODO поменять переменные с id на что-то другое
-
-
 class Response(StatesGroup):
     register_director_handler = State()
     register_director_emp_manage = State()
@@ -44,7 +39,6 @@ async def register_director_handler(message: types.Message, state: FSMContext):
     director_response = message.text
     await state.update_data(user_response=director_response)
     fio = await dbw.get_data('id', message.chat.id)
-    logger.info(f'Стартовая страница директора | {fio}')
     appeal = f"{fio[2]} {fio[3]}"
     director_handlers = {
         'Управление персоналом': {
@@ -86,7 +80,6 @@ async def register_director_handler(message: types.Message, state: FSMContext):
 async def register_director_emp_manage(message: types.Message,
                                        state: FSMContext):
     """Handler для страницы управления сотрудников директора."""
-    logger.info('Страница управления сотрудниками')
     director_response = message.text
     await state.update_data(user_response=director_response)
     director_handlers = {
@@ -200,6 +193,8 @@ async def register_director_create_handler(message: types.Message,
             'director': ['director', 'директор'],
             'admin': ['admin', 'админ', 'администратор']
         }
+
+        # Проверка, что введенная должность есть в списке
         for key, names in posts.items():
             if post in names:
                 post = key
@@ -209,7 +204,6 @@ async def register_director_create_handler(message: types.Message,
         if post == 'director':
             command_dict = director_handlers['Смена директора']
             check_fio = f'{surname} {name} {patronymic}'
-            logger.info(f'Redefine check_fio | check_fio: {check_fio}')
         temporary_password = random.randint(100000, 1000000)
         if not command_dict:
             command_dict = director_handlers['Добавление пользователя']
@@ -223,6 +217,7 @@ async def register_director_create_handler(message: types.Message,
                 username=surname,
                 post=post,
             )
+        logger.info(f'New employee add | {surname} {name} {patronymic} {post}')
 
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -274,6 +269,9 @@ async def register_director_find_handler(message: types.Message,
         parse_mode='Markdown',
         reply_markup=markup_director_emp
     )
+    logger.info(f'Employee finded | {surname} {name} {patronymic} {post}')
+    
+    # Сообщения, если у сотрудника есть документы
     if documents:
         await bot_aiogram.send_message(
             chat_id=message.chat.id,
@@ -314,7 +312,6 @@ async def director_change_director(message: types.Message,
         },
     }
     while True:
-        current_handler = ''
         if director_response == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -333,6 +330,7 @@ async def director_change_director(message: types.Message,
         patronymic = dir_data[2]
         temporary_password = random.randint(100000, 1000000)
         current_handler = director_handlers.get('Смена директора')
+        logger.info(f'Director changed | new director: {surname} {name} {patronymic}')
         current_handler['message'] = current_handler.get('message') + str(
             temporary_password)
         user_id = message.chat.id
@@ -379,13 +377,6 @@ async def director_remove_user(message: types.Message,
         },
     }
     while True:
-        # TODO Саша, пишет что у тебя дубликаты кода, так что подумай,
-        #  может можно вывести этот код в отдельную функцию и просто из двух
-        #  мест ее вызывать
-
-        # TODO Саша, проверь нужно ли это присвоение, потому что оно выделяется
-        #  как не используемое
-        current_handler = ''
         if emp_fio == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -393,11 +384,12 @@ async def director_remove_user(message: types.Message,
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break
-        id = await dbw.get_id_with_fio(emp_fio)
-        id = id[0][0]
-        await dbw.remove_user(id)
+        user_id = await dbw.get_id_with_fio(emp_fio)
+        user_id = user_id[0][0]
+        await dbw.remove_user(user_id)
         current_handler = director_handlers.get('Сотрудник удалён')
-        current_handler['message'] = current_handler['message'] + str(id)
+        logger.info(f'Employee deleted | {emp_fio}')
+        current_handler['message'] = current_handler['message'] + str(user_id)
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -439,7 +431,6 @@ async def director_finder_id(message: types.Message,
         },
     }
     while True:
-        current_handler = ''
         if emp_fio == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -488,7 +479,6 @@ async def director_add_documents(message: types.Message,
         },
     }
     while True:
-        current_handler = ''
         if document_data == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -496,7 +486,7 @@ async def director_add_documents(message: types.Message,
 
         # Проверка, что даты указаны в нужном формате
         try:
-            id = current_employee_id
+            user_id = current_employee_id
             date_start = document_data[0]
             date_finish = document_data[1]
             name = document_data[2]
@@ -507,8 +497,9 @@ async def director_add_documents(message: types.Message,
             current_handler = director_handlers.get('Неверные данные')
             break
 
-        await dbw.add_new_document(id, date_start, date_finish, name)
+        await dbw.add_new_document(user_id, date_start, date_finish, name)
         current_handler = director_handlers.get('Добавление документа')
+        logger.info('New document added | Employee id: {user_id}')
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -523,7 +514,6 @@ async def director_finder_delete_id(message: types.Message, state: FSMContext):
     """Handler поиска ид для удаления документов сотруднику."""
     print('enter')
     global current_employee_id_delete
-    logger.info('Поиск ид для удаления')
     emp_fio = message.text
     await state.update_data(user_response=emp_fio)
     director_handlers = {
@@ -550,7 +540,6 @@ async def director_finder_delete_id(message: types.Message, state: FSMContext):
         },
     }
     while True:
-        current_handler = ''
         if emp_fio == 'Отмена':
             current_employee_id_delete = 0
             current_handler = director_handlers.get('Отмена')
@@ -599,18 +588,18 @@ async def director_remove_document(message: types.Message, state: FSMContext):
         },
     }
     while True:
-        current_handler = ''
         if name == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
-        id = await dbw.get_document_with_name(name)
+        user_id = await dbw.get_document_with_name(name)
         print(id)
         if not id:
             current_handler = director_handlers.get('Документ не найден')
             break
-        current_employee_id_delete = id[0][0]
+        current_employee_id_delete = user_id[0][0]
         await dbw.delete_document(name)
         current_handler = director_handlers.get('Документ удалён')
+        logger.info(f'Document deleted | Employee id: {user_id}')
         break
     await bot_aiogram.send_message(
         chat_id=message.chat.id,
@@ -644,7 +633,6 @@ async def director_update_user(message: types.Message,
         },
     }
     while True:
-        current_handler = ''
         if emp_data == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -660,6 +648,7 @@ async def director_update_user(message: types.Message,
         user_id = await dbw.get_id_with_fio([surname, name, patronymic])
         await dbw.update_with_id_user(field, user_id, needed)
         current_handler = director_handlers.get('Данные обновлены')
+        logger.info(f'Employee data updated | {surname} {name} {patronymic}')
         current_handler['message'] = current_handler['message'] + str(id)
         break
     await bot_aiogram.send_message(

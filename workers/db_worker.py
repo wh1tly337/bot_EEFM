@@ -219,21 +219,6 @@ async def delete_document(name):
         logger.error(ex)
 
 
-# TODO если у сотрудников одинаковая фамилия\имя, то он поменяет для обоих
-# TODO Саня, если это не нужно то удали и TODO и закомментированную функцию
-# Функция не нужна, закомитил если все в беня улетит
-# async def update_user(field, current, needed):
-#     try:
-#         await start_connection()
-#         cursor.execute(f"""UPDATE users SET {field} = '{needed}'
-#         WHERE {field}
-#         = '{current}'""")
-#         connection.commit()
-#         await close_connection()
-#     except Exception as ex:
-#         logger.error(ex)
-
-
 async def update_with_id_user(field, user_id, needed):
     """ Изменение данные сотрудника по id"""
     try:

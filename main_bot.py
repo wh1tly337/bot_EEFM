@@ -21,8 +21,7 @@ from workers import (
     file_worker as fw
 )
 
-# TODO добавить logger в функцию (осталось только Саше в director_handler
-#  и свои функции в db_worker)
+# TODO добавить logger в функцию
 
 # TODO проработать комментарии (осталось только Саше в director_handler
 #  и свои функции в db_worker)
@@ -45,7 +44,6 @@ doch.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
 dirh.register_handlers_director(dp)
 
-# TODO сделать удаление директором документов, у которых вышел срок
 
 deep_counter = 0
 today = None
@@ -58,7 +56,7 @@ async def admin_schedule_notification():
     if (
             dt.weekday(dt.now()) == 6 and
             os.path.exists('auxiliary/deferred_schedule.xlsx') is False and
-            dt.now != today and
+            dt.now() != today and
             int(dt.now().strftime('%H')) > 10
     ):
         admin_id = await dbw.get_data('post', 'admin', 'id')
@@ -80,8 +78,8 @@ async def admin_schedule_notification():
 
         if (
                 dt.weekday(dt.now()) == 0 and
-                result == (dt.now() - td(days=2)).strftime('%d.%m.%Y') and
-                dt.now != today and
+                result == (dt.now() - td(days=1)).strftime('%d.%m.%Y') and
+                dt.now() != today and
                 int(dt.now().strftime('%H')) > 8
         ):
             admin_id = await dbw.get_data('post', 'admin', 'id')
@@ -100,30 +98,42 @@ async def admin_schedule_notification():
         deep_counter += 1
         await admin_schedule_notification()
 
+alarmed_documents = {}
+to_delete = []
 
 async def check_documents():
     global deep_counter
+    global alarmed_documents
+    global to_delete
     documents = await dbw.get_all_documents()
     now_time = dt.now()
     director_id = await dbw.get_data('post', 'director', 'id')
     for document in documents:
         doc_time = dt.strptime(document[2], '%d.%m.%Y')
         delta_time = (doc_time - now_time).days
-        if delta_time < 100:
+        if delta_time < 100 and document not in alarmed_documents:
             emp_fio = await dbw.get_data('id', document[0])
-
+            alarmed_documents[document] = now_time
             await bot_aiogram.send_message(
                 director_id,
-                f"Документ: {document[1]}\n"
+                f"Документ: {document[3]}\n"
                 f"Сотрудник: {emp_fio[1]} {emp_fio[2]} {emp_fio[3]}\n"
                 f"До конца действия: {delta_time} дней\n"
                 f"Истекает: {doc_time.strftime('%d.%m.%Y')}"
             )
+    for document, time in alarmed_documents.items():
+        if now_time - time > td(days=30):
+            to_delete.append(document)
+            print('after')
+            pprint(alarmed_documents)
+    for del_doc in to_delete:
+        alarmed_documents.pop(del_doc)
+        to_delete = []
     if deep_counter == 1:
         deep_counter = 0
         return
     while True:
-        await asyncio.sleep(10)
+        await asyncio.sleep(1800)
         deep_counter += 1
         await check_documents()
 
@@ -142,8 +152,8 @@ async def startup_message(_):
         #         'отправить /start или любое сообщение боту'
 
         # тестовый вариант
-        user_id = 726420734
-        # user_id = 577906481
+        # user_id = 726420734
+        user_id = 577906481
         await bot_aiogram.send_message(
             user_id,
             'Бот был перезапущен, для его работы необходимо отправить /start '
