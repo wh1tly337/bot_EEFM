@@ -270,7 +270,7 @@ async def register_director_find_handler(message: types.Message,
         reply_markup=markup_director_emp
     )
     logger.info(f'Employee finded | {surname} {name} {patronymic} {post}')
-    
+
     # Сообщения, если у сотрудника есть документы
     if documents:
         await bot_aiogram.send_message(
@@ -312,6 +312,7 @@ async def director_change_director(message: types.Message,
         },
     }
     while True:
+        current_handler = ''
         if director_response == 'Отмена':
             current_handler = director_handlers.get('Отмена')
             break
@@ -377,7 +378,7 @@ async def director_remove_user(message: types.Message,
         },
     }
     while True:
-        if emp_fio == 'Отмена':
+        if emp_fio == 'Отмена':  # noqa
             current_handler = director_handlers.get('Отмена')
             break
         emp_fio = emp_fio.split(' ')
@@ -431,18 +432,18 @@ async def director_finder_id(message: types.Message,
         },
     }
     while True:
-        if emp_fio == 'Отмена':
+        if emp_fio == 'Отмена': # noqa
             current_handler = director_handlers.get('Отмена')
             break
         emp_fio = emp_fio.split(' ')
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break
-        id = await dbw.get_id_with_fio(emp_fio)
-        if not id:
+        employee_id = await dbw.get_id_with_fio(emp_fio)
+        if not employee_id:
             current_handler = director_handlers.get('Сотрудник не найден')
             break
-        current_employee_id = id[0][0]
+        current_employee_id = employee_id[0][0]
         current_handler = director_handlers.get('Сотрудник найден')
         break
     await bot_aiogram.send_message(
@@ -544,7 +545,7 @@ async def director_finder_delete_id(message: types.Message, state: FSMContext):
             current_employee_id_delete = 0
             current_handler = director_handlers.get('Отмена')
             break
-        emp_fio = emp_fio.split(' ')
+        emp_fio = emp_fio.split(' ') # noqa
         if len(emp_fio) != 3:
             current_handler = director_handlers.get('Неверные данные')
             break

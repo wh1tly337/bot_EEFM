@@ -205,6 +205,7 @@ async def admin_deferred_doc_handler():
             admin_id,
             "Расписание автоматически загружено на текущую неделю"
         )
+        logger.info('Schedule was automatically load to bot at monday')
         need_check = False  # изменение переменной, чтобы бот только один раз
         # отправил сообщение
 
@@ -251,11 +252,13 @@ async def admin_file_handler(message: types.Message):
                 src_docs = src_files
                 message_text = 'Расписание получено!'
                 when = 'now'
+                logger.info('Schedule was manually load by admin')
             else:
                 src_docs = src_deferred_schedule
                 message_text = 'Расписание получено! Оно будет ' \
                                'автоматически загружено в понедельник утром'
                 when = 'monday'
+                logger.info('Schedule will be automatically load on monday')
 
             await message.document.download(
                 destination_file=f"{src_docs}"
@@ -364,6 +367,7 @@ async def admin_mailing_handler(message: types.Message, state: FSMContext):
                     parse_mode='Markdown',
                     reply_markup=markup_admin
                 )
+            logger.info('Admin mailing was sent successfully')
             response = Response.admin_message_handler
         except Exception:
             response = Response.admin_message_handler
@@ -400,6 +404,7 @@ async def admin_to_director_handler(message: types.Message, state: FSMContext):
             parse_mode='Markdown',
             reply_markup=markup_admin
         )
+        logger.info('Admin was sent message to director')
         response = Response.admin_message_handler
 
     await response.set()

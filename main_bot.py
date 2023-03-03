@@ -12,22 +12,14 @@ from auxiliary.req_data import *
 from bot import (
     bot_commands as bc,
     message_handler as mh,
-    doctor_handler as doch,
+    doctor_handler as doc_h,
     admin_handler as ah,
-    director_handler as dirh
+    director_handler as dir_h
 )
 from workers import (
     db_worker as dbw,
     file_worker as fw
 )
-
-# TODO добавить logger в функцию
-
-# TODO проработать комментарии (осталось только Саше в director_handler
-#  и свои функции в db_worker)
-
-# TODO вывод расписания для админа и директора в формате pdf
-
 
 # создание/открытие и запись данных в логгер при запуске бота
 logger.add(
@@ -40,10 +32,9 @@ logger.add(
 # регистрация команд/сообщений в боте
 bc.register_handlers_default_commands(dp)
 mh.register_handlers_authorization(dp)
-doch.register_handlers_doctor(dp)
+doc_h.register_handlers_doctor(dp)
 ah.register_handlers_admin(dp)
-dirh.register_handlers_director(dp)
-
+dir_h.register_handlers_director(dp)
 
 deep_counter = 0
 today = None
@@ -98,8 +89,10 @@ async def admin_schedule_notification():
         deep_counter += 1
         await admin_schedule_notification()
 
+
 alarmed_documents = {}
 to_delete = []
+
 
 async def check_documents():
     global deep_counter
@@ -125,7 +118,6 @@ async def check_documents():
         if now_time - time > td(days=30):
             to_delete.append(document)
             print('after')
-            pprint(alarmed_documents)
     for del_doc in to_delete:
         alarmed_documents.pop(del_doc)
         to_delete = []
@@ -181,7 +173,7 @@ if __name__ == '__main__':
         asyncio.set_event_loop(loop)
         # TODO не забыть включить вызов функций проверки
         # asyncio.ensure_future(check_documents(), loop=loop)
-        asyncio.ensure_future(admin_schedule_notification(), loop=loop)
+        # asyncio.ensure_future(admin_schedule_notification(), loop=loop)
         asyncio.ensure_future(executor.start_polling(
             dp,
             on_startup=startup_message,
