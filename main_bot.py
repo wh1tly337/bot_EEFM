@@ -133,24 +133,13 @@ async def check_documents():
 async def startup_message(_):
     """Функция для отправки стартового сообщения о перезапуске всем юзерам."""
     try:
-        # TODO поменять на рабочий вариант
-
-        # рабочий вариант
-        # all_ids = await dbw.get_all_ids()
-        # for i in range(len(all_ids)):
-        #     await bot_aiogram.send_message(
-        #         all_ids[i],
-        #         'Бот был перезапущен, для его работы необходимо ' \
-        #         'отправить /start или любое сообщение боту'
-
-        # тестовый вариант
-        # user_id = 726420734
-        user_id = 577906481
-        await bot_aiogram.send_message(
-            user_id,
-            'Бот был перезапущен, для его работы необходимо отправить /start '
-            'или любое сообщение боту'
-        )
+        all_ids = await dbw.get_all_ids()
+        for i in range(len(all_ids)):
+            await bot_aiogram.send_message(
+                all_ids[i],
+                'Бот был перезапущен, для его работы необходимо '
+                'отправить /start или любое сообщение боту'
+            )
         logger.info('The initial mailing was made successfully')
     except Exception as ex:
         logger.error(ex)
@@ -167,13 +156,11 @@ async def shutdown_move(_):
 
 if __name__ == '__main__':
     logger.info('Bot successfully started')
-
     try:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        # TODO не забыть включить вызов функций проверки
-        # asyncio.ensure_future(check_documents(), loop=loop)
-        # asyncio.ensure_future(admin_schedule_notification(), loop=loop)
+        asyncio.ensure_future(check_documents(), loop=loop)
+        asyncio.ensure_future(admin_schedule_notification(), loop=loop)
         asyncio.ensure_future(executor.start_polling(
             dp,
             on_startup=startup_message,

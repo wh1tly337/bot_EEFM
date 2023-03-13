@@ -22,7 +22,7 @@ class Response(StatesGroup):
 
 
 async def authorization_handler(message: types.Message, state: FSMContext):
-    """ Функция-обработчик сообщения после нажатия кнопки "Получить доступ" """
+    """Функция-обработчик сообщения после нажатия кнопки "Получить доступ". """
     authorization_response = message.text
     await state.update_data(user_response=authorization_response)
 
@@ -48,7 +48,7 @@ async def authorization_handler(message: types.Message, state: FSMContext):
 
 async def authorization_password_handler(message: types.Message,
                                          state: FSMContext):
-    """ Функция-обработчик временного пароля и добавления пользователя в бд """
+    """Функция-обработчик временного пароля и добавления пользователя в бд."""
     authorization_password_response = message.text
     await state.update_data(user_response=authorization_password_response)
     # try для корректной обработки/работы данных из бд
@@ -126,7 +126,7 @@ async def authorization_password_handler(message: types.Message,
 
 # noinspection PyShadowingNames,DuplicatedCode
 def register_handlers_authorization(dp: Dispatcher):
-    """ Регистратор данных для main_bot.py """
+    """Регистратор данных для main_bot.py."""
     dp.register_message_handler(
         authorization_handler,
         state=Response.authorization_handler

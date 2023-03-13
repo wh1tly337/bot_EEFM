@@ -13,7 +13,7 @@ from workers import db_worker as dbw
 
 
 async def start_message(message: types.Message):
-    """ Функция отвечающая за команду /start """
+    """Функция отвечающая за команду /start."""
     result = await dbw.get_data(
         field='id',
         what_need='id',
